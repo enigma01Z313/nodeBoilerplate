@@ -1,3 +1,6 @@
-const serveJson = (req, res, next) => res.status(200).json(res.jsonData);
+const serveJson = (req, res, next) => {
+  const status = res.statusCode ?? 200;
+  res.status(status).json(res.jsonData);
+};
 
 module.exports = serveJson;

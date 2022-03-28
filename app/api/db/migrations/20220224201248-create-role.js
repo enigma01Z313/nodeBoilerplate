@@ -23,6 +23,11 @@ module.exports = {
         type: DataTypes.STRING,
         defaultValue: "",
       },
+      status: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: 1,
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

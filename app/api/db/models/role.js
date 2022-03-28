@@ -1,12 +1,19 @@
 "use strict";
 const { Model } = require("sequelize");
+const getStatus = require("../staticDb/simpleStatus");
+
 module.exports = (sequelize, DataTypes) => {
   class Role extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+    toJSON() {
+      return {
+        ...this.get(),
+        id: this.uuid,
+        permissions: JSON.parse(this.permissions),
+        status: getStatus(this.status),
+        uuid: undefined,
+      };
+    }
+
     static associate(models) {
       // define association here
     }
@@ -27,6 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: "",
+      },
+      status: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: 1,
       },
     },
     {
