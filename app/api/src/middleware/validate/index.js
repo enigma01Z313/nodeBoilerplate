@@ -1,5 +1,5 @@
 const ValidateF = require("./ValidateF");
-const validator = require("./validator");
+const validator = require("./validatorMiddleware");
 
 module.exports = {
   ValidateF,

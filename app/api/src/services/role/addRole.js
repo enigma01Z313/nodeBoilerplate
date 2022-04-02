@@ -7,6 +7,7 @@ const addRole = async (req, res, next) => {
     permissions: JSON.stringify(permissions),
   });
 
+  res.statusCode = 201;
   res.jsonData = newRole;
   next();
 };

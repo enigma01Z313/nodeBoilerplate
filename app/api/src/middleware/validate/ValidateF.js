@@ -1,3 +1,11 @@
+const setType = (item, type, faType) => ({
+  value: type,
+  violations: [
+    `'${item.parameter}' should be type ${type}`,
+    `'${item.faName}' باید از نوع ${faType} باشد`,
+  ],
+});
+
 class ValidateF {
   constructor() {
     this.items = [];
@@ -6,6 +14,7 @@ class ValidateF {
 
   //main validations
   param(paramName, faName) {
+    faName = faName ?? paramName;
     this.items.push({
       parameter: paramName,
       faName,
@@ -15,6 +24,36 @@ class ValidateF {
     return this;
   }
 
+  //data types
+  object(schema) {
+    const lastItem = this.items[this.items.length - 1];
+    lastItem.validations["dataType"] = {
+      value: "object",
+      schema,
+    };
+    return this;
+  }
+
+  array(type) {
+    const lastItem = this.items[this.items.length - 1];
+    lastItem.validations["dataType"] = setType(lastItem, "array", "آرایه");
+    lastItem.validations["dataType"].dataType = type;
+    return this;
+  }
+
+  string() {
+    const lastItem = this.items[this.items.length - 1];
+    lastItem.validations["dataType"] = setType(lastItem, "string", "رشته");
+    return this;
+  }
+
+  number() {
+    const lastItem = this.items[this.items.length - 1];
+    lastItem.validations["dataType"] = setType(lastItem, "number", "عدد");
+    return this;
+  }
+
+  //validations
   required() {
     const lastItem = this.items[this.items.length - 1];
     lastItem.validations["required"] = {
@@ -27,6 +66,7 @@ class ValidateF {
     return this;
   }
 
+  //others
   regex(pattern) {
     const lastItem = this.items[this.items.length - 1];
     lastItem.validations["regex"] = {
@@ -75,16 +115,24 @@ class ValidateF {
     return this;
   }
 
-  //data types
-  array() {
-    const lastItem = this.items[this.items.length - 1];
-    lastItem.validations["dataType"] = {
-      value: "array",
-      violations: [
-        `'${lastItem.parameter}' should be type array`,
-        `'${lastItem.faName}' باید از نوع آرایه باشد`,
-      ],
-    };
+  //typed required
+  requiredString() {
+    this.required().string();
+    return this;
+  }
+
+  requiredNumber() {
+    this.required().number();
+    return this;
+  }
+
+  requiredArray(type) {
+    this.required().array(type);
+    return this;
+  }
+
+  requiredObject(schema) {
+    this.object(schema);
     return this;
   }
 

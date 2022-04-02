@@ -1,25 +1,7 @@
-const { User, Role } = require("../../../db/models");
 const fError = require("../../utils/fError");
 
-const getUser = (req, next) =>
-  new Promise(async (resolve, reject) => {
-    const { authorization } = req.headers;
-
-    if (!authorization)
-      return next(fError(401, "Authorization not sent", "خطای اطلاعات ارسالی"));
-
-    const user = await User.findOne({
-      where: { accessToken: authorization },
-      include: Role,
-    });
-    if (!user)
-      return next(fError(404, "Token not valid", "توکن نا معتبر میباشد"));
-
-    resolve(user);
-  });
-
 const authorizationDef = (permission) => async (req, res, next) => {
-  const user = await getUser(req, next);
+  const { authenticatedUser: user } = res;
   const {
     Role: { permissions: grantedPermissions },
   } = user;
@@ -37,7 +19,7 @@ const authorizationDef = (permission) => async (req, res, next) => {
 };
 
 const authorizationAnd = (permissions) => async (req, res, next) => {
-  const user = await getUser(req, next);
+  const { authenticatedUser: user } = res;
   const {
     Role: { permissions: grantedPermissions },
   } = user;
@@ -58,7 +40,7 @@ const authorizationAnd = (permissions) => async (req, res, next) => {
 };
 
 const authorizationOr = (permissions) => async (req, res, next) => {
-  const user = await getUser(req, next);
+  const { authenticatedUser: user } = res;
   const {
     Role: { permissions: grantedPermissions },
   } = user;
