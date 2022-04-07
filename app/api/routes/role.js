@@ -55,7 +55,7 @@ const testD2 = {
 const validation = require("../src/middleware/validate/validatorFunction");
 const { roleSchema, rolesListSchema } = require("../src/utils/schema");
 // console.log(validation(testD, roleSchema));
-console.log(validation(testD2, rolesListSchema));
+// console.log(validation(testD2, rolesListSchema));
 // console.log(roleSchema);
 // console.log(roleSchema[3].validations.dataType);
 // console.log(rolesListSchema);
