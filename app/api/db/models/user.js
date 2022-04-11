@@ -1,5 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
+const getStatus = require("../staticDb/simpleStatus");
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate({ Role }) {
@@ -15,6 +17,8 @@ module.exports = (sequelize, DataTypes) => {
           name: this.Role.name,
         },
         permissions: JSON.parse(this.Role.permissions),
+        status: getStatus(this.status),
+        roleId: undefined,
         uuid: undefined,
         ip: undefined,
         accessToken: undefined,

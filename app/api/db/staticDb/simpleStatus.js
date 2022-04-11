@@ -12,7 +12,7 @@ const statusList = [
 ];
 
 const getStatus = (code) => {
-  return statusList.find((item) => item.code === code);
+  return statusList.find((item) => item.code === parseInt(code));
 };
 
 module.exports = getStatus;

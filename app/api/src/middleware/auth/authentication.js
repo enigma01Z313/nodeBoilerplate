@@ -1,8 +1,10 @@
+require("dotenv").config();
+
 const { User, Role } = require("../../../db/models");
 const fError = require("../../utils/fError");
 
 const authentication = async (req, res, next) => {
-  const { authorization } = req.headers;
+  const { authorization } = req?.headers;
 
   if (!authorization)
     return next(fError(401, "Authorization not sent", "خطای اطلاعات ارسالی"));

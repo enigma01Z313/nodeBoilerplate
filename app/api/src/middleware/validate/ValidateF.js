@@ -116,8 +116,10 @@ class ValidateF {
   }
 
   //typed required
-  requiredString() {
+  requiredString(length) {
     this.required().string();
+    if (typeof length !== typeof undefined) this.length(length);
+
     return this;
   }
 
@@ -132,7 +134,7 @@ class ValidateF {
   }
 
   requiredObject(schema) {
-    this.object(schema);
+    this.required().object(schema);
     return this;
   }
 

@@ -8,7 +8,7 @@ const updateRole = async (req, res, next) => {
   if (permissions && JSON.stringify(permissions) !== role.permissions)
     role.permissions = uppedData = JSON.stringify(permissions);
 
-  if (typeof status !== typeof undefined && status !== role.status)
+  if (typeof status !== typeof undefined && status !== parseInt(role.status))
     role.status = uppedData = status;
 
   if (uppedData === false) {

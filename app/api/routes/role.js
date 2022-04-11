@@ -54,12 +54,6 @@ const testD2 = {
 };
 const validation = require("../src/middleware/validate/validatorFunction");
 const { roleSchema, rolesListSchema } = require("../src/utils/schema");
-// console.log(validation(testD, roleSchema));
-console.log(validation(testD2, rolesListSchema));
-// console.log(roleSchema);
-// console.log(roleSchema[3].validations.dataType);
-// console.log(rolesListSchema);
-// console.log(rolesListSchema[0].validations.dataType);
 
 const {
   listPermissions,
@@ -82,6 +76,9 @@ const newRoleSchema = new ValidateF()
 const updatedRoleSchema = new ValidateF()
   .param("permissions", "لیست نقش کاربری")
   .array("string")
+  .param("status", "وضعیت")
+  .number()
+  .param("name", "نام")
   .done();
 
 /**************************/
@@ -98,8 +95,8 @@ router.get(
 router.post(
   "/",
   use(validator(newRoleSchema)),
-  // use(authentication),
-  // use(authorization.or(["ADD_ROLES", "EDIT_ROLES"])),
+  use(authentication),
+  use(authorization.or(["ADD_ROLES", "EDIT_ROLES"])),
   use(isUnique("Role", "نقش", "name", "نام")),
   use(validatePermissions),
   use(addRole),
@@ -108,8 +105,9 @@ router.post(
 
 router.get(
   "/",
-  // use(authentication),
-  // use(authorization.def("SEE_ROLES")),
+  use(authentication),
+  use(authorization.def("SEE_ROLES")),
+  (req, res) => {return res.end('12')},
   filteredData({ id: { [Op.ne]: 1 } }),
   use(getRoles),
   serveJson
@@ -117,8 +115,8 @@ router.get(
 
 router.get(
   "/:uuid",
-  // use(authentication),
-  // use(authorization.def("SEE_ROLES")),
+  use(authentication),
+  use(authorization.def("SEE_ROLES")),
   use(getDataByUUID("Role", "نقش کاربری")),
   serveJson
 );
@@ -126,8 +124,8 @@ router.get(
 router.put(
   "/:uuid",
   use(validator(updatedRoleSchema)),
-  // use(authentication),
-  // use(authorization.or(["SEE_ROLES", "EDIT_ROLES"])),
+  use(authentication),
+  use(authorization.or(["SEE_ROLES", "EDIT_ROLES"])),
   use(isUnique("Role", "نقش", "name", "نام")),
   use(getDataByUUID("Role", "نقش کاربری")),
   updateRole,

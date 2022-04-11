@@ -1,7 +1,6 @@
 const fError = require("../../utils/fError");
 
-const validateErrors = (i, v, t, parameterName) => {
-  //check for required validation
+const validateErrors = (i, v, t, parameterName, parameterNameFa) => {
   if (
     i === "required" &&
     v.value === true &&
@@ -23,7 +22,11 @@ const validateErrors = (i, v, t, parameterName) => {
       (v.value === "number" && typeof t !== "number"))
   )
     return fError(400, v.violations[0], v.violations[1]);
-  else if (i === "dataType" && v.value === "array") {
+  else if (
+    i === "dataType" &&
+    v.value === "array" &&
+    typeof t !== typeof undefined
+  ) {
     if (!Array.isArray(t)) return fError(400, v.violations[0], v.violations[1]);
     else {
       for (item of t) {
@@ -31,18 +34,24 @@ const validateErrors = (i, v, t, parameterName) => {
           return fError(
             400,
             `Expect paramater '${parameterName}' be array and each element be '${v.dataType}'`,
-            `پارامتر '${parameterName}' باید آرایه باشد و اعضای آن '${v.dataType}' باشند`
+            `پارامتر '${parameterNameFa}' باید آرایه باشد و اعضای آن '${v.dataType}' باشند`
           );
         else if (typeof v.dataType !== "string") {
-          for (tmpData of t) {
-            for ([j, k] of Object.entries(v.dataType)) {
-              validateRes = validateErrors(j, k, tmpData, item.parameter);
-            }
-          }
-          console.log(i);
-          console.log(v);
-          console.log(t);
-          console.log("---------------------");
+          const ii = "dataType";
+          const vv = {
+            value: "object",
+            schema: v.dataType,
+          };
+          const tt = item;
+          const validateErr = validateErrors(
+            ii,
+            vv,
+            tt,
+            parameterName,
+            parameterNameFa
+          );
+
+          if (!!validateErr) return validateErr;
         }
       }
     }
@@ -51,15 +60,28 @@ const validateErrors = (i, v, t, parameterName) => {
     typeof t !== typeof undefined &&
     v.value === "object"
   ) {
+    if (typeof t !== "object")
+      return fError(
+        400,
+        `parameter '${parameterName}' should be type object`,
+        `پارامتر '${parameterNameFa}' باید از نوع شیع باشد`
+      );
+
     for (item of v.schema) {
       const tmpData = t[item.parameter];
       for ([i, v] of Object.entries(item.validations)) {
-        validateRes = validateErrors(i, v, tmpData, item.parameter);
+        validateRes = validateErrors(
+          i,
+          v,
+          tmpData,
+          item.parameter,
+          item.faName
+        );
         if (validateRes)
           return fError(
             400,
             `${parameterName}.${v.violations[0]}`,
-            `${parameterName}.${v.violations[1]}`
+            `${parameterNameFa}.${v.violations[1]}`
           );
       }
     }

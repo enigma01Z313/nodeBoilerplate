@@ -3,10 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
 const { hashSecret } = require("../../../../config/hachConfig");
 
-const password = crypto
-  .createHmac("sha256", hashSecret)
-  .update("12300321")
-  .digest("hex");
+const password = "e10659603e1219ad9ab5b55794977be4c5a021b234aaa8629fe0ab780807e77a";
 
 module.exports = {
   async up(queryInterface, Sequelize) {
