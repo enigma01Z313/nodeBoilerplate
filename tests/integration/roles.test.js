@@ -1,52 +1,53 @@
 "use strict";
 
 const request = require("supertest");
-const app = require("../app/app");
-const generateRandom = require("../app/api/src/utils/generateRandom");
-const { roleSchema, rolesListSchema } = require("../app/api/src/utils/schema");
-const validator = require("../app/api/src/middleware/validate/validatorFunction");
-const fError = require("../app/api/src/utils/fError");
+const app = require("../../app/app");
+const generateRandom = require("../../app/api/src/utils/generateRandom");
+const { roleSchema, rolesListSchema } = require("../../app/api/src/utils/schema");
+const validator = require("../../app/api/src/middleware/validate/validatorFunction");
+const fError = require("../../app/api/src/utils/fError");
 
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ4MzAyODU1LTI0NjctNGViNC1hNzhhLTE1N2Y4NDdiOGNjMSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NDkxMzYyNjIsImV4cCI6MTY0OTIyNjI2Mn0.8xR2eTs0uMrFDMp3UTRTddwF7FAnYLWMFNyX4SuQ0G4";
 const newRoleName = generateRandom();
 
 describe("Roles api tests", () => {
-  // test("GET /api/roles/permissions", async () => {
-  //   await request(app)
-  //     .get("/api/roles/permissions")
-  //     .set("Authorization", token)
-  //     .expect("Content-Type", "application/json; charset=utf-8")
-  //     .expect(200)
-  //     .expect((res) => {
-  //       const data = res.body;
-  //       if (data.length !== 4)
-  //         return new Error(
-  //           `data length error: expected '4', recieved '${data.length}'`
-  //         );
+  test("GET /api/roles/permissions", async () => {
+    await request(app)
+      .get("/api/roles/permissions")
+      .set("Authorization", token)
+      .expect("Content-Type", "application/json; charset=utf-8")
+      .expect(500)
+      .expect((res) => {
+        console.log(res);
+        const data = res.body;
+        if (data.length !== 4)
+          return new Error(
+            `data length error: expected '4', recieved '${data.length}'`
+          );
 
-  //       let index = 0;
-  //       for (item of data) {
-  //         const { name, permissions } = item;
-  //         if (!name)
-  //           return new Error(
-  //             `Parameter 'name' does not exist on permissions index'${index}'`
-  //           );
+        let index = 0;
+        for (item of data) {
+          const { name, permissions } = item;
+          if (!name)
+            return new Error(
+              `Parameter 'name' does not exist on permissions index'${index}'`
+            );
 
-  //         if (!permissions)
-  //           return new Error(
-  //             `Parameter 'permissions' does not exist on permissions index'${index}'`
-  //           );
+          if (!permissions)
+            return new Error(
+              `Parameter 'permissions' does not exist on permissions index'${index}'`
+            );
 
-  //         index++;
-  //       }
-  //     });
-  // });
+          index++;
+        }
+      });
+  });
 
-  /////////////////////////
-  //    adding roles     //
-  /////////////////////////
-  //check for name duplication
+  // /////////////////////////
+  // //    adding roles     //
+  // /////////////////////////
+  // //check for name duplication
   // test("POST /api/roles", async () => {
   //   await request(app)
   //     .post("/api/roles")
@@ -68,7 +69,7 @@ describe("Roles api tests", () => {
   //     });
   // });
 
-  //check for wrong permission sent
+  // //check for wrong permission sent
   // test("POST /api/roles", async () => {
   //   await request(app)
   //     .post("/api/roles")
@@ -90,7 +91,7 @@ describe("Roles api tests", () => {
   //     });
   // });
 
-  //check for adding new role
+  // //check for adding new role
   // test("POST /api/roles", async () => {
   //   await request(app)
   //     .post("/api/roles")
@@ -107,10 +108,10 @@ describe("Roles api tests", () => {
   //     });
   // });
 
-  /////////////////////////
-  //    getting roles    //
-  /////////////////////////
-  //get all roles
+  // /////////////////////////
+  // //    getting roles    //
+  // /////////////////////////
+  // //get all roles
   // test("GET /api/roles", async () => {
   //   await request(app)
   //     .get("/api/roles")
@@ -125,7 +126,7 @@ describe("Roles api tests", () => {
   //     });
   // });
 
-  //get all roles with status filter
+  // //get all roles with status filter
   // test(`GET /api/roles?status=?`, async () => {
   //   const randomBooleanInts = await randomBooleanInt();
   //   await request(app)
@@ -145,11 +146,11 @@ describe("Roles api tests", () => {
   //     });
   // });
 
-  /////////////////////////
-  //   get single role   //
-  /////////////////////////
-  let roleId;
-  //not valid roleId
+  // /////////////////////////
+  // //   get single role   //
+  // /////////////////////////
+  // let roleId;
+  // //not valid roleId
   // roleId = "123";
   // test(`GET /api/roles/${roleId}`, async () => {
   //   await request(app)
@@ -166,7 +167,7 @@ describe("Roles api tests", () => {
   //     });
   // });
 
-  //valid roleId
+  // //valid roleId
   // test(`GET /api/roles/{validRoleId}`, async () => {
   //   const {
   //     body: { data: rolesList },
@@ -189,10 +190,10 @@ describe("Roles api tests", () => {
   //     });
   // });
 
-  /////////////////////////
-  //     update role     //
-  /////////////////////////
-  //not valid roleId
+  // /////////////////////////
+  // //     update role     //
+  // /////////////////////////
+  // //not valid roleId
   // test(`PUT /api/roles/{validRoleId}`, async () => {
   //   const randomBooleanInt = () =>
   //     new Promise((resolve, reject) => {
@@ -233,7 +234,5 @@ describe("Roles api tests", () => {
   //     });
   // });
 
-  test("sss", () => {
-    // console.log(process.env);
-  });
+
 });
