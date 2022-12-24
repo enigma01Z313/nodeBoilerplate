@@ -1,4 +1,4 @@
-const { dbHost, dbName, dbUser, dbPass, dbNameTest } = require("./dbMysql");
+const { dbHost, dbName, dbUser, dbPass } = require("./dbMysql");
 
 module.exports = {
   development: {
@@ -8,11 +8,12 @@ module.exports = {
     host: dbHost,
     dialect: "mysql",
     operatorsAliases: "0",
+    logging: true,
   },
   test: {
     username: dbUser,
     password: dbPass,
-    database: dbNameTest,
+    database: dbName,
     host: dbHost,
     dialect: "mysql",
     operatorsAliases: "0",

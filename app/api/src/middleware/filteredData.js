@@ -1,28 +1,39 @@
 const { Op } = require("sequelize");
 
-const filteredData = (exclude) => (req, res, next) => {
-  const whereOptions = [];
-  whereOptions.push(exclude);
-  const { page, limit, status } = req.query;
+const filteredData =
+  (exclude = {}, translatedModel) =>
+  (req, res, next) => {
+    const whereOptions = [];
+    whereOptions.push(exclude);
+    const { page, limit, status, role } = req.query;
+    const { setLang } = res;
 
-  //filters section
-  if (status) whereOptions.push({ status });
+    //filters section
+    if (status) whereOptions.push({ status });
 
-  const defaultOptions = { where: { [Op.and]: [...whereOptions] } };
-  const paginationedOptions = Object.assign({}, defaultOptions);
+    if (setLang)
+      whereOptions.push({
+        [`$${translatedModel}Translations.lang$`]: setLang,
+      });
 
-  //pagination section
-  if (limit) paginationedOptions.limit = parseInt(limit);
-  if (page) {
-    const limits = limit ?? 10;
-    const pageNum = page > 0 ? parseInt(page) - 1 : 0;
+    if (role) whereOptions.push({ [`$Role.uuid$`]: role });
 
-    paginationedOptions.limit = parseInt(limit);
-    paginationedOptions.offset = pageNum * parseInt(limit);
-  }
+    const defaultOptions = { where: { [Op.and]: [...whereOptions] } };
+    const paginationedOptions = Object.assign({}, defaultOptions);
 
-  res.dbOptions = { defaultOptions, paginationedOptions };
-  next();
-};
+    //pagination section
+    if (limit && limit !== "undefined")
+      paginationedOptions.limit = parseInt(limit);
+    if (page && limit !== "undefined") {
+      const limits = limit ?? 10;
+      const pageNum = page > 0 ? parseInt(page) - 1 : 0;
+
+      paginationedOptions.limit = parseInt(limits);
+      paginationedOptions.offset = pageNum * parseInt(limits);
+    }
+
+    res.dbOptions = { defaultOptions, paginationedOptions };
+    next();
+  };
 
 module.exports = filteredData;

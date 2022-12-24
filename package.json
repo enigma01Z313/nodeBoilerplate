@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "test": "jest --runInBand --detectOpenHandles --forceExit"
+    "dev": "set RUN_ENV=development && nodemon server.js",
+    "server": "RUN_ENV=server nodemon server.js",
+    "staging": "STAGING=TRUE RUN_ENV=server nodemon server.js",
+    "test": "set RUN_ENV=test && jest --runInBand --detectOpenHandles --forceExit",
+    "updateCoinsDb": "node ./app/api/src/services/coins/update.js"
   },
   "jest": {
     "testEnvironment": "node"
@@ -14,14 +17,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
+    "axois": "^0.0.1-security",
     "body-parser": "^1.19.1",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
+    "form-data": "^4.0.0",
+    "formidable": "^2.0.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.0",
+    "mongoose": "^6.4.0",
     "morgan": "^1.10.0",
+    "multiparty": "^4.2.3",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.16.3"
+    "nodemailer": "^6.7.5",
+    "sequelize": "^6.16.3",
+    "tunnel-ssh": "^4.1.6"
   },
   "devDependencies": {
     "jest": "^27.5.1",

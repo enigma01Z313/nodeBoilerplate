@@ -1,18 +1,6 @@
-const statusList = [
-  {
-    code: 0,
-    label: "غیر فعال",
-    color: "red",
-  },
-  {
-    code: 1,
-    label: "فعال",
-    color: "greed",
-  },
-];
+const statusList = require("./status").defaultStatus;
 
-const getStatus = (code) => {
-  return statusList.find((item) => item.code === parseInt(code));
-};
+const getStatus = (code) =>
+  statusList.find((item) => item.code === parseInt(code));
 
 module.exports = getStatus;

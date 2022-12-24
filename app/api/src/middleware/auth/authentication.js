@@ -1,20 +1,23 @@
 require("dotenv").config();
 
-const { User, Role } = require("../../../db/models");
+const { UserWithAsset, Role } = require("../../../db/mysql/models");
 const fError = require("../../utils/fError");
 
 const authentication = async (req, res, next) => {
   const { authorization } = req?.headers;
 
-  if (!authorization)
-    return next(fError(401, "Authorization not sent", "خطای اطلاعات ارسالی"));
+  console.log(req.headers);
 
-  const user = await User.findOne({
-    where: { accessToken: authorization },
+  if (!authorization)
+    return next(fError(403, "Authorization not sent", "خطای اطلاعات ارسالی"));
+
+  const user = await UserWithAsset.findOne({
+    where: { accessToken: authorization.split(" ")[1] },
     include: Role,
   });
+
   if (!user)
-    return next(fError(403, "Token not valid", "توکن نا معتبر میباشد"));
+    return next(fError(401, "Token not valid", "توکن نا معتبر میباشد"));
 
   res.authenticatedUser = user;
   next();

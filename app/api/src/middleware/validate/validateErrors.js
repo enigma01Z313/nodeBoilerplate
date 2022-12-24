@@ -1,23 +1,32 @@
 const fError = require("../../utils/fError");
 
-const validateErrors = (i, v, t, parameterName, parameterNameFa) => {
+const validateErrors = (i, v, t, parameterName, parameterNameFa, fullBody) => {
   if (
     i === "required" &&
     v.value === true &&
     (typeof t === "undefined" || t === "")
   )
     return fError(400, v.violations[0], v.violations[1]);
-  else if (i === "regex" && v.value !== "" && !v.value.test(t))
+  else if (i === "atleastOne" && v && !v.value.some((item) => item in fullBody))
     return fError(400, v.violations[0], v.violations[1]);
-  else if (i === "length" && t?.length !== v.value)
+  else if (i === "regex" && t && v.value !== "" && !v.value.test(t))
     return fError(400, v.violations[0], v.violations[1]);
-  else if (i === "maximum" && t?.length >= v.value)
+  else if (i === "length" && t && t?.length !== v.value)
     return fError(400, v.violations[0], v.violations[1]);
-  else if (i === "minimum" && t?.length <= v.value)
+  else if (i === "maximum" && t && t?.length >= v.value)
+    return fError(400, v.violations[0], v.violations[1]);
+  else if (i === "minimum" && t && t?.length <= v.value)
+    return fError(400, v.violations[0], v.violations[1]);
+  else if (
+    i === "range" &&
+    typeof t !== typeof undefined &&
+    !(t <= v.value[1] && t >= v.value[0])
+  )
     return fError(400, v.violations[0], v.violations[1]);
   else if (
     i === "dataType" &&
     typeof t !== typeof undefined &&
+    t !== null &&
     ((v.value === "string" && typeof t !== "string") ||
       (v.value === "number" && typeof t !== "number"))
   )
@@ -25,7 +34,8 @@ const validateErrors = (i, v, t, parameterName, parameterNameFa) => {
   else if (
     i === "dataType" &&
     v.value === "array" &&
-    typeof t !== typeof undefined
+    typeof t !== typeof undefined &&
+    t !== null
   ) {
     if (!Array.isArray(t)) return fError(400, v.violations[0], v.violations[1]);
     else {
@@ -58,6 +68,7 @@ const validateErrors = (i, v, t, parameterName, parameterNameFa) => {
   } else if (
     i === "dataType" &&
     typeof t !== typeof undefined &&
+    t !== null &&
     v.value === "object"
   ) {
     if (typeof t !== "object")

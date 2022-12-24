@@ -4,23 +4,39 @@ const use = require("../src/utils/use");
 const serveJson = require("../src/middleware/serveJson");
 const { ValidateF, validator } = require("../src/middleware/validate");
 const userById = require("../src/middleware/gets/userById");
+const isUnique = require("../src/middleware/isUnique");
+const verifyRecaptcha = require("../src/middleware/verifyRecaptcha");
+const checkCaptchaNecessity = require("../src/middleware/checkCaptchaNecessity");
 
 const {
-  authornticate,
   oneTimeLogin,
   oneTimeConfirm,
-} = require("../src/services/auth");
+  register,
+  createAsset,
+  login,
+} = require("../src/services");
 
 /**************************/
 /*   validation schemas   */
 /**************************/
 const loginSchema = new ValidateF()
-  .phoneSchema()
+  .param("username", "شماره تماس/ایمیل")
+  .regex(
+    /(^09(1[0-9]|3[0-9]|2[0-9])-?[0-9]{3}-?[0-9]{4}$)|(^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$)/
+  )
   .param("password", "رمز عبور")
   .required()
+  .param("captchaCode", "کپچا")
+  // .required()
   .done();
 
 const phoneSchema = new ValidateF().phoneSchema().done();
+
+const emailSchema = new ValidateF()
+  .param("email", "ایمیل")
+  .required()
+  .regex(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/)
+  .done();
 
 const confirmCodeSchema = new ValidateF()
   .param("confirmCode", "کد تایید")
@@ -32,18 +48,33 @@ const confirmCodeSchema = new ValidateF()
 /*         routes         */
 /**************************/
 router.post(
-  "/login",
-  use(validator(loginSchema)),
-  use(authornticate),
+  "/register",
+  use(validator(emailSchema)),
+  use(checkCaptchaNecessity),
+  use(verifyRecaptcha),
+  use(isUnique("UserWithAsset", "کاربر", "email", "ایمیل")),
+  use(register),
   serveJson
 );
 
-router.post("/", use(validator(phoneSchema)), use(oneTimeLogin), serveJson);
+router.post(
+  "/login",
+  use(validator(loginSchema)),
+  use(checkCaptchaNecessity),
+  use(verifyRecaptcha),
+  use(login),
+  serveJson
+);
+
+router.post("/", use(validator(emailSchema)), use(oneTimeLogin), serveJson);
 
 router.post(
   "/:userId",
+  use(checkCaptchaNecessity),
+  use(verifyRecaptcha),
   use(validator(confirmCodeSchema)),
   use(userById),
+  // use(getUserAsset),
   use(oneTimeConfirm),
   serveJson
 );

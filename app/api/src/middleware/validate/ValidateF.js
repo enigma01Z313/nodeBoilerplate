@@ -66,6 +66,26 @@ class ValidateF {
     return this;
   }
 
+  //or required
+  requiredAtLeast(paramList) {
+    const generalValidations = {
+      parameter: "GENERAL",
+      faName: "عمومی",
+      validations: {
+        atleastOne: {
+          value: paramList,
+          violations: [
+            `at least on of'${paramList.join(", ")}' must be sent`,
+            `حداقل یکی پارامترهای '${paramList.join(", ")}' باید ارسال شود`,
+          ],
+        },
+      },
+    };
+    this.items[this.items.length] = generalValidations;
+
+    return this;
+  }
+
   //others
   regex(pattern) {
     const lastItem = this.items[this.items.length - 1];
@@ -115,6 +135,18 @@ class ValidateF {
     return this;
   }
 
+  range(m, n) {
+    const lastItem = this.items[this.items.length - 1];
+    lastItem.validations["range"] = {
+      value: [m, n],
+      violations: [
+        `'${lastItem.parameter}' should atleast be ${m} and atmost ${n}`,
+        `'${lastItem.faName}' باید حداقل ${m} و حداکثر ${n} باشد`,
+      ],
+    };
+    return this;
+  }
+
   //typed required
   requiredString(length) {
     this.required().string();
@@ -147,6 +179,16 @@ class ValidateF {
     this.param("phone", "تلفن همراه")
       .required()
       .regex(/^09[0-9]{9}$/);
+    return this;
+  }
+
+  //predefined schemas
+  emailSchema() {
+    this.param("email", "ایمیل")
+      .required()
+      .regex(
+        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      );
     return this;
   }
 }

@@ -10,8 +10,10 @@ const validator = (data, validations) => {
         v,
         tmpData,
         item.parameter,
-        item.faName
+        item.faName,
+        data
       );
+
       if (!!validateErr) return validateErr;
     }
   }

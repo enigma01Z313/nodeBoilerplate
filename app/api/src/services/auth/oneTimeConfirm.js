@@ -1,7 +1,10 @@
 const hash = require("../../utils/hash");
+const { Portfolio } = require("../../../db/mongoDb");
 const fError = require("../../utils/fError");
 const createJWT = require("../../utils/createJWT");
 const { oneTimeLoginTime } = require("../../../../../config/oneTimeLoginTime");
+const statusList = require("../../../db/staticDb/status");
+const { Watchlist } = require("../../../db/mysql/models");
 
 const oneTimeConfirm = async (req, res, next) => {
   const { user } = res;
@@ -10,9 +13,16 @@ const oneTimeConfirm = async (req, res, next) => {
   const curTime = new Date().getTime();
 
   if (
-    hash(confirmCode) !== user.oneTimeLogin ||
-    curTime - user.updatedAt.getTime() >= oneTimeLoginTime * 1000
-  )
+    hash(confirmCode) !== user.confirmCode ||
+    curTime - user.updatedAt.getTime() >= oneTimeLoginTime * 100000
+  ) {
+    const cookieHeader = req.cookies;
+    const failedAttempt = cookieHeader?.failedAttempt ?? 0;
+    res.cookie("failedAttempt", +failedAttempt + 1, {
+      maxAge: 1500000,
+      httpOnly: true,
+    });
+
     return next(
       fError(
         401,
@@ -20,9 +30,22 @@ const oneTimeConfirm = async (req, res, next) => {
         "رمز یک بار مصرف نامعتبر/اشتباه میباشد"
       )
     );
+  }
 
-  await user.update({ accessToken, refreshToken, oneTimeLogin: null });
-  res.jsonData = { accessToken, refreshToken, user };
+  const updatedUser = await user.update({
+    accessToken,
+    refreshToken,
+    oneTimeLogin: null,
+  });
+
+  const userData = await updatedUser.myJson();
+
+  res.jsonData = {
+    accessToken,
+    refreshToken,
+    user: userData,
+    meta: { ...statusList },
+  };
   next();
 };
 

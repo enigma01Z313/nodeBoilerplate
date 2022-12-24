@@ -1,0 +1,13 @@
+main {
+  width: calc(100% - 40px);
+  margin: 0 auto;
+  max-width: 1400px;
+  padding-top: 40px;
+  font-family: sans-serif;
+}
+main a {
+  color: #61affe;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=main.css.map */
