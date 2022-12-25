@@ -1,12 +1,10 @@
 const hash = require("../../utils/hash");
-const { Portfolio } = require("../../../db/mongoDb");
 const fError = require("../../utils/fError");
 const createJWT = require("../../utils/createJWT");
 const { oneTimeLoginTime } = require("../../../../../config/oneTimeLoginTime");
 const statusList = require("../../../db/staticDb/status");
-const { Watchlist } = require("../../../db/mysql/models");
 
-const oneTimeConfirm = async (req, res, next) => {
+module.exports = async (req, res, next) => {
   const { user } = res;
   const { confirmCode } = req.body;
   const { accessToken, refreshToken } = createJWT(user);
@@ -48,5 +46,3 @@ const oneTimeConfirm = async (req, res, next) => {
   };
   next();
 };
-
-module.exports = oneTimeConfirm;

@@ -13,9 +13,9 @@ fs.readdirSync(__dirname)
   )
   .forEach((file) => {
     const routerItem = require(path.join(__dirname, file));
-    const routerPath = file.split(".");
-
-    router.use(`/${routerPath[0]}`, routerItem);
+    console.log(path.join(__dirname, file));
+    //     const routerPath = file.split(".");
+    //     router.use(`/${routerPath[0]}`, routerItem);
   });
 
 module.exports = router;

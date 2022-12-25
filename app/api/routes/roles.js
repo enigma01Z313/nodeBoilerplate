@@ -14,7 +14,9 @@ const getDataList = require("../src/middleware/getDataList");
 
 const { roleSchema } = require("../src/utils/schema");
 
-const { listPermissions, addRole, updateRole } = require("../src/services");
+const {
+  Role: { create, update, listPermissions },
+} = require("../src/services");
 
 /**************************/
 /*   validation schemas   */
@@ -62,7 +64,7 @@ router.post(
   use(authorization.or(["ADD_ROLES", "EDIT_ROLES"])),
   use(isUnique("Role", "نقش", "name", "نام")),
   use(validatePermissions),
-  use(addRole),
+  use(create),
   serveJson
 );
 
@@ -81,15 +83,8 @@ router.put(
   use(authorization.or(["SEE_ROLES", "EDIT_ROLES"])),
   use(isUnique("Role", "نقش", "name", "نام")),
   use(getDataByUUID("Role", "نقش کاربری")),
-  updateRole,
+  use(update),
   serveJson
 );
-
-////////////////////////////
-/// schema tester
-////////////////////////////
-router.post("/schema", use(validator(roleSchema)), (req, res) => {
-  res.end("ssssssssssss");
-});
 
 module.exports = router;

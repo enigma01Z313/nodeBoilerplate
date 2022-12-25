@@ -1,6 +1,6 @@
 const { User } = require("../../../db/mysql/models");
 
-const addUser = async (req, res, next) => {
+module.exports = async (req, res, next) => {
   const { firstName, lastName, email, phone, password, status } = req.body;
 
   const newUser = await User.create({
@@ -29,5 +29,3 @@ const addUser = async (req, res, next) => {
   res.jsonData = modifiedUser;
   next();
 };
-
-module.exports = addUser;

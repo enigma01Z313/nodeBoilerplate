@@ -1,4 +1,4 @@
-const updateRole = async (req, res, next) => {
+module.exports = async (req, res, next) => {
   let uppedData = false;
   const { jsonData: role } = res;
   const { name, permissions, status } = req.body;
@@ -19,5 +19,3 @@ const updateRole = async (req, res, next) => {
   res.jsonData = await role.save();
   next();
 };
-
-module.exports = updateRole;

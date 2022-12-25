@@ -1,7 +1,7 @@
 const { UserWithAsset } = require("../../../db/mysql/models");
 const hash = require("../../utils/hash");
 
-const updateUser = async (req, res, next) => {
+module.exports = async (req, res, next) => {
   let uppedData = false;
   const { theSameUser } = res;
   const { phone, email, firstName, lastName, imageId, status, password } =
@@ -52,5 +52,3 @@ const updateUser = async (req, res, next) => {
   res.jsonData = await user.save();
   next();
 };
-
-module.exports = updateUser;

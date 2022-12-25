@@ -7,7 +7,7 @@ const fError = require("../../utils/fError");
 const sizeValidation = require("./_sizeValidation");
 const extensionValidation = require("./_extensionValidation");
 
-const uploadFile =
+module.exports =
   ({ name: fileName, types: fileTypes, maxAllowedSize: fileMaxAllowedSize }) =>
   async (req, res, next) => {
     const form = new multiparty.Form();
@@ -69,5 +69,3 @@ const uploadFile =
       });
     });
   };
-
-module.exports = uploadFile;

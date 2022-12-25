@@ -2,7 +2,7 @@ const { User } = require("../../../db/mysql/models");
 const fError = require("../../utils/fError");
 const setOnetimePassword = require("../../utils/logic/setOnetimePassword");
 
-const oneTimeLogin = async (req, res, next) => {
+module.exports = async (req, res, next) => {
   const { email } = req.body;
 
   const user = await User.findOne({
@@ -13,5 +13,3 @@ const oneTimeLogin = async (req, res, next) => {
   res.jsonData = await setOnetimePassword(user);
   next();
 };
-
-module.exports = oneTimeLogin;

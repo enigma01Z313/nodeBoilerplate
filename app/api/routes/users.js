@@ -14,7 +14,9 @@ const getDataByUUID = require("../src/middleware/getDataByUUID");
 const getDataList = require("../src/middleware/getDataList");
 const theSameUser = require("../src/middleware/theSameUser");
 
-const { updateUser, addUser } = require("../src/services");
+const {
+  User: { create, update },
+} = require("../src/services");
 
 /**************************/
 /*   validation schemas   */
@@ -65,7 +67,7 @@ router.post(
   use(isUnique("User", "کاربر", "email", "ایمیل")),
   use(isUnique("User", "کاربر", "phone", "شماره تماس")),
   use(doesExist("Role", "نقش کاربری", "roleId", "آیدی")),
-  use(addUser),
+  use(create),
   serveJson
 );
 
@@ -95,7 +97,7 @@ router.put(
   use(isUnique("User", "کاربر", "phone", "شماره موبایل")),
   use(isUnique("User", "کاربر", "email", "ایمیل")),
   use(doesExist("Role", "نقش کاربری", "roleId", "آیدی", "body")),
-  updateUser,
+  use(update),
   serveJson
 );
 

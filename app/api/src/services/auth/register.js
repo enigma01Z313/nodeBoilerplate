@@ -7,7 +7,7 @@ const hash = require("../../utils/hash");
 const nodemailer = require("nodemailer");
 const { smtpHost, smtpUser, smtpPass } = require("../../../../../config/smtp");
 
-const register = async (req, res, next) => {
+module.exports = async (req, res, next) => {
   const { email } = req.body;
 
   const code = Math.floor(Math.random() * 900000 + 100000);
@@ -29,4 +29,3 @@ const register = async (req, res, next) => {
   res.jsonData = { id: newUser.toJSON().id, code };
   next();
 };
-module.exports = register;

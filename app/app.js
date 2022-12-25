@@ -22,6 +22,8 @@ mysqlDB.connect(function (err) {
 });
 
 const apiRouter = require("./api/routes");
+console.log("-------------------");
+console.log(apiRouter);
 const handleError = require("./handleError");
 const handleCors = require("./handleCors");
 
@@ -38,9 +40,6 @@ app.use(bodyParser.json());
 app.use(handleCors);
 
 app.use(express.static(path.resolve(__dirname, "./public")));
-app.get("/test", (req, res) => {
-  res.end("sssssssssss");
-});
 app.use("/api", apiRouter);
 app.get("/robots.txt", (req, res) => {
   res.end("robots file");

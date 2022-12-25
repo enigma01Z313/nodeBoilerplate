@@ -1,12 +1,11 @@
 const { Op } = require("sequelize");
-const { Portfolio } = require("../../../db/mongoDb");
-const { User, Role, Watchlist } = require("../../../db/mysql/models");
+const { User, Role } = require("../../../db/mysql/models");
 const hash = require("../../utils/hash");
 const fError = require("../../utils/fError");
 const createJWT = require("../../utils/createJWT");
 const statusList = require("../../../db/staticDb/status");
 
-const login = async (req, res, next) => {
+module.exports = async (req, res, next) => {
   const { password, username } = req.body;
 
   const user = await User.findOne({
@@ -32,15 +31,6 @@ const login = async (req, res, next) => {
   const { accessToken, refreshToken } = createJWT(user);
   await user.update({ accessToken, refreshToken });
 
-  const watchlist = await Watchlist.findOne({ where: { owner: user.id } });
-
-  let portfolio = await Portfolio.findOne({
-    userId: user.uuid,
-    name: user.uuid,
-  });
-  if (!portfolio)
-    portfolio = await Portfolio.create({ userId: user.uuid, name: user.uuid });
-
   res.jsonData = {
     accessToken,
     refreshToken,
@@ -49,5 +39,3 @@ const login = async (req, res, next) => {
   };
   next();
 };
-
-module.exports = login;

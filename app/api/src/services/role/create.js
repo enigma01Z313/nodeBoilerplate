@@ -1,6 +1,6 @@
 const { Role } = require("../../../db/mysql/models");
 
-const addRole = async (req, res, next) => {
+module.exports = async (req, res, next) => {
   const { name, permissions } = req.body;
   const newRole = await Role.create({
     name,
@@ -11,5 +11,3 @@ const addRole = async (req, res, next) => {
   res.jsonData = newRole;
   next();
 };
-
-module.exports = addRole;

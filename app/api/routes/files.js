@@ -6,13 +6,15 @@ const authentication = require("../src/middleware/auth/authentication");
 const authorization = require("../src/middleware/auth/authorization");
 const getDataByUUID = require("../src/middleware/getDataByUUID");
 
-const { uploadFile, getFile } = require("../src/services");
+const {
+  Filemanager: { upload, get },
+} = require("../src/services");
 
 router.post(
   "/",
   // use(authentication),
   use(
-    uploadFile({
+    upload({
       name: "image",
       types: ["jpg", "png", "gif"],
       maxAllowedSize: "2Mb",
@@ -22,6 +24,6 @@ router.post(
 );
 
 // get image route
-router.get("/:uuid", use(getDataByUUID("File", "فایل")), getFile);
+router.get("/:uuid", use(getDataByUUID("File", "فایل")), get);
 
 module.exports = router;
