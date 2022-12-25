@@ -1,11 +1,10 @@
 "use strinct";
 
-const { UserWithAsset, Watchlist } = require("../../../db/mysql/models");
+const { User } = require("../../../db/mysql/models");
 const fError = require("../../utils/fError");
 const notification = require("../../utils/notifications");
 const hash = require("../../utils/hash");
 const nodemailer = require("nodemailer");
-const { smtpHost, smtpUser, smtpPass } = require("../../../../../config/smtp");
 
 module.exports = async (req, res, next) => {
   const { email } = req.body;
@@ -18,7 +17,7 @@ module.exports = async (req, res, next) => {
   //   html: emailTemplate,
   // });
 
-  const newUser = await UserWithAsset.create({
+  const newUser = await User.create({
     email,
     confirmCode: hash("" + code),
     roleId: 2,
