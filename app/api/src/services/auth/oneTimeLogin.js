@@ -1,12 +1,12 @@
-const { User } = require("../../../db/mysql/models");
+const { User } = require("../../../db/MySQL/models");
 const fError = require("../../utils/fError");
 const setOnetimePassword = require("../../utils/logic/setOnetimePassword");
 
 module.exports = async (req, res, next) => {
-  const { email } = req.body;
+  const { phone } = req.body;
 
   const user = await User.findOne({
-    where: { email },
+    where: { phone },
   });
   if (!user) return next(fError(404, "Not Found", "شماره تماس اشتباه میباشد"));
 

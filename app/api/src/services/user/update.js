@@ -1,4 +1,4 @@
-const { UserWithAsset } = require("../../../db/mysql/models");
+const { UserWithAsset } = require("../../../db/MySQL/models");
 const hash = require("../../utils/hash");
 
 module.exports = async (req, res, next) => {

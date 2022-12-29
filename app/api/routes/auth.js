@@ -9,11 +9,7 @@ const verifyRecaptcha = require("../src/middleware/verifyRecaptcha");
 const checkCaptchaNecessity = require("../src/middleware/checkCaptchaNecessity");
 
 const {
-  oneTimeLogin,
-  oneTimeConfirm,
-  register,
-  createAsset,
-  login,
+  Auth: { oneTimeLogin, oneTimeConfirm, register, login },
 } = require("../src/services");
 
 /**************************/
@@ -24,6 +20,7 @@ const loginSchema = new ValidateF()
   .regex(
     /(^09(1[0-9]|3[0-9]|2[0-9])-?[0-9]{3}-?[0-9]{4}$)|(^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$)/
   )
+  .required()
   .param("password", "رمز عبور")
   .required()
   .param("captchaCode", "کپچا")
@@ -49,10 +46,10 @@ const confirmCodeSchema = new ValidateF()
 /**************************/
 router.post(
   "/register",
-  use(validator(emailSchema)),
+  use(validator(phoneSchema)),
   use(checkCaptchaNecessity),
   use(verifyRecaptcha),
-  use(isUnique("UserWithAsset", "کاربر", "email", "ایمیل")),
+  use(isUnique("User", "کاربر", "phone", "شماره تماس")),
   use(register),
   serveJson
 );
@@ -66,7 +63,7 @@ router.post(
   serveJson
 );
 
-router.post("/", use(validator(emailSchema)), use(oneTimeLogin), serveJson);
+router.post("/", use(validator(phoneSchema)), use(oneTimeLogin), serveJson);
 
 router.post(
   "/:userId",
@@ -74,7 +71,6 @@ router.post(
   use(verifyRecaptcha),
   use(validator(confirmCodeSchema)),
   use(userById),
-  // use(getUserAsset),
   use(oneTimeConfirm),
   serveJson
 );

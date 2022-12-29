@@ -1,8 +1,7 @@
-const formidable = require("formidable");
 const multiparty = require("multiparty");
 const path = require("path");
 const fs = require("fs");
-const { File } = require("../../../db/mysql/models");
+const { File } = require("../../../db/MySQL/models");
 const fError = require("../../utils/fError");
 const sizeValidation = require("./_sizeValidation");
 const extensionValidation = require("./_extensionValidation");

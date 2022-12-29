@@ -1,0 +1,9 @@
+GET http://localhost:30002/api/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjA5MzMzOTUwODg5IiwiaWF0IjoxNjcyMTU4MDkyLCJleHAiOjE2ODExNTgwOTJ9.u5rVKN8yG0wIW2WSnMEhALz-xaLY2qhDjXBUN8D2aCc
+
+###
+GET http://localhost:30002/api/users/a34060b5-7be7-4b70-a1b5-7d1b5a252f3f
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjA5MzMzOTUwODg5IiwiaWF0IjoxNjcyMTU4MDkyLCJleHAiOjE2ODExNTgwOTJ9.u5rVKN8yG0wIW2WSnMEhALz-xaLY2qhDjXBUN8D2aCc
+

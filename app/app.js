@@ -22,17 +22,9 @@ mysqlDB.connect(function (err) {
 });
 
 const apiRouter = require("./api/routes");
-console.log("-------------------");
-console.log(apiRouter);
 const handleError = require("./handleError");
 const handleCors = require("./handleCors");
 
-app.use((req, res, next) => {
-  console.log("-------------------------");
-  console.log(req.originalUrl);
-  console.log("-------------------------");
-  next();
-});
 app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,8 +37,6 @@ app.get("/robots.txt", (req, res) => {
   res.end("robots file");
 });
 app.get("/*", function (req, res) {
-  // console.log("ssssssssss");
-  // console.log(path.resolve(__dirname, "./public/index.html"));
   res.sendFile(path.join(__dirname, "public/index.html"), function (err) {
     if (err) {
       res.status(500).send(err);

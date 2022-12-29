@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { User, Role } = require("../../../db/mysql/models");
+const { User, Role } = require("../../../db/MySQL/models");
 const hash = require("../../utils/hash");
 const fError = require("../../utils/fError");
 const createJWT = require("../../utils/createJWT");

@@ -1,4 +1,4 @@
-const Models = require("../../db/mysql/models");
+const Models = require("../../db/MySQL/models");
 const fError = require("../utils/fError");
 
 const isUnique = (model, modelFa, param, paramFa) => async (req, res, next) => {

@@ -1,4 +1,4 @@
-const { Role } = require("../../../db/mysql/models");
+const { Role } = require("../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
   const { name, permissions } = req.body;

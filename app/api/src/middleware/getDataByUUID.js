@@ -1,6 +1,7 @@
-const Models = require("../../db/mysql/models");
+const Models = require("../../db/MySQL/models");
 const fError = require("../utils/fError");
 const { Op } = require("sequelize");
+const refineData = require("../../db/MySQL/refines");
 
 const createIncludeArray = (str) => {
   if (!str) return { include: [] };
@@ -38,7 +39,7 @@ const getDataByUUID =
         )
       );
 
-    res.jsonData = item.myJson ? await item.myJson() : item;
+    res.jsonData = refineData[model.toLowerCase()](item);
     next();
   };
 
