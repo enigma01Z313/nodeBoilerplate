@@ -26,14 +26,15 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "form-data": "^4.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.4.0",
     "morgan": "^1.10.0",
     "multiparty": "^4.2.3",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.5",
     "sequelize": "^6.16.3",
-    "tunnel-ssh": "^4.1.6"
+    "tunnel-ssh": "^4.1.6",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "jest": "^27.5.1",
