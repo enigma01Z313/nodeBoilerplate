@@ -25,7 +25,7 @@
     "express": "^4.17.2",
     "form-data": "^4.0.0",
     "formidable": "^2.0.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.4.0",
     "morgan": "^1.10.0",
     "multiparty": "^4.2.3",
