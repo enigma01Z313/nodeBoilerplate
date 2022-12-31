@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const Models = require("../../db/mysql/models");
+const Models = require("../../db/MySQL/models");
 const fError = require("../utils/fError");
 
 const createIncludeArray = (str) => {

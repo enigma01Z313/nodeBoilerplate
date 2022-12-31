@@ -1,5 +1,3 @@
-"use strict";
-
 const defaultPermissions = [
   {
     name: "مدیرت نقش ها",
@@ -86,23 +84,4 @@ const defaultPermissions = [
   },
 ];
 
-module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-      "options",
-      [
-        {
-          key: "permissions",
-          value: JSON.stringify(defaultPermissions),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ],
-      {}
-    );
-  },
-
-  async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("options", null, {});
-  },
-};
+module.exports = defaultPermissions;

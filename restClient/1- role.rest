@@ -1,0 +1,3 @@
+GET http://localhost:30002/api/roles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM3NGRmMmM3LWM1ODUtNDQ5ZC1hNzAwLTQ4OTIzZjg1ZGYzZSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzIxNTc0NzEsImV4cCI6MTY4MTE1NzQ3MX0.lsf6Ok1qwqwKD0tPcp19W6GWsW-P3a9Hd_3l07R4knY

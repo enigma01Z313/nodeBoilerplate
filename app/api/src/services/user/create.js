@@ -1,4 +1,4 @@
-const { User } = require("../../../db/mysql/models");
+const { User } = require("../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
   const { firstName, lastName, email, phone, password, status } = req.body;

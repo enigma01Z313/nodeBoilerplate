@@ -1,4 +1,4 @@
-const { Option } = require("../../db/mysql/models");
+const { Option } = require("../../db/MySQL/models");
 const fError = require("../utils/fError");
 
 const validatePermissions = async (req, res, next) => {

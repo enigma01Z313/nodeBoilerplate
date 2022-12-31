@@ -1,0 +1,38 @@
+@baseUrl = http://loclhost:30002
+@apiUrl = {{baseUrl}}/api
+
+POST http://localhost:30002/api/auth
+Content-Type: application/json
+
+{
+  "phone": "09333950889"
+}
+
+###
+POST http://localhost:30002/api/auth/a34060b5-7be7-4b70-a1b5-7d1b5a252f3f
+Content-Type: application/json
+
+{
+  "confirmCode": "295394",
+  "skipCaptcha": true
+}
+
+###
+POST http://localhost:30002/api/auth/register
+Content-Type: application/json
+
+{
+  "phone": "09355459698",
+  "skipCaptcha": true
+}
+
+###
+
+POST http://localhost:30002/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "09333950889",
+  "password": "1230",
+  "skipCaptcha": true
+}

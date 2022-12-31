@@ -1,4 +1,4 @@
-const { Option } = require("../../../db/mysql/models");
+const { Option } = require("../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
   const permissions = await Option.findOne({ where: { key: "permissions" } });

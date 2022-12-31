@@ -33,15 +33,14 @@ module.exports = async (req, res, next) => {
   const updatedUser = await user.update({
     accessToken,
     refreshToken,
+    status: 1,
     oneTimeLogin: null,
   });
-
-  const userData = await updatedUser.myJson();
 
   res.jsonData = {
     accessToken,
     refreshToken,
-    user: userData,
+    user: updatedUser,
     meta: { ...statusList },
   };
   next();
