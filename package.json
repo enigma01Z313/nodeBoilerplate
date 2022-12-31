@@ -26,10 +26,6 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "form-data": "^4.0.0",
-<<<<<<< HEAD
-    "formidable": "^2.0.1",
-=======
->>>>>>> test
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.4.0",
     "morgan": "^1.10.0",
