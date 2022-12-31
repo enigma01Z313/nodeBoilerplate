@@ -1,11 +1,20 @@
 const { UserWithAsset } = require("../../../db/MySQL/models");
 const hash = require("../../utils/hash");
+const updateMetaData = require("./_updateMeta");
 
 module.exports = async (req, res, next) => {
   let uppedData = false;
   const { theSameUser } = res;
-  const { phone, email, firstName, lastName, imageId, status, password } =
-    req.body;
+  const {
+    phone,
+    email,
+    firstName,
+    lastName,
+    imageId,
+    status,
+    password,
+    ...metaFields
+  } = req.body;
   const { Role } = res;
   const { uuid } = req.params;
 
@@ -48,6 +57,10 @@ module.exports = async (req, res, next) => {
     res.statusCode = 204;
     return next();
   }
+
+  const userMeta = await updateMetaData(metaFields, req.body);
+
+  await user.setUserMeta(userMeta);
 
   res.jsonData = await user.save();
   next();
