@@ -6,9 +6,9 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql2");
 const cookieParser = require("cookie-parser");
 const { dbUrl, dbHost, dbUser, dbPass } = require("../config/dbMysql");
-const connectToMongo = require("./api/db/mongoDb/connect");
+// const connectToMongo = require("./api/db/mongoDb/connect");
 
-connectToMongo();
+// connectToMongo();
 
 //mysql database conncetion
 const mysqlDB = mysql.createConnection({
