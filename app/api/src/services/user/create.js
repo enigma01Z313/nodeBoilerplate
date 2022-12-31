@@ -1,7 +1,9 @@
 const { User } = require("../../../db/MySQL/models");
+const updateMetaData = require("./_updateMeta");
 
 module.exports = async (req, res, next) => {
-  const { firstName, lastName, email, phone, password, status } = req.body;
+  const { firstName, lastName, email, phone, password, status, ...metaFields } =
+    req.body;
 
   const newUser = await User.create({
     firstName,
@@ -24,6 +26,10 @@ module.exports = async (req, res, next) => {
     permissions: JSON.parse(res.Role.permissions),
   };
   const modifiedUser = { ...newUser.toJSON(), ...roleData };
+
+  const userMeta = await updateMetaData(metaFields, req.body);
+
+  newUser.setUserMeta(userMeta);
 
   res.statusCode = 201;
   res.jsonData = modifiedUser;
