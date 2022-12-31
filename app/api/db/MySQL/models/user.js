@@ -6,17 +6,11 @@ module.exports = (sequelize, DataTypes) =>
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      get() {
-        return this.getDataValue("uuid");
-      },
     },
     uuid: {
       allowNull: false,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-      get() {
-        undefined;
-      },
     },
     phone: {
       allowNull: false,
@@ -30,9 +24,6 @@ module.exports = (sequelize, DataTypes) =>
     },
     confirmCode: {
       type: DataTypes.STRING(500),
-      get() {
-        undefined;
-      },
     },
     firstName: {
       type: DataTypes.STRING,

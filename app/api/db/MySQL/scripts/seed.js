@@ -1,7 +1,7 @@
 "use strict";
 
 const crypto = require("crypto");
-const { Option, Role, User } = require("../models");
+const { Option, Role, User, UserMeta } = require("../models");
 
 const defaultPermissions = require("./defaultOption");
 const hash = require("../../../src/utils/hash");
@@ -47,6 +47,7 @@ const password = hash("1230");
   ]);
   console.log("Roles seed has been finished");
 
+  //Users
   await User.create({
     uuid: crypto.randomUUID(),
     phone: "09333950889",
@@ -60,7 +61,30 @@ const password = hash("1230");
     createdAt: new Date(),
     updatedAt: new Date(),
   });
+
+  const user2 = await User.create({
+    uuid: crypto.randomUUID(),
+    phone: "09903696246",
+    email: "faezeh92eh@gmail.com",
+    password,
+    firstName: "Faeze",
+    lastName: "Ehsani",
+    roleId: 1,
+    imageId: 1,
+    status: 1,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  });
   console.log("User seed has been finished");
+
+  //UserMeta
+  const userMeta1 = await UserMeta.create({
+    key: "fave-color",
+    value: "Pink",
+  });
+  console.log("UserMeta seed has been finished");
+
+  await user2.addUserMeta(userMeta1);
 
   process.exit();
 })();
