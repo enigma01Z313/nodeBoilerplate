@@ -8,10 +8,11 @@ const {
     index: { ValidateF, validator },
   },
   getDataList,
+  isUnique,
 } = require("../src/middleware");
 
 const {
-  Tag: { list, get },
+  Tag: { list, get, create },
 } = require("../src/services");
 
 /**************************/
@@ -35,5 +36,14 @@ router.get(
 );
 
 router.get("/:uuid", use(authentication), use(get), serveJson);
+
+router.post(
+  "/",
+  use(validator(newTagSchema)),
+  use(authentication),
+  use(isUnique("Tag", "برچسب", "name", "نام")),
+  use(create),
+  serveJson
+);
 
 module.exports = router;
