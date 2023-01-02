@@ -43,7 +43,6 @@ const updatedRoleSchema = new ValidateF()
 router.get(
   "/permissions",
   use(authentication),
-  use(authorization.or(["ADD_ROLES", "EDIT_ROLES"])),
   use(listPermissions),
   serveJson
 );
@@ -61,7 +60,6 @@ router.post(
   "/",
   use(validator(newRoleSchema)),
   use(authentication),
-  use(authorization.or(["ADD_ROLES", "EDIT_ROLES"])),
   use(isUnique("Role", "نقش", "name", "نام")),
   use(validatePermissions),
   use(create),
@@ -71,7 +69,6 @@ router.post(
 router.get(
   "/:uuid",
   use(authentication),
-  use(authorization.def("SEE_ROLES")),
   use(getDataByUUID("Role", "نقش کاربری")),
   serveJson
 );
@@ -80,7 +77,6 @@ router.put(
   "/:uuid",
   use(validator(updatedRoleSchema)),
   use(authentication),
-  use(authorization.or(["SEE_ROLES", "EDIT_ROLES"])),
   use(isUnique("Role", "نقش", "name", "نام")),
   use(getDataByUUID("Role", "نقش کاربری")),
   use(update),

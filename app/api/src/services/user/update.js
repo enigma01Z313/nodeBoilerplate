@@ -1,4 +1,4 @@
-const { UserWithAsset } = require("../../../db/MySQL/models");
+const { User } = require("../../../db/MySQL/models");
 const hash = require("../../utils/hash");
 const updateMetaData = require("./_updateMeta");
 
@@ -15,12 +15,13 @@ module.exports = async (req, res, next) => {
     password,
     ...metaFields
   } = req.body;
-  const { Role } = res;
+
+  const { role } = res.chainData;
   const { uuid } = req.params;
 
-  const user = await UserWithAsset.findOne({ where: { uuid } });
+  const user = await User.findOne({ where: { uuid } });
 
-  const roleId = Role?.id;
+  const roleId = role?.id;
 
   if (phone && phone !== user.phone) user.phone = uppedData = phone;
 
@@ -42,16 +43,12 @@ module.exports = async (req, res, next) => {
   )
     user.status = uppedData = status;
 
+
   if (!theSameUser && roleId && roleId !== user.roleId)
     user.roleId = uppedData = roleId;
 
   if (password && password !== user.password)
     user.password = uppedData = hash(password);
-
-  // console.log(theSameUser);
-  // console.log(user);
-  // console.log(req.body);
-  // console.log(uppedData);
 
   if (uppedData === false) {
     res.statusCode = 204;

@@ -1,10 +1,38 @@
+@baseUrl = http://67.43.234.92:30005/api
+@apiUrl = {{baseUrl}}/users
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY1YmVmYmE4LWVmNmUtNGZmZi1hYTQ0LTAzYTM2OGQ4ODNjMiIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzI1NzUyODYsImV4cCI6MTY4MTU3NTI4Nn0.WerpZ0V3o1_YzH9gjlnpp4o_je1eGR5n3aQ_EWp-_LM
 
-GET http://127.0.0.1:30002/api/users
+GET {{apiUrl}}
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjA5MzMzOTUwODg5IiwiaWF0IjoxNjcyMTU4MDkyLCJleHAiOjE2ODExNTgwOTJ9.u5rVKN8yG0wIW2WSnMEhALz-xaLY2qhDjXBUN8D2aCc
+Authorization: Bearer {{token}}
 
 ###
-GET http://127.0.0.1:30002/api/users/v34060b5-7be7-4b70-a1b5-7d1b5a252f3f
+GET {{apiUrl}}/6987dc6e-9955-49da-8847-1e1a8a1c2d70
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjA5MzMzOTUwODg5IiwiaWF0IjoxNjcyMTU4MDkyLCJleHAiOjE2ODExNTgwOTJ9.u5rVKN8yG0wIW2WSnMEhALz-xaLY2qhDjXBUN8D2aCc
+Authorization: Bearer {{token}}
 
+###
+POST {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "phone": "09124439654",
+    "email": "n98ahmadian@gmail.com",
+    "firstName": "Naiem",
+    "lastName": "Ahmadian",
+    "imageId": "1",
+    "status": 1,
+    "brand" : "Dior",
+    "roleId": "21ffc1f8-c672-4315-9d64-e96c33fe0ba3",
+    "car" : "pejo 206"
+}
+
+###
+PUT {{apiUrl}}/6987dc6e-9955-49da-8847-1e1a8a1c2d70
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+"brand": "Gucci"
+}

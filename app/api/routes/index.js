@@ -6,6 +6,11 @@ const basename = path.basename(__filename);
 const express = require("express");
 const router = express.Router();
 
+router.use((req, res, next) => {
+  res.chainData = {};
+  next();
+});
+
 fs.readdirSync(__dirname)
   .filter(
     (file) =>

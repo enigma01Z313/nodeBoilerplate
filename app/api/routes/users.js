@@ -2,20 +2,23 @@ const express = require("express");
 const { Op } = require("sequelize");
 const router = express.Router();
 const use = require("../src/utils/use");
-const serveJson = require("../src/middleware/serveJson");
-const authentication = require("../src/middleware/auth/authentication");
-const authorization = require("../src/middleware/auth/authorization");
-const { ValidateF, validator } = require("../src/middleware/validate");
-const isUnique = require("../src/middleware/isUnique");
-const doesExist = require("../src/middleware/doesExist");
-const filteredData = require("../src/middleware/filteredData");
-const sortedData = require("../src/middleware/sortedData");
-const getDataByUUID = require("../src/middleware/getDataByUUID");
-const getDataList = require("../src/middleware/getDataList");
-const theSameUser = require("../src/middleware/theSameUser");
+const {
+  serveJson,
+  Auth: { authentication, authorization },
+  Validate: {
+    index: { ValidateF, validator },
+  },
+  isUnique,
+  doesExist,
+  filteredData,
+  sortedData,
+  getDataList,
+  theSameUser,
+  getEntityByUuid,
+} = require("../src/middleware");
 
 const {
-  User: { create, update },
+  User: { create, update, get, list },
 } = require("../src/services");
 
 /**************************/
@@ -60,13 +63,22 @@ const updatedUserSchema = new ValidateF()
 /**************************/
 /*         routes         */
 /**************************/
+
+router.get(
+  "/:uuid",
+  use(authentication),
+  use(theSameUser),
+  use(get),
+  serveJson
+);
+
 router.post(
   "/",
   use(validator(newUserSchema)),
   use(authentication),
-  use(isUnique("User", "کاربر", "email", "ایمیل")),
   use(isUnique("User", "کاربر", "phone", "شماره تماس")),
-  use(doesExist("Role", "نقش کاربری", "roleId", "آیدی")),
+  use(isUnique("User", "کاربر", "email", "ایمیل")),
+  use(getEntityByUuid({ model: "Role", fields: ["roleId"] })),
   use(create),
   serveJson
 );
@@ -80,23 +92,23 @@ router.get(
   serveJson
 );
 
-router.get(
-  "/:uuid",
-  use(authentication),
-  use(theSameUser),
-  use(getDataByUUID("User", "کاربر", "Role")),
-  serveJson
-);
+// router.get(
+//   "/:uuid",
+//   use(authentication),
+//   use(theSameUser),
+//   use(getDataByUUID("User", "کاربر", "Role")),
+//   serveJson
+// );
 
 router.put(
   "/:uuid",
   use(validator(updatedUserSchema)),
   use(authentication),
   use(theSameUser),
-  use(getDataByUUID("User", "نقش کاربری", "Role")),
+  use(getEntityByUuid({ model: "Role", fields: ["roleId"] })),
   use(isUnique("User", "کاربر", "phone", "شماره موبایل")),
   use(isUnique("User", "کاربر", "email", "ایمیل")),
-  use(doesExist("Role", "نقش کاربری", "roleId", "آیدی", "body")),
+  use(getEntityByUuid({ model: "User" })),
   use(update),
   serveJson
 );

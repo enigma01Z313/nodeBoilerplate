@@ -1,4 +1,5 @@
-const { User, UserMeta } = require("../../../db/MySQL/models");
+const { User, UserMeta, Role } = require("../../../db/MySQL/models");
+const { user: refinedUser } = require("../../../db/MySQL/refines");
 
 module.exports = async (req, res, next) => {
   const { uuid } = req.params;
@@ -9,8 +10,14 @@ module.exports = async (req, res, next) => {
       {
         model: UserMeta,
       },
+      {
+        model: Role,
+      },
     ],
   });
+
+  console.log(refinedUser(user));
+
   res.jsonData = user;
   next();
 };

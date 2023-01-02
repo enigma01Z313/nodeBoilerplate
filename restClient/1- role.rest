@@ -1,3 +1,31 @@
-GET http://localhost:30002/api/roles
+@baseUrl = http://67.43.234.92:30005/api
+@apiUrl = {{baseUrl}}/roles
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY1YmVmYmE4LWVmNmUtNGZmZi1hYTQ0LTAzYTM2OGQ4ODNjMiIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzI1NzUyODYsImV4cCI6MTY4MTU3NTI4Nn0.WerpZ0V3o1_YzH9gjlnpp4o_je1eGR5n3aQ_EWp-_LM
+
+GET {{apiUrl}}/permissions
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM3NGRmMmM3LWM1ODUtNDQ5ZC1hNzAwLTQ4OTIzZjg1ZGYzZSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzIxNTc0NzEsImV4cCI6MTY4MTE1NzQ3MX0.lsf6Ok1qwqwKD0tPcp19W6GWsW-P3a9Hd_3l07R4knY
+Authorization: Bearer {{token}}
+
+###
+
+GET {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{apiUrl}}/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+POST {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+ "name" : "manager",
+ "permissions" : ["SEE_ROLES"]
+}
