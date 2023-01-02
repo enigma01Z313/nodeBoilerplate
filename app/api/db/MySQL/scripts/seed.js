@@ -1,7 +1,15 @@
 "use strict";
 
 const crypto = require("crypto");
-const { Option, Role, User, UserMeta } = require("../models");
+const {
+  Option,
+  Role,
+  User,
+  UserMeta,
+  Book_tag,
+  Tag,
+  Book,
+} = require("../models");
 
 const defaultPermissions = require("./defaultOption");
 const hash = require("../../../src/utils/hash");
@@ -85,6 +93,24 @@ const password = hash("1230");
   console.log("UserMeta seed has been finished");
 
   await user2.addUserMeta(userMeta1);
+
+  //book
+
+  const book1 = await Book.create({
+    name: "5 Am Club",
+  });
+
+  console.log("Book see has been finished");
+
+  //tag
+
+  const tag1 = await Tag.create({
+    name: "concept over twenty years ago",
+  });
+
+  console.log("tag seed has been finished");
+
+  await book1.addTag(tag1);
 
   process.exit();
 })();
