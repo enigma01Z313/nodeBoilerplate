@@ -11,7 +11,7 @@ const {
 } = require("../src/middleware");
 
 const {
-  Tag: { list },
+  Tag: { list, get },
 } = require("../src/services");
 
 /**************************/
@@ -33,5 +33,7 @@ router.get(
   use(getDataList("Tag", "برچسب")),
   serveJson
 );
+
+router.get("/:uuid", use(authentication), use(get), serveJson);
 
 module.exports = router;
