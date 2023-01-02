@@ -9,10 +9,11 @@ const {
   },
   getDataList,
   isUnique,
+  getEntityByUuid,
 } = require("../src/middleware");
 
 const {
-  Tag: { list, get, create },
+  Tag: { list, get, create, update },
 } = require("../src/services");
 
 /**************************/
@@ -23,7 +24,7 @@ const newTagSchema = new ValidateF()
   .requiredString()
   .done();
 
-const updateTagSchema = new ValidateF().param("name", "نام").string().done();
+const updatedTagSchema = new ValidateF().param("name", "نام").string().done();
 
 /**************************/
 /*         routes         */
@@ -43,6 +44,16 @@ router.post(
   use(authentication),
   use(isUnique("Tag", "برچسب", "name", "نام")),
   use(create),
+  serveJson
+);
+
+router.put(
+  "/:uuid",
+  use(validator(updatedTagSchema)),
+  use(authentication),
+  use(isUnique("Tag", "برچسب", "name", "نام")),
+  use(getEntityByUuid({ model: "Tag", fields: ["uuid"] })),
+  use(update),
   serveJson
 );
 

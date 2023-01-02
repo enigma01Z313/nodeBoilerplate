@@ -16,7 +16,7 @@ module.exports = (info) => {
     let returnFlag = false;
 
     for (const field of fields) {
-      if (!req.body[field]) {
+      if (!req.body[field] && !req.params[field]) {
         returnFlag = true;
         break;
       }
@@ -35,13 +35,14 @@ module.exports = (info) => {
     };
 
     const item = await Models[model].findOne(whereOptions);
-    console.log(item);
+
     if (!item)
       return next(fError(404, " This id is not found", "این شناسه پیدا نشد"));
 
     const name = model[0].toLowerCase() + model.substring(1);
 
     res.chainData[name] = item;
+
     res.chainData[`refined${name}`] = refineData[model.toLowerCase()]?.(item);
 
     next();
