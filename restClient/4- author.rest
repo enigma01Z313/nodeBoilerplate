@@ -1,0 +1,40 @@
+@baseUrl = http://127.0.0.1:30005/api
+@apiUrl = {{baseUrl}}/authors
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM0MzJhYTY4LWI0ODEtNDg4OS1iOGNhLTRiN2M4NTIzYjcyMCIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzI2Nzc2NzYsImV4cCI6MTY4MTY3NzY3Nn0.1Twu-QN7gervTGyBbpkGAbfill6ACbyoQQ8vvArnJuw
+
+
+POST {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Abolghasem",
+  "lastName": "Ferdowsi",
+  "coutnry": "Iran",
+  "birthDate": "1323-01-02T15:44:18.093Z",
+  "deathDate": "1400-01-02T15:44:18.093Z",
+  "content": "<h1>test</h1>\n<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam recusandae alias error harum maxime adipisci amet laborum. Perspiciatis minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit quibusdam sed amet tempora. Sit laborum ab, eius fugit doloribus tenetur fugiat, temporibus enim commodi iusto libero magni deleniti quod quam consequuntur! Commodi minima excepturi repudiandae velit hic maxime doloremque. Quaerat provident commodi consectetur veniam similique ad earum omnis ipsum saepe, voluptas, hic voluptates pariatur est explicabo fugiat, dolorum eligendi quam cupiditate excepturi mollitia maiores labore suscipit quas? Nulla, placeat. Voluptatem quaerat non architecto ab laudantium modi minima sunt esse temporibus sint culpa, recusandae aliquam numquam totam ratione voluptas quod exercitationem fuga. Possimus quis earum veniam quasi aliquam eligendi, placeat qui corporis!</p>"
+}
+
+###
+
+GET {{apiUrl}}?limit=2&page=1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{apiUrl}}/f3551edd-bfe3-412d-ac8a-9eac21747938
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+PUT {{apiUrl}}/ab54dabc-ffad-44f6-81a2-4068652d0913
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "content": "aww test ",
+  "deathDate": "1433-01-02T15:44:18.093Z"
+}

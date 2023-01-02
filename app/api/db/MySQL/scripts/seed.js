@@ -9,6 +9,8 @@ const {
   Book_tag,
   Tag,
   Book,
+  Author,
+  BookAuthor,
 } = require("../models");
 
 const defaultPermissions = require("./defaultOption");
@@ -94,16 +96,19 @@ const password = hash("1230");
 
   await user2.addUserMeta(userMeta1);
 
-  //book
-
+  //Books
   const book1 = await Book.create({
     name: "5 Am Club",
   });
+  const book2 = await Book.create({
+    name: "Book 1",
+  });
+  const book3 = await Book.create({
+    name: "Animal Farm",
+  });
+  console.log("Books seed has been finished");
 
-  console.log("Book see has been finished");
-
-  //tag
-
+  //Tags
   const tag1 = await Tag.create({
     name: "concept over twenty years ago",
   });
@@ -111,6 +116,51 @@ const password = hash("1230");
   console.log("tag seed has been finished");
 
   await book1.addTag(tag1);
+
+  //Authors
+  const author1 = await Author.create({
+    firstName: "farzin",
+    lastName: "ahmadi",
+    coutnry: "Iran",
+    birthDate: new Date(
+      new Date().setFullYear(new Date().getFullYear() - 28)
+    ).toISOString(),
+    content: "test mohtava",
+  });
+
+  const author2 = await Author.create({
+    firstName: "George",
+    lastName: "Orwell",
+    coutnry: "UK",
+    birthDate: new Date(
+      new Date().setFullYear(new Date().getFullYear() - 120)
+    ).toISOString(),
+    deathDate: new Date(
+      new Date().setFullYear(new Date().getFullYear() - 67)
+    ).toISOString(),
+    content: "test mohtava",
+  });
+  console.log("Authors seed has been finished");
+
+  //Book Authors
+  await BookAuthor.bulkCreate([
+    {
+      authorType: 1,
+      author_id: author2.id,
+      book_id: book2.id,
+    },
+    {
+      authorType: 1,
+      author_id: author1.id,
+      book_id: book1.id,
+    },
+    {
+      authorType: 2,
+      author_id: author1.id,
+      book_id: book2.id,
+    },
+  ]);
+  console.log("Book Authors seed has been finished");
 
   process.exit();
 })();
