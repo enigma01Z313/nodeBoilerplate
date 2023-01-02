@@ -1,9 +1,5 @@
 module.exports = (db) => {
-<<<<<<< HEAD
-  const { User, Role, UserMeta, Book, Tag, Book_tag } = db;
-=======
-  const { User, Role, UserMeta, Book, Author, BookAuthor } = db;
->>>>>>> bookAuthor
+  const { User, Role, UserMeta, Book, Tag, Book_tag, Author, BookAuthor } = db;
 
   User.belongsTo(Role, { foreignKey: "role_id" });
 
@@ -11,7 +7,6 @@ module.exports = (db) => {
 
   UserMeta.belongsTo(User, { foreignKey: "userId" });
 
-<<<<<<< HEAD
   Book.belongsToMany(Tag, {
     through: Book_tag,
     as: "tags",
@@ -23,20 +18,11 @@ module.exports = (db) => {
     as: "books",
     foreignKey: "tag_id",
   });
-
   // Book.hasMany(Book_tag);
-
   // Book_tag.belongsTo(Book);
-
   // Tag.hasMany(Book_tag);
-
   // Book_tag.belongsTo(Tag);
-=======
-  // console.log("----------------");
-  // console.log(Book);
-  // console.log(Author);
-  // console.log(BookAuthor);
-  // console.log("----------------");
+
   Book.belongsToMany(Author, {
     through: BookAuthor,
     as: "authors",
@@ -51,7 +37,6 @@ module.exports = (db) => {
   // BookAuthor.belongsTo(Book, { foreignKey: "book_id" });
   // Author.hasMany(BookAuthor, { foreignKey: "author_id" });
   // BookAuthor.belongsTo(Author, { foreignKey: "author_id" });
->>>>>>> bookAuthor
 
   return db;
 };
