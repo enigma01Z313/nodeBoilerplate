@@ -6,9 +6,9 @@ const {
   Role,
   User,
   UserMeta,
-  Book_tag,
   Tag,
   Book,
+  Category,
 } = require("../models");
 
 const defaultPermissions = require("./defaultOption");
@@ -112,5 +112,13 @@ const password = hash("1230");
 
   await book1.addTag(tag1);
 
+  //category
+
+  const category1 = await Category.create({
+    name: "Classics",
+  });
+  console.log("category seed has been finished");
+
+  await book1.addCategories(category1);
   process.exit();
 })();
