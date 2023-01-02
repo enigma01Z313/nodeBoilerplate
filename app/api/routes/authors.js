@@ -11,6 +11,7 @@ const {
   Auth: { authentication, authorization },
   getDataByUUID,
   getDataList,
+  getEntityByUuid,
   filteredData,
 } = require("../src/middleware");
 

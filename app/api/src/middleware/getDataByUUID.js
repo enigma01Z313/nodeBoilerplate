@@ -39,8 +39,7 @@ const getDataByUUID =
         )
       );
 
-    const refinedFunction = refineData[model.toLowerCase()];
-    res.jsonData = refinedFunction ? refinedFunction(item) : item;
+    res.jsonData = refineData[model.toLowerCase()](item);
     next();
   };
 
