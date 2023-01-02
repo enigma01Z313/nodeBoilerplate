@@ -16,7 +16,7 @@ const {
 } = require("../src/middleware");
 
 const {
-  Author: { create },
+  Author: { create, get, update },
 } = require("../src/services");
 
 /**************************/
@@ -27,6 +27,21 @@ const newAuthorSchema = new ValidateF()
   .requiredString()
   .param("lastName", "نام خانوادگی")
   .requiredString()
+  .param("coutnry", "کشور محل تولد")
+  .string()
+  .param("birthDate", "تاریخ تولد")
+  .string()
+  .param("deathDate", "تاریخ فوت")
+  .string()
+  .param("content", "محتوا")
+  .string()
+  .done();
+
+const updateAuthorSchema = new ValidateF()
+  .param("firstName", "نام")
+  .string()
+  .param("lastName", "نام خانوادگی")
+  .string()
   .param("coutnry", "کشور محل تولد")
   .string()
   .param("birthDate", "تاریخ تولد")
@@ -56,10 +71,14 @@ router.get(
   serveJson
 );
 
-router.get(
+router.get("/:uuid", use(authentication), use(get), serveJson);
+
+router.put(
   "/:uuid",
+  use(validator(updateAuthorSchema)),
   use(authentication),
-  use(getDataByUUID("Author", "مولف")),
+  use(getEntityByUuid({ model: "Author", fields: ["uuid"] })),
+  use(update),
   serveJson
 );
 

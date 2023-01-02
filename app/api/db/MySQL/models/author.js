@@ -35,6 +35,5 @@ module.exports = (sequelize, DataTypes) =>
     },
     content: {
       type: DataTypes.STRING(10000),
-      field: "death_date",
     },
   });
