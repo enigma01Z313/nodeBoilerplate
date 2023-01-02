@@ -1,0 +1,23 @@
+@baseUrl = http://127.0.0.1:30005/api
+@apiUrl = {{baseUrl}}/authors
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhiZWE5OWFmLWNhNzAtNDQ5OS04OGY1LTBlYTYyOTEzYmNmZCIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzI2NDg5MTMsImV4cCI6MTY4MTY0ODkxM30.KgO0KXq1w3herE0ZubbV41p-Mq0r7m_Z5kwbyAd6u9s
+
+
+POST {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Abolghasem",
+  "lastName": "Ferdowsi"
+}
+
+###
+GET {{apiUrl}}?limit=2&page=1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{apiUrl}}/ee07664f-52c6-4bca-920f-13c04c14115f
+Content-Type: application/json
+Authorization: Bearer {{token}}
