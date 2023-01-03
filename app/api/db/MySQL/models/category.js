@@ -16,8 +16,4 @@ module.exports = (sequelize, DataTypes) =>
       allowNull: false,
       type: DataTypes.STRING,
     },
-    parentId: {
-      type: DataTypes.INTEGER,
-      field: "parent_id",
-    },
   });

@@ -40,5 +40,8 @@ module.exports = (db) => {
     foreignKey: "category_id",
   });
 
+  Category.hasMany(Category, {
+    foreignKey: "parentId",
+  });
   return db;
 };

@@ -15,6 +15,7 @@ module.exports = async (req, res, next) => {
   }
 
   const updateCategory = await category.save();
+
   res.jsonData = updateCategory;
   next();
 };

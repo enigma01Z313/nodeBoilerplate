@@ -10,6 +10,7 @@ const {
   getDataList,
   isUnique,
   getEntityByUuid,
+  filteredData,
 } = require("../src/middleware");
 
 const {
@@ -23,14 +24,16 @@ const newCategorySchema = new ValidateF()
   .param("name", "نام")
   .requiredString()
   .param("parentId")
-  .number()
+  .string()
+  .length(36)
   .done();
 
 const updatedCategorySchema = new ValidateF()
   .param("name", "نام")
   .string()
   .param("parentId")
-  .number()
+  .string()
+  .length(36)
   .done();
 
 /**************************/
@@ -39,6 +42,7 @@ const updatedCategorySchema = new ValidateF()
 router.get(
   "/",
   use(authentication),
+  use(filteredData()),
   use(getDataList("Category", "دسته بندی")),
   serveJson
 );
@@ -50,6 +54,7 @@ router.post(
   use(validator(newCategorySchema)),
   use(authentication),
   use(isUnique("Category", "دسته بندی", "name", "نام")),
+  use(getEntityByUuid({ model: "Category", fields: ["parentId"] })),
   use(create),
   serveJson
 );
