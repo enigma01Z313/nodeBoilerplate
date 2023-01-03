@@ -5,8 +5,8 @@ module.exports = (db) => {
     UserMeta,
     Book,
     Tag,
-    Book_tag,
     Category,
+    Book_tag,
     Book_category,
     Author,
     BookAuthor,
@@ -15,7 +15,6 @@ module.exports = (db) => {
   User.belongsTo(Role, { foreignKey: "role_id" });
 
   User.hasMany(UserMeta, { foreignKey: "userId" });
-
   UserMeta.belongsTo(User, { foreignKey: "userId" });
 
   Book.belongsToMany(Tag, {
@@ -23,7 +22,6 @@ module.exports = (db) => {
     as: "tags",
     foreignKey: "book_id",
   });
-
   Tag.belongsToMany(Book, {
     through: Book_tag,
     as: "books",
@@ -66,5 +64,6 @@ module.exports = (db) => {
   // Author.hasMany(BookAuthor, { foreignKey: "author_id" });
   // BookAuthor.belongsTo(Author, { foreignKey: "author_id" });
 
+  Book.belongsTo(User, { foreignKey: "publisherId" });
   return db;
 };

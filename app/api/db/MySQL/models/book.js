@@ -16,4 +16,28 @@ module.exports = (sequelize, DataTypes) =>
       allowNull: false,
       type: DataTypes.STRING,
     },
+    publishedYear: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      field: "published_year",
+    },
+    content: {
+      type: DataTypes.STRING(10000),
+    },
+    price: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      default: 0,
+    },
+    sitePercent: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      default: 0,
+      field: "site_percent",
+    },
+    status: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      default: 0,
+    }
   });
