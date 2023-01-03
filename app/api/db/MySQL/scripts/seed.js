@@ -11,8 +11,8 @@ const {
   Category,
   Author,
   BookAuthor,
-  BookTag,
-  BookCategory,
+  Book_tag,
+  Book_category,
 } = require("../models");
 const models = require("../models");
 
@@ -223,7 +223,7 @@ const password = hash("1230");
   console.log("category seed has been finished");
 
   //bookCategory
-  const bookCategories = await BookCategory.bulkCreate([
+  const bookCategories = await Book_category.bulkCreate([
     { book_id: 1, category_id: 8 },
     { book_id: 3, category_id: 4 },
   ]);

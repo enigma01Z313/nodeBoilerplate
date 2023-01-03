@@ -5,6 +5,7 @@ module.exports = (db) => {
     UserMeta,
     Book,
     Tag,
+    Category,
     Book_tag,
     Book_category,
     Author,
