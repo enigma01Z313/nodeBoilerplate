@@ -8,12 +8,11 @@ const {
   UserMeta,
   Tag,
   Book,
-<<<<<<< HEAD
   Category,
-=======
   Author,
   BookAuthor,
->>>>>>> 0f6fb345988323a44b7205e24dc4ff0c140f57e1
+  BookTag,
+  BookCategory,
 } = require("../models");
 
 const defaultPermissions = require("./defaultOption");
@@ -33,10 +32,12 @@ const password = hash("1230");
 
 (async function () {
   // Positions
-  await Option.create({
-    key: "permissions",
-    value: JSON.stringify(defaultPermissions),
-  });
+  const options = await Option.bulkCreate([
+    {
+      key: "permissions",
+      value: JSON.stringify(defaultPermissions),
+    },
+  ]);
   console.log("Options seed has been finished");
 
   // Roles
@@ -51,7 +52,7 @@ const password = hash("1230");
     },
     {
       uuid: crypto.randomUUID(),
-      name: "admin",
+      name: "ادمین",
       permissions: listPermissions(defaultPermissions),
       status: 1,
       createdAt: new Date(),
@@ -66,8 +67,8 @@ const password = hash("1230");
     phone: "09333950889",
     email: "f.ahmadyf94@gmail.com",
     password,
-    firstName: "Farzin",
-    lastName: "Ahmady",
+    firstName: "فرزین",
+    lastName: "احمدی",
     roleId: 1,
     imageId: 1,
     status: 1,
@@ -75,84 +76,123 @@ const password = hash("1230");
     updatedAt: new Date(),
   });
 
-  const user2 = await User.create({
-    uuid: crypto.randomUUID(),
-    phone: "09903696246",
-    email: "faezeh92eh@gmail.com",
-    password,
-    firstName: "Faeze",
-    lastName: "Ehsani",
-    roleId: 1,
-    imageId: 1,
-    status: 1,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
+  const users = await User.bulkCreate([
+    {
+      uuid: crypto.randomUUID(),
+      phone: "09903696246",
+      email: "faezeh92eh@gmail.com",
+      password,
+      firstName: "فائزه",
+      lastName: "احسانی",
+      roleId: 1,
+      imageId: 1,
+      status: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      uuid: crypto.randomUUID(),
+      phone: "09127676895",
+      email: "minaAhmadzade@gmail.com",
+      password,
+      firstName: "مینا",
+      lastName: "احمدزاده",
+      roleId: 1,
+      imageId: 1,
+      status: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ]);
   console.log("User seed has been finished");
 
   //UserMeta
-  const userMeta1 = await UserMeta.create({
-    key: "fave-color",
-    value: "Pink",
-  });
+  const usermeta = await UserMeta.bulkCreate([
+    {
+      key: "رنگ مورد علاقه",
+      value: "آبی",
+      userId: 1,
+    },
+    {
+      key: "ورزش مورد علاقه",
+      value: "بوکس",
+      userId: 2,
+    },
+  ]);
   console.log("UserMeta seed has been finished");
 
-  await user2.addUserMeta(userMeta1);
+  // await user2.addUserMeta(userMeta1);
 
   //Books
-  const book1 = await Book.create({
-    name: "5 Am Club",
-  });
-  const book2 = await Book.create({
-    name: "Book 1",
-  });
-  const book3 = await Book.create({
-    name: "Animal Farm",
-  });
+  const books = await Book.bulkCreate([
+    { name: "باشگاه پنج صبحی ها" },
+    { name: "جرئت داشته باش" },
+    { name: "قلعه حیوانات" },
+  ]);
   console.log("Books seed has been finished");
 
   //Tags
-  const tag1 = await Tag.create({
-    name: "concept over twenty years ago",
-  });
+  const tags = await Tag.bulkCreate([
+    { name: "فروش ویژه" },
+    { name: "تاریخی " },
+    { name: "ترجمه " },
+    { name: "داستان کوتاه " },
+  ]);
 
   console.log("tag seed has been finished");
 
-  await book1.addTag(tag1);
+  //bookTag
+  const bookTags = await BookTag.bulkCreate([{ book_id: 1, tag_id: 3 }]);
 
-<<<<<<< HEAD
   //category
 
-  const category1 = await Category.create({
-    name: "Classics",
-  });
+  const categories = await Category.bulkCreate([
+    { name: "کلاسیک" },
+    { name: "ترسناک" },
+    { name: "تاریخی" },
+    { name: "کمدی" },
+    { name: "ادبیات", parentId: 3 },
+    { name: "اسلام", parentId: 3 },
+    { name: "ایران", parentId: 3 },
+    { name: "علمی", parentId: 3 },
+    { name: "دیالوگ", parentId: 4 },
+    { name: "مونولوگ", parentId: 4 },
+    { name: "هزل", parentId: 4 },
+  ]);
   console.log("category seed has been finished");
 
-  await book1.addCategories(category1);
-=======
-  //Authors
-  const author1 = await Author.create({
-    firstName: "farzin",
-    lastName: "ahmadi",
-    coutnry: "Iran",
-    birthDate: new Date(
-      new Date().setFullYear(new Date().getFullYear() - 28)
-    ).toISOString(),
-    content: "test mohtava",
-  });
+  //bookCategory
+  const bookCategories = await BookCategory.bulkCreate([
+    { book_id: 1, category_id: 8 },
+    { book_id: 3, category_id: 4 },
+  ]);
 
-  const author2 = await Author.create({
-    firstName: "George",
-    lastName: "Orwell",
-    coutnry: "UK",
-    birthDate: new Date(
-      new Date().setFullYear(new Date().getFullYear() - 120)
-    ).toISOString(),
-    deathDate: new Date(
-      new Date().setFullYear(new Date().getFullYear() - 67)
-    ).toISOString(),
-    content: "test mohtava",
-  });
+  //Authors
+
+  const authors = await Author.bulkCreate([
+    {
+      firstName: "فرزین",
+      lastName: "احمدی",
+      coutnry: "ایران",
+      birthDate: new Date(
+        new Date().setFullYear(new Date().getFullYear() - 28)
+      ).toISOString(),
+      content: "فرزین احمدی جوان 28 ساله و با استعداد ایرانی",
+    },
+    {
+      firstName: "رابین",
+      lastName: "شارما",
+      coutnry: "کانادا",
+      birthDate: new Date(
+        new Date().setFullYear(new Date().getFullYear() - 120)
+      ).toISOString(),
+      deathDate: new Date(
+        new Date().setFullYear(new Date().getFullYear() - 67)
+      ).toISOString(),
+      content: "رابین شارما در سال ۱۹۶۵ در کانادا متولد شد.",
+    },
+  ]);
+
   console.log("Authors seed has been finished");
 
   //Book Authors
@@ -175,6 +215,5 @@ const password = hash("1230");
   ]);
   console.log("Book Authors seed has been finished");
 
->>>>>>> 0f6fb345988323a44b7205e24dc4ff0c140f57e1
   process.exit();
 })();
