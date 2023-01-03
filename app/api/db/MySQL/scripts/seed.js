@@ -121,8 +121,6 @@ const password = hash("1230");
   ]);
   console.log("UserMeta seed has been finished");
 
-  // await user2.addUserMeta(userMeta1);
-
   //Books
   const books = await Book.bulkCreate([
     { name: "باشگاه پنج صبحی ها" },
@@ -142,7 +140,7 @@ const password = hash("1230");
   console.log("tag seed has been finished");
 
   //bookTag
-  const bookTags = await BookTag.bulkCreate([{ book_id: 1, tag_id: 3 }]);
+  // const bookTags = await BookTag.bulkCreate([{ book_id: 1, tag_id: 3 }]);
 
   //category
 
@@ -162,10 +160,10 @@ const password = hash("1230");
   console.log("category seed has been finished");
 
   //bookCategory
-  const bookCategories = await BookCategory.bulkCreate([
-    { book_id: 1, category_id: 8 },
-    { book_id: 3, category_id: 4 },
-  ]);
+  // const bookCategories = await BookCategory.bulkCreate([
+  //   { book_id: 1, category_id: 8 },
+  //   { book_id: 3, category_id: 4 },
+  // ]);
 
   //Authors
 
@@ -199,18 +197,18 @@ const password = hash("1230");
   await BookAuthor.bulkCreate([
     {
       authorType: 1,
-      author_id: author2.id,
-      book_id: book2.id,
+      author_id: 2,
+      book_id: 2,
     },
     {
       authorType: 1,
-      author_id: author1.id,
-      book_id: book1.id,
+      author_id: 1,
+      book_id: 1,
     },
     {
       authorType: 2,
-      author_id: author1.id,
-      book_id: book2.id,
+      author_id: 1,
+      book_id: 2,
     },
   ]);
   console.log("Book Authors seed has been finished");
