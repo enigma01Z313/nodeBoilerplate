@@ -1,4 +1,4 @@
-@baseUrl = http://67.43.234.92:30005/api
+@baseUrl = http://127.0.0.1:30005/api
 @apiUrl = {{baseUrl}}/auth
 
 POST http://localhost:30002/api/auth

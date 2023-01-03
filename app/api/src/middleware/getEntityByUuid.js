@@ -41,9 +41,9 @@ module.exports = (info) => {
 
     const name = model[0].toLowerCase() + model.substring(1);
 
+    const refiner = refineData[model.toLowerCase()];
     res.chainData[name] = item;
-
-    res.chainData[`refined${name}`] = refineData[model.toLowerCase()]?.(item);
+    res.chainData[`refined${name}`] = refiner ? refiner(item) : item;
 
     next();
   };
