@@ -6,9 +6,9 @@ module.exports = (db) => {
     Book,
     Tag,
     Book_tag,
+    Book_category,
     Author,
     BookAuthor,
-    Book_category,
   } = db;
 
   User.belongsTo(Role, { foreignKey: "role_id" });
