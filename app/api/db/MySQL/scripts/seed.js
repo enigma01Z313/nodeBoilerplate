@@ -11,13 +11,8 @@ const {
   Category,
   Author,
   BookAuthor,
-<<<<<<< HEAD
-  BookTag,
-  BookCategory,
-=======
   Book_tag,
   Book_category,
->>>>>>> book
 } = require("../models");
 const models = require("../models");
 
@@ -38,11 +33,7 @@ const password = hash("1230");
 
 (async function () {
   // Positions
-<<<<<<< HEAD
-  const options = await Option.bulkCreate([
-=======
   await Option.bulkCreate([
->>>>>>> book
     {
       key: "permissions",
       value: JSON.stringify(defaultPermissions),
@@ -102,11 +93,7 @@ const password = hash("1230");
     updatedAt: new Date(),
   });
 
-<<<<<<< HEAD
-  const users = await User.bulkCreate([
-=======
   await User.bulkCreate([
->>>>>>> book
     {
       uuid: crypto.randomUUID(),
       phone: "09903696246",
@@ -114,11 +101,7 @@ const password = hash("1230");
       password,
       firstName: "فائزه",
       lastName: "احسانی",
-<<<<<<< HEAD
-      roleId: 1,
-=======
       roleId: 2,
->>>>>>> book
       imageId: 1,
       status: 1,
       createdAt: new Date(),
@@ -131,9 +114,6 @@ const password = hash("1230");
       password,
       firstName: "مینا",
       lastName: "احمدزاده",
-<<<<<<< HEAD
-      roleId: 1,
-=======
       roleId: 3,
       imageId: 1,
       status: 1,
@@ -161,7 +141,6 @@ const password = hash("1230");
       firstName: "قلمچی",
       lastName: "",
       roleId: 4,
->>>>>>> book
       imageId: 1,
       status: 1,
       createdAt: new Date(),
@@ -171,11 +150,7 @@ const password = hash("1230");
   console.log("User seed has been finished");
 
   //UserMeta
-<<<<<<< HEAD
-  const usermeta = await UserMeta.bulkCreate([
-=======
   await UserMeta.bulkCreate([
->>>>>>> book
     {
       key: "رنگ مورد علاقه",
       value: "آبی",
@@ -190,12 +165,6 @@ const password = hash("1230");
   console.log("UserMeta seed has been finished");
 
   //Books
-<<<<<<< HEAD
-  const books = await Book.bulkCreate([
-    { name: "باشگاه پنج صبحی ها" },
-    { name: "جرئت داشته باش" },
-    { name: "قلعه حیوانات" },
-=======
   await Book.bulkCreate([
     {
       name: "باشگاه پنج صبحی ها",
@@ -215,16 +184,11 @@ const password = hash("1230");
       content: "test",
       price: 1300,
     },
->>>>>>> book
   ]);
   console.log("Books seed has been finished");
 
   //Tags
-<<<<<<< HEAD
-  const tags = await Tag.bulkCreate([
-=======
   await Tag.bulkCreate([
->>>>>>> book
     { name: "فروش ویژه" },
     { name: "تاریخی " },
     { name: "ترجمه " },
@@ -234,13 +198,6 @@ const password = hash("1230");
   console.log("tag seed has been finished");
 
   //bookTag
-<<<<<<< HEAD
-  // const bookTags = await BookTag.bulkCreate([{ book_id: 1, tag_id: 3 }]);
-
-  //category
-
-  const categories = await Category.bulkCreate([
-=======
   await Book_tag.bulkCreate([
     { book_id: 1, tag_id: 3 },
     { book_id: 1, tag_id: 2 },
@@ -251,7 +208,6 @@ const password = hash("1230");
   //category
 
   await Category.bulkCreate([
->>>>>>> book
     { name: "کلاسیک" },
     { name: "ترسناک" },
     { name: "تاریخی" },
@@ -267,16 +223,6 @@ const password = hash("1230");
   console.log("category seed has been finished");
 
   //bookCategory
-<<<<<<< HEAD
-  // const bookCategories = await BookCategory.bulkCreate([
-  //   { book_id: 1, category_id: 8 },
-  //   { book_id: 3, category_id: 4 },
-  // ]);
-
-  //Authors
-
-  const authors = await Author.bulkCreate([
-=======
   const bookCategories = await Book_category.bulkCreate([
     { book_id: 1, category_id: 8 },
     { book_id: 3, category_id: 4 },
@@ -285,7 +231,6 @@ const password = hash("1230");
   //Authors
 
   await Author.bulkCreate([
->>>>>>> book
     {
       firstName: "فرزین",
       lastName: "احمدی",
@@ -308,10 +253,6 @@ const password = hash("1230");
       content: "رابین شارما در سال ۱۹۶۵ در کانادا متولد شد.",
     },
   ]);
-<<<<<<< HEAD
-
-=======
->>>>>>> book
   console.log("Authors seed has been finished");
 
   //Book Authors
