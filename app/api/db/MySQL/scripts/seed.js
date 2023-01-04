@@ -202,6 +202,7 @@ const password = hash("1230");
     { book_id: 1, tag_id: 3 },
     { book_id: 1, tag_id: 2 },
     { book_id: 2, tag_id: 1 },
+    { book_id: 1, tag_id: 1 },
   ]);
   console.log("book tag seed has been finished");
 

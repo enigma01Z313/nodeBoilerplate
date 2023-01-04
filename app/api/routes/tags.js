@@ -13,8 +13,17 @@ const {
 } = require("../src/middleware");
 
 const {
-  Tag: { list, get, create, update },
+  Tag: {
+    list,
+    get,
+    create,
+    update,
+    Book: { list: bookList },
+  },
 } = require("../src/services");
+
+const services = require("../src/services");
+// console.log(services);
 
 /**************************/
 /*   validation schemas   */
@@ -37,6 +46,14 @@ router.get(
 );
 
 router.get("/:uuid", use(authentication), use(get), serveJson);
+
+router.get(
+  "/:uuid/books",
+  use(authentication),
+  use(getEntityByUuid({ model: "Tag", fields: ["uuid"] })),
+  use(bookList),
+  serveJson
+);
 
 router.post(
   "/",

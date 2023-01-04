@@ -27,17 +27,17 @@ module.exports = (sequelize, DataTypes) =>
     price: {
       allowNull: false,
       type: DataTypes.INTEGER,
-      default: 0,
+      defaultValue: 0,
     },
     sitePercent: {
       allowNull: false,
       type: DataTypes.INTEGER,
-      default: 0,
+      defaultValue: 0,
       field: "site_percent",
     },
     status: {
       allowNull: false,
       type: DataTypes.INTEGER,
-      default: 0,
-    }
+      defaultValue: 0,
+    },
   });

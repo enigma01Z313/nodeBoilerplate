@@ -65,6 +65,14 @@ router.put(
   use(authentication),
   use(isUnique("Category", "دسته بندی", "name", "نام")),
   use(getEntityByUuid({ model: "Category", fields: ["uuid"] })),
+  use(
+    getEntityByUuid({
+      model: "Category",
+      fields: ["parentId"],
+      as: "parentCategory",
+    })
+  ),
+
   use(update),
   serveJson
 );
