@@ -2,4 +2,6 @@ node_modules
 
 app/logs/*
 
+config/.env
+
 /vendor/
