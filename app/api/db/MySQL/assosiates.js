@@ -64,6 +64,7 @@ module.exports = (db) => {
   // Author.hasMany(BookAuthor, { foreignKey: "author_id" });
   // BookAuthor.belongsTo(Author, { foreignKey: "author_id" });
 
-  Book.belongsTo(User, { foreignKey: "publisherId" });
+  Book.belongsTo(User, { foreignKey: "publisherId", as: "publisher" });
+  User.hasMany(Book, { foreignKey: "publisherId" });
   return db;
 };

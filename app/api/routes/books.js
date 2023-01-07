@@ -9,6 +9,7 @@ const {
     index: { ValidateF, validator },
   },
   Auth: { authentication, authorization },
+  Book: { query: bookQuery },
   getDataByUUID,
   getDataList,
   getEntityByUuid,
@@ -22,7 +23,7 @@ const {
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", list, serveJson);
+router.get("/", use(bookQuery), use(list), serveJson);
 
 router.get("/:uuid", (req, res) => res.end("getting book"), serveJson);
 

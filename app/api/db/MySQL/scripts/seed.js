@@ -171,18 +171,21 @@ const password = hash("1230");
       publishedYear: 1395,
       content: "test",
       price: 1300,
+      publisherId: 4,
     },
     {
       name: "جرئت داشته باش",
       publishedYear: 1390,
       content: "test",
       price: 1300,
+      publisherId: 4,
     },
     {
       name: "قلعه حیوانات",
       publishedYear: 1340,
       content: "test",
       price: 1300,
+      publisherId: 5,
     },
   ]);
   console.log("Books seed has been finished");
