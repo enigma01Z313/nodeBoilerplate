@@ -1,4 +1,4 @@
-@baseUrl = http://127.0.0.1:30005/api
+@baseUrl = http://67.43.234.92:30005/api
 @apiUrl = {{baseUrl}}/books
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBhZWE1MDYxLWFlNjUtNGFhNi1hOWU5LTVlZjkzNjc2YTU3ZiIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzMwMjIwOTgsImV4cCI6MTY4MjAyMjA5OH0.tY8jcnDnWZKiYjfF0_0yCsv5DfffCxTwCryOa2r_qMo
 
@@ -10,7 +10,7 @@
 # GET {{apiUrl}}?publisherIds=3,4
 # GET {{apiUrl}}?author=2
 # GET {{apiUrl}}?author=1,2
-GET {{apiUrl}}?author=1,2&limit=1&page=2
+GET {{apiUrl}}?tags=1,2&categories=8&limit=3&page=1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

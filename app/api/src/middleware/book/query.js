@@ -86,9 +86,6 @@ module.exports = async (req, res, next) => {
   const offset = (page - 1) * +limit;
   const pagedOptions = Object.assign({ limit, offset }, defaultOptions);
 
-  console.log(defaultOptions);
-  const books = await Book.findAll(defaultOptions);
-
   res.queryOptions = { defaultOptions, pagedOptions };
   return next();
 };

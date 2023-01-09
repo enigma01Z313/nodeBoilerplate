@@ -14,7 +14,7 @@ const {
 } = require("../src/middleware");
 
 const {
-  Category: { get, create, update },
+  Category: { get, create, update, list },
 } = require("../src/services");
 
 /**************************/
@@ -43,7 +43,8 @@ router.get(
   "/",
   use(authentication),
   use(filteredData()),
-  use(getDataList("Category", "دسته بندی")),
+  use(list),
+  // use(getDataList("Category", "دسته بندی")),
   serveJson
 );
 

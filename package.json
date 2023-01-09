@@ -7,7 +7,7 @@
     "sqlReset": "node ./app/api/db/MySQL/scripts/reset.js",
     "sqlSeed": "node ./app/api/db/MySQL/scripts/seed.js",
     "dev": "set RUN_ENV=development && nodemon server.js",
-    "server": "RUN_ENV=server nodemon server.js",
+    "server": "RUN_ENV=server && nodemon server.js",
     "staging": "STAGING=TRUE RUN_ENV=server nodemon server.js",
     "test": "set RUN_ENV=test && jest --runInBand --detectOpenHandles --forceExit",
     "updateCoinsDb": "node ./app/api/src/services/coins/update.js"
