@@ -1,4 +1,4 @@
-const statusList = require("./db").defaultStatus;
+const statusList = require("./db").bookStatus;
 
 const getStatus = (code) =>
   statusList.find((item) => item.code === parseInt(code));

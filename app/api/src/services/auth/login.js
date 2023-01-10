@@ -3,7 +3,7 @@ const { User, Role } = require("../../../db/MySQL/models");
 const hash = require("../../utils/hash");
 const fError = require("../../utils/fError");
 const createJWT = require("../../utils/createJWT");
-const statusList = require("../../../db/staticDb/status");
+const statusList = require("../../../db/staticDb/db");
 
 module.exports = async (req, res, next) => {
   const { password, username } = req.body;

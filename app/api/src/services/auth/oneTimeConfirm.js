@@ -2,7 +2,7 @@ const hash = require("../../utils/hash");
 const fError = require("../../utils/fError");
 const createJWT = require("../../utils/createJWT");
 const { oneTimeLoginTime } = require("../../../../../config/oneTimeLoginTime");
-const statusList = require("../../../db/staticDb/status");
+const statusList = require("../../../db/staticDb/db");
 
 module.exports = async (req, res, next) => {
   const { user } = res;

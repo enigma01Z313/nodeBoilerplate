@@ -172,6 +172,7 @@ const password = hash("1230");
       content: "test",
       price: 1300,
       publisherId: 4,
+      status: 1,
     },
     {
       name: "جرئت داشته باش",
@@ -179,6 +180,7 @@ const password = hash("1230");
       content: "test",
       price: 1300,
       publisherId: 4,
+      status: 1,
     },
     {
       name: "قلعه حیوانات",
@@ -186,6 +188,7 @@ const password = hash("1230");
       content: "test",
       price: 1300,
       publisherId: 5,
+      status: 1,
     },
   ]);
   console.log("Books seed has been finished");

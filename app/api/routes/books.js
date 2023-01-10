@@ -17,7 +17,7 @@ const {
 } = require("../src/middleware");
 
 const {
-  Book: { list },
+  Book: { list, get },
 } = require("../src/services");
 
 /**************************/
@@ -25,7 +25,7 @@ const {
 /**************************/
 router.get("/", use(bookQuery), use(list), serveJson);
 
-router.get("/:uuid", (req, res) => res.end("getting book"), serveJson);
+router.get("/:uuid", use(get), serveJson);
 
 router.get(
   "/:uuid/tags",
