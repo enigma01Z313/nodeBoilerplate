@@ -16,14 +16,17 @@ module.exports = async (req, res, next) => {
     where: { uuid },
     include: [
       { model: Author, as: "authors", through: { attributes: ["authorType"] } },
-      // { model: Tag, as: "tags", through: { attributes: [] } },
-      // { model: Category, as: "categories", through: { attributes: [] } },
+      { model: Tag, as: "tags", through: { attributes: [] } },
+      { model: Category, as: "categories", through: { attributes: [] } },
+      { model: User, as: "publisher" },
     ],
   };
   const book = await Book.findOne(bookOption);
-
   if (!book) return next(fError(404, "Not found", "کتاب مورد نظر یافت نشد"));
 
-  res.jsonData = refineBook(book);
+  const { data, similarityParams } = refineBook(book);
+
+  res.chainData = { ...res.chainData, similarityParams };
+  res.jsonData = data;
   next();
 };

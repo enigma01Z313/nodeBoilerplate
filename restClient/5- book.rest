@@ -7,9 +7,9 @@
 # GET {{apiUrl}}?categories=4
 # GET {{apiUrl}}?categories=4,8
 # GET {{apiUrl}}?publisherIds=3,4
-# GET {{apiUrl}}?author=2
-# GET {{apiUrl}}?author=1,2
-# GET {{apiUrl}}?author=1&limit=4&page=1
+# GET {{apiUrl}}?authors=2
+# GET {{apiUrl}}?authors=1,2
+# GET {{apiUrl}}?authors=1&limit=4&page=1
 GET {{apiUrl}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -22,12 +22,12 @@ Authorization: Bearer {{token}}
 
 ###
 
-GET {{apiUrl}}/111/tags
+GET {{apiUrl}}/a3c975f9-2fe9-415f-aa5e-bd4a76c43faf/tags
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ###
 
-GET {{apiUrl}}/111/similar
+GET {{apiUrl}}/a3c975f9-2fe9-415f-aa5e-bd4a76c43faf/similar
 Content-Type: application/json
 Authorization: Bearer {{token}}

@@ -17,7 +17,7 @@ const {
 } = require("../src/middleware");
 
 const {
-  Book: { list, get },
+  Book: { list, get, similar: similarBooks },
 } = require("../src/services");
 
 /**************************/
@@ -33,10 +33,6 @@ router.get(
   serveJson
 );
 
-router.get(
-  "/:uuid/similar",
-  (req, res) => res.end("getting similar books"),
-  serveJson
-);
+router.get("/:uuid/similar", use(get), use(similarBooks), serveJson);
 
 module.exports = router;
