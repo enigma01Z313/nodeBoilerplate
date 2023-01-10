@@ -16,7 +16,7 @@ Authorization: Bearer {{token}}
 
 ###
 
-GET {{apiUrl}}/ceca4942-95f4-436f-986e-e86cd1672160
+GET {{apiUrl}}/a3c975f9-2fe9-415f-aa5e-bd4a76c43faf
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

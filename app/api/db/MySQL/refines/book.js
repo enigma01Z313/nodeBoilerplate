@@ -36,9 +36,9 @@ const refineBookAuthorities = (authors) => {
     const { code, label, key } = authorTypes(author.bookAuthor.authorType);
     if (!refinedAuthors[key]) refinedAuthors[key] = { label, list: [] };
 
-    console.log({ ...author.dataValues });
+    console.log(author);
 
-    refinedAuthors[key].list.push({ ...author.dataValues });
+    refinedAuthors[key].list.push({ author });
   }
 
   // console.log(refinedAuthors);
