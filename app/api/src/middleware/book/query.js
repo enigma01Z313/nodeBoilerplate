@@ -4,20 +4,26 @@ const {
   Category,
   Author,
   User,
-  Book,
+  Off_price,
 } = require("../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
   const { page: pageNum, limit: pageLimit } = req.query;
 
-  const tags = req.query.tags ?? res.chaindata.similar.tags;
-  const categories = req.query.categories ?? res.chaindata.similar.categories;
-  const authors = req.query.authors ?? res.chaindata.similar.authors;
-  const publishers = req.query.publishers ?? res.chaindata.similar.publishers;
+  const tags = req.query.tags ?? res.chaindata?.similar?.tags;
+  const categories = req.query.categories ?? res.chaindata?.similar?.categories;
+  const authors = req.query.authors ?? res.chaindata?.similar?.authors;
+  const publishers = req.query.publishers ?? res.chaindata?.similar?.publishers;
 
   let defaultOptions = {};
   const include = [];
   let queryChunk;
+
+  queryChunk = {
+    model: Off_price,
+  };
+  include.push(queryChunk);
+  defaultOptions = { ...defaultOptions, include };
 
   if (tags) {
     queryChunk = {
@@ -69,6 +75,8 @@ module.exports = async (req, res, next) => {
     include.push(queryChunk);
     defaultOptions = { ...defaultOptions, include };
   }
+
+  console.log(defaultOptions);
 
   const limit = pageLimit ? +pageLimit : 10;
   const page = pageNum ? +pageNum : 1;

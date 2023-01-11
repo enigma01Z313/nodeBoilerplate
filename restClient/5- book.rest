@@ -1,6 +1,6 @@
-@baseUrl = http://67.43.234.92:30005/api
+@baseUrl = http://127.0.0.1:30005/api
 @apiUrl = {{baseUrl}}/books
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIyZDRhOTUzLTMyOGItNDliMC1iMWY3LTdkOTRhMzQzZWQyYyIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzMzNDU0NzksImV4cCI6MTY4MjM0NTQ3OX0.ec2dfNDtCl5yltUfIegwYpwF39abObEOBLcKVzlBh-0
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhOGMwMjViLTcwOWEtNDgxNS05MzI5LWM4ZDM1YjZmMmMxYSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM0MjYyODksImV4cCI6MTY4MjQyNjI4OX0.v8t5p8zUimoE5o9RhjrmTp3QTFutMdmm95pcpioStK0
 
 
 # GET {{apiUrl}}?tags=1,2
@@ -14,19 +14,13 @@
 # GET {{apiUrl}}?author=1,2
 # GET {{apiUrl}}?tags=1,2&categories=8&limit=3&page=1
 # GET {{apiUrl}}?author=1&limit=4&page=1
-GET {{apiUrl}}
+GET {{apiUrl}}?limit=2&page=2
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ###
 
-GET {{apiUrl}}/a3c975f9-2fe9-415f-aa5e-bd4a76c43faf
-Content-Type: application/json
-Authorization: Bearer {{token}}
-
-###
-
-GET {{apiUrl}}/a3c975f9-2fe9-415f-aa5e-bd4a76c43faf/tags
+GET {{apiUrl}}/d405faf7-9aad-4c49-ab33-df72dbaf6d68
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
