@@ -1,4 +1,5 @@
 const { Tag } = require("../../../db/MySQL/models");
+const { tag: refineTag } = require("../../../db/MySQL/refines");
 
 module.exports = async (req, res, next) => {
   const { uuid } = req.params;
@@ -6,7 +7,7 @@ module.exports = async (req, res, next) => {
     where: { uuid },
   });
 
-  res.jsonData = tag;
+  res.jsonData = refineTag(tag);
 
   next();
 };

@@ -16,7 +16,7 @@ module.exports = (item) => {
   return {
     ...data,
     id: item.uuid,
-    books: item.books && refineBooks(item.books),
+    books: refineBooks(item.books),
     uuid: undefined,
   };
 };

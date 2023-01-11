@@ -8,14 +8,12 @@ const {
 } = require("../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
-  const {
-    tags,
-    categories,
-    author,
-    publishers,
-    page: pageNum,
-    limit: pageLimit,
-  } = req.query;
+  const { page: pageNum, limit: pageLimit } = req.query;
+
+  const tags = req.query.tags ?? res.chaindata.similar.tags;
+  const categories = req.query.categories ?? res.chaindata.similar.categories;
+  const authors = req.query.authors ?? res.chaindata.similar.authors;
+  const publishers = req.query.publishers ?? res.chaindata.similar.publishers;
 
   let defaultOptions = {};
   const include = [];
@@ -47,13 +45,13 @@ module.exports = async (req, res, next) => {
     defaultOptions = { ...defaultOptions, include };
   }
 
-  if (author) {
+  if (authors) {
     queryChunk = {
       model: Author,
       as: "authors",
       attributes: ["id", "uuid"],
       through: { attributes: [] },
-      where: { uuid: { [Op.or]: author.split(",") } },
+      where: { uuid: { [Op.or]: authors.split(",") } },
     };
 
     include.push(queryChunk);
