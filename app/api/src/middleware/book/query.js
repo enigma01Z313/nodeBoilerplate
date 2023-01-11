@@ -76,8 +76,6 @@ module.exports = async (req, res, next) => {
     defaultOptions = { ...defaultOptions, include };
   }
 
-  console.log(defaultOptions);
-
   const limit = pageLimit ? +pageLimit : 10;
   const page = pageNum ? +pageNum : 1;
   const offset = (page - 1) * +limit;

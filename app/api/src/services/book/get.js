@@ -4,6 +4,7 @@ const {
   Author,
   User,
   Book,
+  Off_price,
 } = require("../../../db/MySQL/models");
 
 const { book: refineBook } = require("../../../db/MySQL/refines");
@@ -19,14 +20,14 @@ module.exports = async (req, res, next) => {
       { model: Tag, as: "tags", through: { attributes: [] } },
       { model: Category, as: "categories", through: { attributes: [] } },
       { model: User, as: "publisher" },
+      { model: Off_price },
     ],
   };
   const book = await Book.findOne(bookOption);
   if (!book) return next(fError(404, "Not found", "کتاب مورد نظر یافت نشد"));
 
-  const { data, similarityParams } = refineBook(book);
+  const data = refineBook(book);
 
-  res.chainData = { ...res.chainData, similarityParams };
   res.jsonData = data;
   next();
 };

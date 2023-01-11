@@ -49,7 +49,6 @@ const refineBookAuthorities = (authors) => {
 
   authors.sort((a, b) => a.bookAuthor.authorType - b.bookAuthor.authorType);
 
-  console.log(authors);
   for (const author of authors) {
     const { code, label, key } = authorTypes(author.bookAuthor.authorType);
     if (!refinedAuthors[key]) refinedAuthors[key] = { label, list: [] };
@@ -85,7 +84,22 @@ const refinePublisher = ({ dataValues: publisher } = {}) =>
       };
 
 const refinePrice = (price, offPrice) => {
-  return { aa: 12 };
+  if (!offPrice) return { price };
+  else {
+    let offedPrice;
+    const {
+      dataValues: { type, amount },
+    } = offPrice;
+
+    if (type === 2) offedPrice = price - amount >= 0 ? price - amount : 0;
+    else if (type === 1) offedPrice = ((100 - amount) * price) / 100;
+
+    return {
+      price: offedPrice,
+      originalPrice: price,
+      ofAmount: price - offedPrice,
+    };
+  }
 };
 
 /////////////////////////////////
@@ -102,8 +116,9 @@ module.exports = (data) => {
     categories: refineBookCategories(item.categories),
     authors: refineBookAuthorities(item.authors),
     publisher: refinePublisher(item.publisher),
-    pricew: refinePrice(item, item),
+    ...refinePrice(item.price, item.off_price),
     uuid: undefined,
+    off_price: undefined,
     sitePercent: undefined,
     publisherId: undefined,
   };
