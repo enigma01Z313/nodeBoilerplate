@@ -6,6 +6,9 @@
 # GET {{apiUrl}}?categories=4
 # GET {{apiUrl}}?categories=4,8
 # GET {{apiUrl}}?publisherIds=3,4
+# GET {{apiUrl}}?authors=2
+# GET {{apiUrl}}?authors=1,2
+# GET {{apiUrl}}?authors=1&limit=4&page=1
 # GET {{apiUrl}}?author=2
 # GET {{apiUrl}}?author=1,2
 # GET {{apiUrl}}?tags=1,2&categories=8&limit=3&page=1
