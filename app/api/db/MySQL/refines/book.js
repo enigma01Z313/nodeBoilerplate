@@ -49,7 +49,6 @@ const refineBookAuthorities = (authors) => {
 
   authors.sort((a, b) => a.bookAuthor.authorType - b.bookAuthor.authorType);
 
-  console.log(authors);
   for (const author of authors) {
     const { code, label, key } = authorTypes(author.bookAuthor.authorType);
     if (!refinedAuthors[key]) refinedAuthors[key] = { label, list: [] };
@@ -84,46 +83,25 @@ const refinePublisher = ({ dataValues: publisher } = {}) =>
         role_id: undefined,
       };
 
-const getSimilarityParams = (data) => {
-  const similarityParams = {};
-  let list;
-  const { authors, tags, categories, publisher } = data;
+const refinePrice = (price, offPrice) => {
+  if (!offPrice) return { price };
+  else {
+    let offedPrice;
+    const {
+      dataValues: { type, amount },
+    } = offPrice;
 
-  list = [];
-  for (const author of authors) list.push(author.dataValues.uuid);
-  similarityParams.authors = {
-    model: "Author",
-    weight: 1,
-    list: list.join(","),
-  };
+    if (type === 2) offedPrice = price - amount >= 0 ? price - amount : 0;
+    else if (type === 1) offedPrice = ((100 - amount) * price) / 100;
 
-  list = [];
-  for (const tag of tags) list.push(tag.dataValues.uuid);
-  similarityParams.tags = {
-    model: "Tag",
-    weight: 1,
-    list: list.join(","),
-  };
-
-  list = [];
-  for (const category of categories) list.push(category.dataValues.uuid);
-  similarityParams.categories = {
-    model: "Categories",
-    weight: 1,
-    list: list.join(","),
-  };
-
-  similarityParams.publisher = {
-    model: "User",
-    weight: 1,
-    list: publisher.dataValues.uuid,
-  };
-  publisher;
-
-  console.log(similarityParams);
-
-  return { aa: 12 };
+    return {
+      price: offedPrice,
+      originalPrice: price,
+      ofAmount: price - offedPrice,
+    };
+  }
 };
+
 /////////////////////////////////
 /////////////////////////////////
 /////////////////////////////////
@@ -131,18 +109,17 @@ module.exports = (data) => {
   const item = data?.dataValues ?? data;
 
   return {
-    data: {
-      ...item,
-      id: item.uuid,
-      status: bookStatus(item.status),
-      tags: refineBookTags(item.tags),
-      categories: refineBookCategories(item.categories),
-      authors: refineBookAuthorities(item.authors),
-      publisher: refinePublisher(item.publisher),
-      uuid: undefined,
-      sitePercent: undefined,
-      publisherId: undefined,
-    },
-    similarityParams: getSimilarityParams(item),
+    ...item,
+    id: item.uuid,
+    status: bookStatus(item.status),
+    tags: refineBookTags(item.tags),
+    categories: refineBookCategories(item.categories),
+    authors: refineBookAuthorities(item.authors),
+    publisher: refinePublisher(item.publisher),
+    ...refinePrice(item.price, item.off_price),
+    uuid: undefined,
+    off_price: undefined,
+    sitePercent: undefined,
+    publisherId: undefined,
   };
 };
