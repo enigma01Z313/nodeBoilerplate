@@ -2,7 +2,6 @@
 @apiUrl = {{baseUrl}}/books
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhOGMwMjViLTcwOWEtNDgxNS05MzI5LWM4ZDM1YjZmMmMxYSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM0MjYyODksImV4cCI6MTY4MjQyNjI4OX0.v8t5p8zUimoE5o9RhjrmTp3QTFutMdmm95pcpioStK0
 
-
 # GET {{apiUrl}}?tags=1,2
 # GET {{apiUrl}}?categories=4
 # GET {{apiUrl}}?categories=4,8
@@ -14,7 +13,11 @@
 # GET {{apiUrl}}?author=1,2
 # GET {{apiUrl}}?tags=1,2&categories=8&limit=3&page=1
 # GET {{apiUrl}}?author=1&limit=4&page=1
-GET {{apiUrl}}?limit=2&page=2
+# GET {{apiUrl}}?limit=2&page=2
+# GET {{apiUrl}}?authors=2
+# GET {{apiUrl}}?authors=1,2
+# GET {{apiUrl}}?authors=1&limit=4&page=1
+GET {{apiUrl}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

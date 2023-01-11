@@ -16,7 +16,8 @@ db.sequelize
   })
   .then(
     function () {
-      console.log("Database synchronised.");
+      console.log("Database has been reset and ready to use");
+      process.exit;
     },
     function (err) {
       console.log(err);

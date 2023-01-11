@@ -49,6 +49,7 @@ const refineBookAuthorities = (authors) => {
 
   authors.sort((a, b) => a.bookAuthor.authorType - b.bookAuthor.authorType);
 
+  console.log(authors);
   for (const author of authors) {
     const { code, label, key } = authorTypes(author.bookAuthor.authorType);
     if (!refinedAuthors[key]) refinedAuthors[key] = { label, list: [] };
