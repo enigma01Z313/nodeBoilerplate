@@ -1,0 +1,26 @@
+@baseUrl = http://67.43.234.92:30005/api
+@apiUrl = {{baseUrl}}/books
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZiYjk5N2I0LWEzM2QtNGQ1ZS05YTNiLTZkMTNjMTE5N2E1MCIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM0MTc4MjMsImV4cCI6MTY4MjQxNzgyM30.ggkKkI4KOoVkqgKE2udpEbjHKUiRiDHxFUns9QPfNjA
+
+
+GET {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{apiUrl}}/6dd147f4-bf02-4cff-89a2-4c0e689ffe69
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{apiUrl}}/111/tags
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{apiUrl}}/111/similar
+Content-Type: application/json
+Authorization: Bearer {{token}}

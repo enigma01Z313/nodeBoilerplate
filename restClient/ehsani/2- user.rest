@@ -1,0 +1,37 @@
+@baseUrl = http://67.43.234.92:30005/api
+@apiUrl = {{baseUrl}}/users
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZiYjk5N2I0LWEzM2QtNGQ1ZS05YTNiLTZkMTNjMTE5N2E1MCIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM0MTc4MjMsImV4cCI6MTY4MjQxNzgyM30.ggkKkI4KOoVkqgKE2udpEbjHKUiRiDHxFUns9QPfNjA
+GET {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{apiUrl}}/6987dc6e-9955-49da-8847-1e1a8a1c2d70
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+POST {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "phone": "09124439654",
+    "email": "n98ahmadian@gmail.com",
+    "firstName": "Naiem",
+    "lastName": "Ahmadian",
+    "imageId": "1",
+    "status": 1,
+    "brand" : "Dior",
+    "roleId": "21ffc1f8-c672-4315-9d64-e96c33fe0ba3",
+    "car" : "pejo 206"
+}
+
+###
+PUT {{apiUrl}}/6987dc6e-9955-49da-8847-1e1a8a1c2d70
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+"brand": "Gucci"
+}
