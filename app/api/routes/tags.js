@@ -22,9 +22,6 @@ const {
   },
 } = require("../src/services");
 
-const services = require("../src/services");
-// console.log(services);
-
 /**************************/
 /*   validation schemas   */
 /**************************/

@@ -10,6 +10,7 @@ module.exports = (db) => {
     Book_category,
     Author,
     BookAuthor,
+    Off_price,
   } = db;
 
   User.belongsTo(Role, { foreignKey: "role_id" });
@@ -66,5 +67,8 @@ module.exports = (db) => {
 
   Book.belongsTo(User, { foreignKey: "publisherId", as: "publisher" });
   User.hasMany(Book, { foreignKey: "publisherId" });
+
+  Off_price.belongsTo(Book, { foreignKey: "book_id" });
+
   return db;
 };

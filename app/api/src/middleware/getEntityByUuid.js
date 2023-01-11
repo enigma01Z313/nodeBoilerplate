@@ -9,6 +9,7 @@ module.exports = (info) => {
     const model = info.model;
     const includes = info.includes;
     const fields = info.fields;
+    const fieldAs = info.as;
 
     if (!fields) return next();
 
@@ -39,7 +40,9 @@ module.exports = (info) => {
     if (!item)
       return next(fError(404, " This id is not found", "این شناسه پیدا نشد"));
 
-    const name = model[0].toLowerCase() + model.substring(1);
+    const name = fieldAs
+      ? fieldAs[0].toLowerCase() + fieldAs.substring(1)
+      : model[0].toLowerCase() + model.substring(1);
 
     const refiner = refineData[model.toLowerCase()];
     res.chainData[name] = item;

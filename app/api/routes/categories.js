@@ -14,7 +14,13 @@ const {
 } = require("../src/middleware");
 
 const {
-  Category: { get, create, update },
+  Category: {
+    get,
+    create,
+    update,
+    list,
+    Book: { list: bookList },
+  },
 } = require("../src/services");
 
 /**************************/
@@ -43,11 +49,19 @@ router.get(
   "/",
   use(authentication),
   use(filteredData()),
-  use(getDataList("Category", "دسته بندی")),
+  use(list),
   serveJson
 );
 
 router.get("/:uuid", use(authentication), use(get), serveJson);
+
+router.get(
+  "/:uuid/books",
+  use(authentication),
+  use(getEntityByUuid({ model: "Category", fields: ["uuid"] })),
+  use(bookList),
+  serveJson
+);
 
 router.post(
   "/",
@@ -72,7 +86,6 @@ router.put(
       as: "parentCategory",
     })
   ),
-
   use(update),
   serveJson
 );

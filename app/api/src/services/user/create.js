@@ -20,6 +20,8 @@ module.exports = async (req, res, next) => {
     },
   } = res;
 
+  console.log(res.chainData);
+
   const userData = {
     firstName,
     lastName,

@@ -60,6 +60,10 @@ const statusList = {
       key: "narrator",
     },
   ],
+  offPriceTypes: [
+    { code: 1, label: "درصدی", key: "percent" },
+    { code: 2, label: "قیمت", key: "amount" },
+  ],
 };
 
 module.exports = statusList;

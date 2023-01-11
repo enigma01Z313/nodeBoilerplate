@@ -5,7 +5,6 @@ module.exports = async (req, res, next) => {
 
   const category = await Category.findOne({
     where: { uuid },
-    include: { model: Book, as: "books" },
   });
 
   res.jsonData = category;

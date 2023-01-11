@@ -1,8 +1,10 @@
+const { category: refinedCategory } = require("../../../db/MySQL/refines");
+
 module.exports = async (req, res, next) => {
   let uppedData = false;
 
   const {
-    chainData: { parentCategory },
+    chainData: { parentCategory, category },
   } = res;
 
   const { name, parentId } = req.body;
@@ -19,6 +21,6 @@ module.exports = async (req, res, next) => {
 
   const updateCategory = await category.save();
 
-  res.jsonData = updateCategory;
+  res.jsonData = refinedCategory(updateCategory);
   next();
 };

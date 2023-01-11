@@ -13,6 +13,7 @@ const {
   BookAuthor,
   Book_tag,
   Book_category,
+  Off_price,
 } = require("../models");
 const models = require("../models");
 
@@ -281,6 +282,25 @@ const password = hash("1230");
     },
   ]);
   console.log("Book Authors seed has been finished");
+
+  //Off Price
+
+  await Off_price.bulkCreate([
+    {
+      type: 1,
+      amount: 5,
+      book_id: 1,
+      startDate: "2023-01-10T12:49:14.892Z",
+      endDate: "2023-01-16T12:49:14.892Z",
+    },
+    {
+      type: 2,
+      amount: 3000,
+      book_id: 2,
+      startDate: "2023-01-15T12:49:14.892Z",
+      endDate: "2023-01-19T12:49:14.892Z",
+    },
+  ]);
 
   process.exit();
 })();
