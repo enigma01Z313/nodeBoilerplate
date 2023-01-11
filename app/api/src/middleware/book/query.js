@@ -25,9 +25,9 @@ module.exports = async (req, res, next) => {
     queryChunk = {
       model: Tag,
       as: "tags",
-      attributes: ["id", "uuid", "name"],
+      attributes: ["id", "uuid"],
       through: { attributes: [] },
-      where: { id: { [Op.or]: tags.split(",") } },
+      where: { uuid: { [Op.or]: tags.split(",") } },
     };
 
     include.push(queryChunk);
@@ -38,9 +38,9 @@ module.exports = async (req, res, next) => {
     queryChunk = {
       model: Category,
       as: "categories",
-      attributes: ["id", "uuid", "name", "parentId"],
+      attributes: ["id", "uuid", "parentId"],
       through: { attributes: [] },
-      where: { id: { [Op.or]: categories.split(",") } },
+      where: { uuid: { [Op.or]: categories.split(",") } },
     };
 
     include.push(queryChunk);
@@ -51,18 +51,9 @@ module.exports = async (req, res, next) => {
     queryChunk = {
       model: Author,
       as: "authors",
-      attributes: [
-        "id",
-        "uuid",
-        "firstName",
-        "lastName",
-        "coutnry",
-        "birthDate",
-        "deathDate",
-        "content",
-      ],
+      attributes: ["id", "uuid"],
       through: { attributes: [] },
-      where: { id: { [Op.or]: author.split(",") } },
+      where: { uuid: { [Op.or]: author.split(",") } },
     };
 
     include.push(queryChunk);
@@ -73,8 +64,8 @@ module.exports = async (req, res, next) => {
     queryChunk = {
       model: User,
       as: "publisher",
-      attributes: ["id", "uuid", "firstName", "imageId"],
-      where: { id: { [Op.or]: publishers.split(",") } },
+      attributes: ["id", "uuid"],
+      where: { uuid: { [Op.or]: publishers.split(",") } },
     };
 
     include.push(queryChunk);

@@ -1,22 +1,26 @@
 @baseUrl = http://67.43.234.92:30005/api
 @apiUrl = {{baseUrl}}/books
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBhZWE1MDYxLWFlNjUtNGFhNi1hOWU5LTVlZjkzNjc2YTU3ZiIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzMwMjIwOTgsImV4cCI6MTY4MjAyMjA5OH0.tY8jcnDnWZKiYjfF0_0yCsv5DfffCxTwCryOa2r_qMo
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIyZDRhOTUzLTMyOGItNDliMC1iMWY3LTdkOTRhMzQzZWQyYyIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzMzNDU0NzksImV4cCI6MTY4MjM0NTQ3OX0.ec2dfNDtCl5yltUfIegwYpwF39abObEOBLcKVzlBh-0
 
 
-# GET {{apiUrl}}?tags=2
 # GET {{apiUrl}}?tags=1,2
 # GET {{apiUrl}}?categories=4
 # GET {{apiUrl}}?categories=4,8
 # GET {{apiUrl}}?publisherIds=3,4
 # GET {{apiUrl}}?author=2
 # GET {{apiUrl}}?author=1,2
+<<<<<<< HEAD
 GET {{apiUrl}}?tags=1,2&categories=8&limit=3&page=1
+=======
+# GET {{apiUrl}}?author=1&limit=4&page=1
+GET {{apiUrl}}
+>>>>>>> develop
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ###
 
-GET {{apiUrl}}/111
+GET {{apiUrl}}/ceca4942-95f4-436f-986e-e86cd1672160
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
