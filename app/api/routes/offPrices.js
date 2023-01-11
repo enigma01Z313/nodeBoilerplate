@@ -21,6 +21,7 @@ const {
 /**************************/
 const newOffPriceSchema = new ValidateF()
   .param("type", "نوع")
+  .regex(/^(1|2)$/)
   .requiredNumber()
   .param("amount", "مقدار")
   .requiredNumber()
@@ -32,6 +33,7 @@ const newOffPriceSchema = new ValidateF()
 
 const updatedOffPriceSchema = new ValidateF()
   .param("type", "نوع")
+  .regex(/^(1|2)$/)
   .number()
   .param("amount", "مقدار")
   .number()
@@ -49,7 +51,6 @@ router.post(
   use(validator(newOffPriceSchema)),
   use(authentication),
   use(getEntityByUuid({ model: "Book", fields: ["book_id"] })),
-
   use(create),
   serveJson
 );
