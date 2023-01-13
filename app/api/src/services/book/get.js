@@ -5,6 +5,7 @@ const {
   User,
   Book,
   Off_price,
+  File,
 } = require("../../../db/MySQL/models");
 
 const { book: refineBook } = require("../../../db/MySQL/refines");
@@ -16,6 +17,7 @@ module.exports = async (req, res, next) => {
   const bookOption = {
     where: { uuid },
     include: [
+      { model: File },
       { model: Author, as: "authors", through: { attributes: ["authorType"] } },
       { model: Tag, as: "tags", through: { attributes: [] } },
       { model: Category, as: "categories", through: { attributes: [] } },

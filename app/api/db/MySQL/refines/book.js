@@ -102,6 +102,28 @@ const refinePrice = (price, offPrice) => {
   }
 };
 
+const refineFileMeta = (fileMeta) =>
+  !fileMeta ? { metaData: undefined } : JSON.parse(fileMeta);
+
+const refineBookFiles = (files) =>
+  !files
+    ? undefined
+    : files.map(({ dataValues: file }) => {
+        console.log(file);
+
+        return {
+          ...file,
+          id: file.uuid,
+          ...refineFileMeta(file.metaData),
+          metaData: undefined,
+          id: undefined,
+          path: undefined,
+          book_id: undefined,
+          hasOwner: undefined,
+          createdAt: undefined,
+          updatedAt: undefined,
+        };
+      });
 /////////////////////////////////
 /////////////////////////////////
 /////////////////////////////////
@@ -112,6 +134,7 @@ module.exports = (data) => {
     ...item,
     id: item.uuid,
     status: bookStatus(item.status),
+    files: refineBookFiles(item.files),
     tags: refineBookTags(item.tags),
     categories: refineBookCategories(item.categories),
     authors: refineBookAuthorities(item.authors),

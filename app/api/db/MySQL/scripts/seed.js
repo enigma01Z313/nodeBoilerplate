@@ -14,6 +14,7 @@ const {
   Book_tag,
   Book_category,
   Off_price,
+  File,
 } = require("../models");
 const models = require("../models");
 
@@ -178,6 +179,12 @@ const password = hash("1230");
   ]);
   console.log("UserMeta seed has been finished");
 
+  const imageUUID1 = "42fc95de-886e-4c80-85ca-25ad9dc8c3a9";
+  const imageUUID2 = "83604c59-1c37-4406-83b0-72d84d963a69";
+  const imageUUID3 = "d8990d0f-27a2-4181-acad-d1062348e75e";
+  const imageUUID4 = "8b77d3fc-1b07-4d43-8d4c-efa498998353";
+  const imageUUID5 = "7ed6f26e-4600-4d38-9840-b6400dcfdebb";
+  const imageUUID6 = "0f861f7f-1e95-4ef3-bc02-2f4a58caa0e5";
   //Books
   await Book.bulkCreate([
     {
@@ -187,6 +194,7 @@ const password = hash("1230");
       price: 1300,
       publisherId: 4,
       status: 1,
+      image: imageUUID1,
     },
     {
       name: "جرئت داشته باش",
@@ -195,6 +203,7 @@ const password = hash("1230");
       price: 1300,
       publisherId: 4,
       status: 1,
+      image: imageUUID2,
     },
     {
       name: "قلعه حیوانات",
@@ -203,6 +212,7 @@ const password = hash("1230");
       price: 1300,
       publisherId: 5,
       status: 1,
+      image: imageUUID3,
     },
     {
       name: "تاریخ ایران مدرن",
@@ -213,6 +223,7 @@ const password = hash("1230");
       price: 140000,
       publisherId: 6,
       status: 1,
+      image: imageUUID4,
     },
     {
       name: "آیسخولوس",
@@ -223,6 +234,7 @@ const password = hash("1230");
       price: 72000,
       publisherId: 6,
       status: 1,
+      image: imageUUID5,
     },
     {
       name: "توتوچان",
@@ -233,6 +245,7 @@ const password = hash("1230");
       price: 68000,
       publisherId: 6,
       status: 1,
+      image: imageUUID6,
     },
   ]);
   console.log("Books seed has been finished");
@@ -421,7 +434,6 @@ const password = hash("1230");
   console.log("Book Authors seed has been finished");
 
   //Off Price
-
   await Off_price.bulkCreate([
     {
       type: 1,
@@ -438,6 +450,24 @@ const password = hash("1230");
       endDate: "2023-01-19T12:49:14.892Z",
     },
   ]);
+  console.log("Off price seed has been finished");
+
+  //Book image
+  await File.bulkCreate([
+    { uuid: imageUUID1, name: "1.png", path: "wy.03x3w01c.png" },
+    { uuid: imageUUID2, name: "2.png", path: "13l.ewmzcpshf.png" },
+    { uuid: imageUUID3, name: "3.png", path: "7k.1kyzbxzy.png" },
+    { uuid: imageUUID4, name: "4.png", path: "1dv.xg7x3ijv.png" },
+    { uuid: imageUUID5, name: "5.png", path: "us.r4ooi24k.png" },
+    { uuid: imageUUID6, name: "6.png", path: "1yj.abyz0v2x.png" },
+    { name: "aa.pdf", path: "1cg.517itrhf.pdf", book_id: 1 },
+    { name: "bb.pdf", path: "1n4.dstn1gc9.pdf", book_id: 2 },
+    { name: "cc.pdf", path: "1bf.1hn5rnuj.pdf", book_id: 3 },
+    { name: "dd.pdf", path: "u5.kgqvk4c1l.pdf", book_id: 4 },
+    { name: "ee.pdf", path: "1wl.o4g9dcl4.pdf", book_id: 5 },
+    { name: "ff.pdf", path: "1w2.bc97ivpz.pdf", book_id: 6 },
+  ]);
+  console.log("Book images setup");
 
   process.exit();
 })();

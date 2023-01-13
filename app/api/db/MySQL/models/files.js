@@ -15,4 +15,13 @@ module.exports = (sequelize, DataTypes) =>
       allowNull: false,
       type: DataTypes.STRING,
     },
+    hasOwner: {
+      allowNull: false,
+      defaultValue: false,
+      type: DataTypes.BOOLEAN,
+    },
+    metaData: {
+      allowNull: true,
+      type: DataTypes.STRING(10000),
+    },
   });
