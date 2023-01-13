@@ -13,6 +13,7 @@ module.exports =
     form.uploadDir = path.resolve("./", "app/tmp/");
 
     form.parse(req, function (err, fields, files) {
+      console.log(err);
       if (err)
         return next(
           fError(
@@ -21,6 +22,8 @@ module.exports =
             `فایلی ارسال نشده.`
           )
         );
+
+      console.log(fileName);
 
       const theFile = files[fileName][0];
       const theFileName = theFile.originalFilename;
