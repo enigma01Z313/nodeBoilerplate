@@ -4,6 +4,8 @@ app/logs/*
 
 app/tmp/*
 
+app/filemanager/*
+
 config/.env
 
 /vendor/
