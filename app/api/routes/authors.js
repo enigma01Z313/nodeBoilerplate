@@ -16,7 +16,12 @@ const {
 } = require("../src/middleware");
 
 const {
-  Author: { create, get, update },
+  Author: {
+    create,
+    get,
+    update,
+    Book: { list: getBooks },
+  },
 } = require("../src/services");
 
 /**************************/
@@ -71,7 +76,9 @@ router.get(
   serveJson
 );
 
-router.get("/:uuid", use(authentication), use(get), serveJson);
+router.get("/:uuid", use(get), serveJson);
+
+router.get("/:uuid/books", use(get), use(getBooks), serveJson);
 
 router.put(
   "/:uuid",

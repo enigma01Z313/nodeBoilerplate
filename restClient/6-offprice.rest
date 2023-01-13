@@ -1,0 +1,28 @@
+@baseUrl = http://67.43.234.92:30005/api
+@apiUrl = {{baseUrl}}/offprices
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZiYjk5N2I0LWEzM2QtNGQ1ZS05YTNiLTZkMTNjMTE5N2E1MCIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM0MTc4MjMsImV4cCI6MTY4MjQxNzgyM30.ggkKkI4KOoVkqgKE2udpEbjHKUiRiDHxFUns9QPfNjA
+
+
+###
+POST {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+      "type": 1,
+      "amount":5,
+      "book_id": ["234839d0-1da1-4494-afe0-d9e74964f141", "234839d0-1da1-4494-afe0-d9e74964f141"],
+      "startDate": "2022-01-15T12:49:14.892Z",
+      "endDate": "2023-01-19T12:49:14.892Z"
+
+}
+
+###
+DELETE  {{apiUrl}}/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+
+}
+

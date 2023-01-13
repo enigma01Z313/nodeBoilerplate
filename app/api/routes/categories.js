@@ -45,13 +45,12 @@ const updatedCategorySchema = new ValidateF()
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(authentication), use(filteredData()), use(list), serveJson);
+router.get("/", use(filteredData()), use(list), serveJson);
 
-router.get("/:uuid", use(authentication), use(get), serveJson);
+router.get("/:uuid", use(get), serveJson);
 
 router.get(
   "/:uuid/books",
-  use(authentication),
   use(
     getEntityByUuid({
       model: "Category",

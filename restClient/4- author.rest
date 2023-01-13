@@ -24,9 +24,13 @@ Authorization: Bearer {{token}}
 
 ###
 
-GET {{apiUrl}}/f3551edd-bfe3-412d-ac8a-9eac21747938
+GET {{apiUrl}}/0f758426-1b0c-45c9-b529-a17834e56329
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+###
+GET {{apiUrl}}/0f758426-1b0c-45c9-b529-a17834e56329/books
+Content-Type: application/json
 
 ###
 

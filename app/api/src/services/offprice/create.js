@@ -1,6 +1,5 @@
 const { Off_price } = require("../../../db/MySQL/models");
 const { regexOffPriceType, fError } = require("../../utils");
-console.log(regexOffPriceType);
 module.exports = async (req, res, next) => {
   const { type, amount, startDate, endDate, book_id: undefined } = req.body;
 
@@ -14,8 +13,6 @@ module.exports = async (req, res, next) => {
       book: { id: book_id },
     },
   } = res;
-
-  console.log(res.chainData);
 
   const offPriceData = {
     type,

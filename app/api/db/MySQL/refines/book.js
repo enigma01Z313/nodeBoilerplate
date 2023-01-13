@@ -121,5 +121,8 @@ module.exports = (data) => {
     off_price: undefined,
     sitePercent: undefined,
     publisherId: undefined,
+    bookAuthor: undefined,
+    book_tag: undefined,
+    book_category: undefined,
   };
 };

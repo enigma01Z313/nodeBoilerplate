@@ -3,7 +3,10 @@
 const request = require("supertest");
 const app = require("../../app/app");
 const generateRandom = require("../../app/api/src/utils/generateRandom");
-const { roleSchema, rolesListSchema } = require("../../app/api/src/utils/schema");
+const {
+  roleSchema,
+  rolesListSchema,
+} = require("../../app/api/src/utils/schema");
 const validator = require("../../app/api/src/middleware/validate/validatorFunction");
 const fError = require("../../app/api/src/utils/fError");
 
@@ -19,7 +22,6 @@ describe("Roles api tests", () => {
       .expect("Content-Type", "application/json; charset=utf-8")
       .expect(500)
       .expect((res) => {
-        console.log(res);
         const data = res.body;
         if (data.length !== 4)
           return new Error(
@@ -233,6 +235,4 @@ describe("Roles api tests", () => {
   //       console.log(res.body);
   //     });
   // });
-
-
 });

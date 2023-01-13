@@ -1,0 +1,36 @@
+@baseUrl = http://127.0.0.1:30005/api
+@apiUrl = {{baseUrl}}/categories
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZiYjk5N2I0LWEzM2QtNGQ1ZS05YTNiLTZkMTNjMTE5N2E1MCIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM0MTc4MjMsImV4cCI6MTY4MjQxNzgyM30.ggkKkI4KOoVkqgKE2udpEbjHKUiRiDHxFUns9QPfNjA
+
+GET {{apiUrl}}
+Content-Type: application/json
+
+###
+GET {{apiUrl}}/cb37c389-10b5-431f-a979-11e53ef4f910
+Content-Type: application/json
+
+###
+GET {{apiUrl}}/ab117876-740d-4dcd-ab48-897057484602/books
+Content-Type: application/json
+
+
+###
+POST {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name" : ,
+  "parentId" : 
+}
+
+###
+PUT {{apiUrl}}/4687dca5-a172-4fec-a5fa-0ea8a20f9ebc
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+"name": "ترس",
+ "parentId" : "d9eb4683-8b4f-4e04-841e-2e290ee2deff"
+}
