@@ -1,0 +1,32 @@
+@baseUrl = http://127.0.0.1:30005/api
+@apiUrl = {{baseUrl}}/tags
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZiYjk5N2I0LWEzM2QtNGQ1ZS05YTNiLTZkMTNjMTE5N2E1MCIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM0MTc4MjMsImV4cCI6MTY4MjQxNzgyM30.ggkKkI4KOoVkqgKE2udpEbjHKUiRiDHxFUns9QPfNjA
+
+GET {{apiUrl}}
+Content-Type: application/json
+
+###
+GET {{apiUrl}}/c3303191-9a74-49ae-a57c-a8c46140fb96
+Content-Type: application/json
+
+###
+GET {{apiUrl}}/cdc2a83b-3696-4bc1-b959-371d26175206/books
+Content-Type: application/json
+
+###
+POST {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+
+}
+
+###
+PUT {{apiUrl}}/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+
+}

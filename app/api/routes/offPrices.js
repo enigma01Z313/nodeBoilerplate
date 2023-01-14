@@ -10,6 +10,7 @@ const {
   getDataList,
   isUnique,
   getEntityByUuid,
+  getEntitiesByUuid,
 } = require("../src/middleware");
 
 const {
@@ -50,14 +51,27 @@ router.post(
   "/",
   use(validator(newOffPriceSchema)),
   use(authentication),
-  use(getEntityByUuid({ model: "Book", fields: ["book_id"] })),
+  use(
+    getEntitiesByUuid({
+      model: "Book",
+      field: "book_id",
+      chainKey: "books",
+    })
+  ),
   use(create),
   serveJson
 );
 
 router.delete(
+  "/",
   use(authentication),
-  use(getEntityByUuid({ model: "Off_price", fields: ["uuid"] })),
+  use(
+    getEntitiesByUuid({
+      model: "Book",
+      field: "book_id",
+      chainKey: "books",
+    })
+  ),
   use(remove),
   serveJson
 );

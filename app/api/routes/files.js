@@ -16,7 +16,7 @@ router.post(
   use(
     upload({
       name: "image",
-      types: ["jpg", "png", "gif"],
+      types: ["jpg", "png", "gif", "pdf"],
       maxAllowedSize: "2Mb",
     })
   ),

@@ -1,5 +1,6 @@
 const { Category, Book } = require("../../../db/MySQL/models");
 const { category: refineCategory } = require("../../../db/MySQL/refines");
+const { fError } = require("../../utils");
 
 module.exports = async (req, res, next) => {
   const { uuid } = req.params;
@@ -13,6 +14,7 @@ module.exports = async (req, res, next) => {
     ],
   });
 
+  res.chainData.category = category;
   res.jsonData = refineCategory(category);
   next();
 };

@@ -35,17 +35,11 @@ const updatedTagSchema = new ValidateF().param("name", "نام").string().done()
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(authentication), use(list), serveJson);
+router.get("/", use(list), serveJson);
 
-router.get("/:uuid", use(authentication), use(get), serveJson);
+router.get("/:uuid", use(get), serveJson);
 
-router.get(
-  "/:uuid/books",
-  use(authentication),
-  use(getEntityByUuid({ model: "Tag", fields: ["uuid"] })),
-  use(bookList),
-  serveJson
-);
+router.get("/:uuid/books", use(get), use(bookList), serveJson);
 
 router.post(
   "/",

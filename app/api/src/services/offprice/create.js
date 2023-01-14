@@ -1,24 +1,35 @@
+const { Op } = require("sequelize");
 const { Off_price } = require("../../../db/MySQL/models");
-module.exports = async (req, res, next) => {
-  const { type, amount, startDate, endDate } = req.body;
 
+module.exports = async (req, res, next) => {
   const {
-    chainData: {
-      book: { id: book_id },
-    },
+    chainData: { books },
   } = res;
 
+  const { type, amount, startDate, endDate } = req.body;
 
-  const offPriceData = {
-    type,
-    amount,
-    startDate,
-    endDate,
-    book_id,
-  };
+  const bookIds = [];
+  const createOption = books.map(({ dataValues: { id: book_id } }) => {
+    bookIds.push(book_id);
+    return {
+      type,
+      amount,
+      startDate,
+      endDate,
+      book_id,
+    };
+  });
 
-  const newOffPrice = await Off_price.bulkCreate([offPriceData]);
+  await Off_price.destroy({
+    where: {
+      book_id: {
+        [Op.or]: bookIds,
+      },
+    },
+  });
 
-  res.jsonData = newOffPrice;
+  const createOffPrice = await Off_price.bulkCreate(createOption);
+
+  res.jsonData = createOffPrice;
   next();
 };

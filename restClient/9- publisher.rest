@@ -1,0 +1,11 @@
+@baseUrl = http://127.0.0.1:30005/api
+@apiUrl = {{baseUrl}}/publishers
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM0MzJhYTY4LWI0ODEtNDg4OS1iOGNhLTRiN2M4NTIzYjcyMCIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzI2Nzc2NzYsImV4cCI6MTY4MTY3NzY3Nn0.1Twu-QN7gervTGyBbpkGAbfill6ACbyoQQ8vvArnJuw
+
+GET {{apiUrl}}/42c34205-df59-412f-bbd3-915ad06d5439
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{apiUrl}}/42c34205-df59-412f-bbd3-915ad06d5439/books
+Content-Type: application/json

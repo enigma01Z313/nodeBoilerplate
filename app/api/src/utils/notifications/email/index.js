@@ -21,9 +21,7 @@ const emailNotification = async ({ to, subject, html }) => {
     data: { to, subject, html, token: "123" },
   };
 
-
   const response = await axios(options);
-  console.log(response.data);
   if (response.data.status !== "200") throw new Error("1234");
 
   return response;
