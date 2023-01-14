@@ -13,7 +13,7 @@ const {
 } = require("../src/middleware");
 
 const {
-  Offprice: { create, update },
+  Offprice: { create, remove },
 } = require("../src/services");
 
 /**************************/
@@ -55,12 +55,10 @@ router.post(
   serveJson
 );
 
-router.put(
-  "/:uuid",
-  use(validator(updatedOffPriceSchema)),
+router.delete(
   use(authentication),
   use(getEntityByUuid({ model: "Off_price", fields: ["uuid"] })),
-  use(update),
+  use(remove),
   serveJson
 );
 
