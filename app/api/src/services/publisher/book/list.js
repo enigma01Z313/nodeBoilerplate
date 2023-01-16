@@ -6,7 +6,11 @@ module.exports = async (req, res, next) => {
     chainData: { publisher },
   } = res;
 
-  const books = await publisher.getBooks({ include: [{ model: Off_price }] });
+  const books = await publisher.getBooks({
+    include: [{ model: Off_price }],
+    limit: 1,
+    offset: 1,
+  });
 
   res.jsonData = refineData.bookList(books);
   next();
