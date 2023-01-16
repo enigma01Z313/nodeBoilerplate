@@ -1,10 +1,10 @@
-const refineRole = (role) => {
-  return {
-    id: role.dataValues.uuid,
-    name: role.dataValues.name,
-    permissions: JSON.parse(role.dataValues.permissions),
-  };
-};
+const status = require("../../staticDb")("defaultStatus");
+
+const refineRole = (role) => ({
+  id: role.dataValues.uuid,
+  name: role.dataValues.name,
+  permissions: JSON.parse(role.dataValues.permissions),
+});
 
 const refineMeta = (userMeta) => {
   let refinedMeta = [];
@@ -26,11 +26,14 @@ module.exports = (item) => {
     fullName: `${item.firstName ?? ""} ${item.lastName ?? ""}`,
     role: item.role && refineRole(item.role),
     meta: item.userMeta && refineMeta(item.userMeta),
+    status: status(data.status),
     uuid: undefined,
     ip: undefined,
     password: undefined,
     confirmCode: undefined,
     roleId: undefined,
+    accessToken: undefined,
+    refreshToken: undefined,
     role_id: undefined,
   };
 };

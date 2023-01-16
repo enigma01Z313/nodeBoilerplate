@@ -63,6 +63,13 @@ const updatedUserSchema = new ValidateF()
 /**************************/
 /*         routes         */
 /**************************/
+router.get(
+  "/",
+  use(authentication),
+  use(filteredData({})),
+  use(getDataList("User", "کاربر", undefined, undefined, 'userList')),
+  serveJson
+);
 
 router.get(
   "/:uuid",

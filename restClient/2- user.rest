@@ -7,7 +7,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ###
-GET {{apiUrl}}/6987dc6e-9955-49da-8847-1e1a8a1c2d70
+GET {{apiUrl}}/7acea106-762b-4e35-a58d-ece293c299d3
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
