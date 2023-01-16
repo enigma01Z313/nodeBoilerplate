@@ -1,16 +1,16 @@
 @baseUrl = http://127.0.0.1:30005/api
 @apiUrl = {{baseUrl}}/tags
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZiYjk5N2I0LWEzM2QtNGQ1ZS05YTNiLTZkMTNjMTE5N2E1MCIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM0MTc4MjMsImV4cCI6MTY4MjQxNzgyM30.ggkKkI4KOoVkqgKE2udpEbjHKUiRiDHxFUns9QPfNjA
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhY2VhMTA2LTc2MmItNGUzNS1hNThkLWVjZTI5M2MyOTlkMyIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM4NDUzMDEsImV4cCI6MTY4Mjg0NTMwMX0.f4igOP_QDijzP8FBXfqLJddv_NaoIm_7pBfx4c3P29o
 
 GET {{apiUrl}}
 Content-Type: application/json
 
 ###
-GET {{apiUrl}}/c3303191-9a74-49ae-a57c-a8c46140fb96
+GET {{apiUrl}}/ad9313ae-5b9d-4b4f-8919-e4565e2bf11c
 Content-Type: application/json
 
 ###
-GET {{apiUrl}}/cdc2a83b-3696-4bc1-b959-371d26175206/books
+GET {{apiUrl}}/ad9313ae-5b9d-4b4f-8919-e4565e2bf11c/books?limit=1&page=1
 Content-Type: application/json
 
 ###
