@@ -13,15 +13,11 @@ const {
   getDataList,
   getEntityByUuid,
   filteredData,
+  Book: { bookList },
 } = require("../src/middleware");
 
 const {
-  Author: {
-    create,
-    get,
-    update,
-    Book: { list: getBooks },
-  },
+  Author: { create, get, update },
 } = require("../src/services");
 
 /**************************/
@@ -78,7 +74,17 @@ router.get(
 
 router.get("/:uuid", use(get), serveJson);
 
-router.get("/:uuid/books", use(get), use(getBooks), serveJson);
+const bookListOption = {
+  baseModel: "author",
+  includes: [{ model: "Off_price" }],
+};
+router.get(
+  "/:uuid/books",
+  use(get),
+  use(filteredData({})),
+  use(bookList(bookListOption)),
+  serveJson
+);
 
 router.put(
   "/:uuid",

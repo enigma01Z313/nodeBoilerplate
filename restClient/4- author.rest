@@ -1,6 +1,6 @@
 @baseUrl = http://127.0.0.1:30005/api
 @apiUrl = {{baseUrl}}/authors
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM0MzJhYTY4LWI0ODEtNDg4OS1iOGNhLTRiN2M4NTIzYjcyMCIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzI2Nzc2NzYsImV4cCI6MTY4MTY3NzY3Nn0.1Twu-QN7gervTGyBbpkGAbfill6ACbyoQQ8vvArnJuw
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhY2VhMTA2LTc2MmItNGUzNS1hNThkLWVjZTI5M2MyOTlkMyIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM4NDUzMDEsImV4cCI6MTY4Mjg0NTMwMX0.f4igOP_QDijzP8FBXfqLJddv_NaoIm_7pBfx4c3P29o
 
 
 POST {{apiUrl}}
@@ -24,12 +24,12 @@ Authorization: Bearer {{token}}
 
 ###
 
-GET {{apiUrl}}/0f758426-1b0c-45c9-b529-a17834e56329
+GET {{apiUrl}}/aa3079b8-7fdc-4761-ad98-792a47466bec
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ###
-GET {{apiUrl}}/0f758426-1b0c-45c9-b529-a17834e56329/books
+GET {{apiUrl}}/aa3079b8-7fdc-4761-ad98-792a47466bec/books?limit=1&page=1
 Content-Type: application/json
 
 ###
