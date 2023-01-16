@@ -1,13 +1,13 @@
-@baseUrl = http://67.43.234.92:30005/api
+@baseUrl = http://127.0.0.1:30005/api
 @apiUrl = {{baseUrl}}/users
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY1YmVmYmE4LWVmNmUtNGZmZi1hYTQ0LTAzYTM2OGQ4ODNjMiIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzI1NzUyODYsImV4cCI6MTY4MTU3NTI4Nn0.WerpZ0V3o1_YzH9gjlnpp4o_je1eGR5n3aQ_EWp-_LM
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhY2VhMTA2LTc2MmItNGUzNS1hNThkLWVjZTI5M2MyOTlkMyIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM4NDUzMDEsImV4cCI6MTY4Mjg0NTMwMX0.f4igOP_QDijzP8FBXfqLJddv_NaoIm_7pBfx4c3P29o
 
 GET {{apiUrl}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ###
-GET {{apiUrl}}/6987dc6e-9955-49da-8847-1e1a8a1c2d70
+GET {{apiUrl}}/7acea106-762b-4e35-a58d-ece293c299d3
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

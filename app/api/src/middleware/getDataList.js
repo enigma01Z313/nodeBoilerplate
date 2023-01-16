@@ -1,6 +1,7 @@
 const { Op } = require("sequelize");
 const Models = require("../../db/MySQL/models");
 const fError = require("../utils/fError");
+const Refiners = require("../../db/MySQL/refines");
 
 const createIncludeArray = (str) => {
   if (!str) return { include: [] };
@@ -11,7 +12,7 @@ const createIncludeArray = (str) => {
 };
 
 const getDataList =
-  (model, modelFa, includeModels, orderColumn = "createdAt") =>
+  (model, modelFa, includeModels, orderColumn = "createdAt", refiner) =>
   async (req, res, next) => {
     const defaultOptions = res?.dbOptions?.defaultOptions ?? {};
     const paginationedOptions = res?.dbOptions?.paginationedOptions ?? {};
@@ -30,10 +31,9 @@ const getDataList =
       order: sortOptions,
       subQuery: false,
     });
-    
 
     res.jsonData = {
-      data: pagedItems,
+      data: Refiners[refiner] ? Refiners[refiner]?.(pagedItems) : pagedItems,
       total: items.length,
     };
 
