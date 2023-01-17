@@ -66,7 +66,6 @@ router.post(
 
 router.get(
   "/",
-  use(authentication),
   use(filteredData()),
   use(getDataList("Author", "مولف")),
   serveJson
