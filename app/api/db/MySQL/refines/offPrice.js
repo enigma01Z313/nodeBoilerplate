@@ -1,13 +1,12 @@
-module.exports = (data) => {
-  const item = data?.dataValues ?? data;
+module.exports = (item) => {
+  const data = item?.dataValues ?? item;
 
-  console.log(data);
-  console.log(item);
-  //   return {
-  //     ...item,
-  //     id: item.uuid,
-  //     uuid: undefined,
-  //     createdAt: undefined,
-  //     updatedAt: undefined,
-  //   };
+  return {
+    ...data,
+    id: data.uuid,
+    uuid: undefined,
+    createdAt: undefined,
+    updatedAt: undefined,
+    book_id: undefined,
+  };
 };
