@@ -43,17 +43,25 @@ const refineAuthor = ({ dataValues: author } = {}) =>
         bookAuthor: undefined,
       };
 
-const refineBookAuthorities = (authors) => {
+const refineBookAuthorities = (authors, isList) => {
   if (!authors) return undefined;
-  const refinedAuthors = {};
+  let refinedAuthors;
 
   authors.sort((a, b) => a.bookAuthor.authorType - b.bookAuthor.authorType);
 
-  for (const author of authors) {
-    const { code, label, key } = authorTypes(author.bookAuthor.authorType);
-    if (!refinedAuthors[key]) refinedAuthors[key] = { label, list: [] };
+  if (isList) {
+    refinedAuthors =
+      authors.length === 1
+        ? `${authors[0].firstName} ${authors[0].lastName}`
+        : "جمعی از نویسندگان";
+  } else {
+    refinedAuthors = {};
+    for (const author of authors) {
+      const { code, label, key } = authorTypes(author.bookAuthor.authorType);
+      if (!refinedAuthors[key]) refinedAuthors[key] = { label, list: [] };
 
-    refinedAuthors[key].list.push(refineAuthor(author));
+      refinedAuthors[key].list.push(refineAuthor(author));
+    }
   }
 
   return refinedAuthors;
@@ -127,7 +135,7 @@ const refineBookFiles = (files) =>
 /////////////////////////////////
 /////////////////////////////////
 /////////////////////////////////
-module.exports = (data) => {
+module.exports = (data, isList = false) => {
   const item = data?.dataValues ?? data;
 
   return {
@@ -137,7 +145,7 @@ module.exports = (data) => {
     files: refineBookFiles(item.files),
     tags: refineBookTags(item.tags),
     categories: refineBookCategories(item.categories),
-    authors: refineBookAuthorities(item.authors),
+    authors: refineBookAuthorities(item.authors, isList),
     publisher: refinePublisher(item.publisher),
     ...refinePrice(item.price, item.off_price),
     uuid: undefined,

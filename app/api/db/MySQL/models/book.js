@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) =>
     },
     publishedYear: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       field: "published_year",
     },
     content: {

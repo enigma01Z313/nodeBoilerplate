@@ -5,6 +5,8 @@ const {
   Auth: { authentication, authorization },
 } = require("../src/middleware");
 
+const { use } = require("../src/utils");
+
 const {
   Logs: { list, get },
 } = require("../src/services");
