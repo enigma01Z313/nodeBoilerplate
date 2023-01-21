@@ -24,9 +24,16 @@ const {
 const newTagSchema = new ValidateF()
   .param("name", "نام")
   .requiredString()
+  .param("content", "محتوا")
+  .string()
   .done();
 
-const updatedTagSchema = new ValidateF().param("name", "نام").string().done();
+const updatedTagSchema = new ValidateF()
+  .param("name", "نام")
+  .string()
+  .param("content", "محتوا")
+  .string()
+  .done();
 
 /**************************/
 /*         routes         */

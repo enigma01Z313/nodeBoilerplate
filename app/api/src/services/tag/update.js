@@ -4,9 +4,11 @@ module.exports = async (req, res, next) => {
     chainData: { tag },
   } = res;
 
-  const { name } = req.body;
+  const { name, content } = req.body;
 
   if (name && name !== tag.name) tag.name = uppedData = name;
+
+  if (content && content !== tag.content) tag.content = uppedData = content;
 
   if (uppedData === false) {
     res.statusCode = 204;

@@ -27,4 +27,7 @@ module.exports = (sequelize, DataTypes) =>
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    content: {
+      type: DataTypes.STRING(10000),
+    },
   });
