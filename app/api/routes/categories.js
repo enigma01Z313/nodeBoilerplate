@@ -27,6 +27,8 @@ const newCategorySchema = new ValidateF()
   .param("parentId")
   .string()
   .length(36)
+  .param("content", "محتوا")
+  .string()
   .done();
 
 const updatedCategorySchema = new ValidateF()
@@ -35,6 +37,8 @@ const updatedCategorySchema = new ValidateF()
   .param("parentId")
   .string()
   .length(36)
+  .param("content", "محتوا")
+  .string()
   .done();
 
 /**************************/

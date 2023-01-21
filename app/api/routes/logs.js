@@ -1,11 +1,10 @@
 const express = require("express");
+const { use } = require("../src/utils");
 const router = express.Router();
 const {
   serveJson,
   Auth: { authentication, authorization },
 } = require("../src/middleware");
-
-const { use } = require("../src/utils");
 
 const {
   Logs: { list, get },

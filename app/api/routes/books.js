@@ -13,11 +13,17 @@ const {
   getDataByUUID,
   getDataList,
   getEntityByUuid,
+  getEntitiesByUuid,
   filteredData,
 } = require("../src/middleware");
 
 const {
-  Book: { list, get, similar: similarBooks },
+  Book: {
+    list,
+    get,
+    similar: similarBooks,
+    OffPrice: { get: getOffPrice },
+  },
 } = require("../src/services");
 
 /**************************/
@@ -34,5 +40,12 @@ router.get(
 );
 
 router.get("/:uuid/similar", use(get), use(similarBooks), serveJson);
+
+router.get(
+  "/:uuid/offprice",
+  use(getEntityByUuid({ model: "Book", fields: ["uuid"] })),
+  use(getOffPrice),
+  serveJson
+);
 
 module.exports = router;
