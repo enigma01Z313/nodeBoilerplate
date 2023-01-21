@@ -33,6 +33,19 @@ const listPermissions = (obj) => {
 };
 const password = hash("1230");
 
+const imageUUID1 = "42fc95de-886e-4c80-85ca-25ad9dc8c3a9";
+const imageUUID2 = "83604c59-1c37-4406-83b0-72d84d963a69";
+const imageUUID3 = "d8990d0f-27a2-4181-acad-d1062348e75e";
+const imageUUID4 = "8b77d3fc-1b07-4d43-8d4c-efa498998353";
+const imageUUID5 = "7ed6f26e-4600-4d38-9840-b6400dcfdebb";
+const imageUUID6 = "0f861f7f-1e95-4ef3-bc02-2f4a58caa0e5";
+const imageUUID7 = "0f861f7f-1e95-4f83-bc02-2f4a58caa0e5";
+const imageUUID8 = "0f861f7f-1e95-96f3-bc02-2f4a58caa0e5";
+const imageUUID9 = "0f861f7f-1e95-96f3-bc02-245a58caa0e5";
+const imageUUID10 = "0f861t8f-1e95-96f3-bc02-2f4a58caa0e5";
+const imageUUID11 = "0f861f7f-1e95-969y-bc02-2f4a58caa0e5";
+const imageUUID12 = "0f861f7f-7e95-96f3-bc02-2f4a58caa0e5";
+const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
 (async function () {
   // Positions
   await Option.bulkCreate([
@@ -111,6 +124,45 @@ const password = hash("1230");
     },
     {
       uuid: crypto.randomUUID(),
+      phone: "09107541126",
+      email: "mohammad@gmail.com",
+      password,
+      firstName: "محمد",
+      lastName: "تخت کشها",
+      roleId: 2,
+      imageId: 1,
+      status: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      uuid: crypto.randomUUID(),
+      phone: "09198410970",
+      email: "saeed@gmail.com",
+      password,
+      firstName: "سعید",
+      lastName: "گیوکی",
+      roleId: 2,
+      imageId: 1,
+      status: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      uuid: crypto.randomUUID(),
+      phone: "09300585885",
+      email: "negar@gmail.com",
+      password,
+      firstName: "نگار",
+      lastName: "عالیزاده",
+      roleId: 2,
+      imageId: 1,
+      status: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      uuid: crypto.randomUUID(),
       phone: "09127676895",
       email: "minaAhmadzade@gmail.com",
       password,
@@ -179,12 +231,6 @@ const password = hash("1230");
   ]);
   console.log("UserMeta seed has been finished");
 
-  const imageUUID1 = "42fc95de-886e-4c80-85ca-25ad9dc8c3a9";
-  const imageUUID2 = "83604c59-1c37-4406-83b0-72d84d963a69";
-  const imageUUID3 = "d8990d0f-27a2-4181-acad-d1062348e75e";
-  const imageUUID4 = "8b77d3fc-1b07-4d43-8d4c-efa498998353";
-  const imageUUID5 = "7ed6f26e-4600-4d38-9840-b6400dcfdebb";
-  const imageUUID6 = "0f861f7f-1e95-4ef3-bc02-2f4a58caa0e5";
   //Books
   await Book.bulkCreate([
     {
@@ -247,6 +293,17 @@ const password = hash("1230");
       status: 1,
       image: imageUUID6,
     },
+    {
+      name: "چک لیست",
+      publishedYear: 1330,
+      content: `
+<h2 class="bookDescription_bookDescriptionHeader__2BZou">معرفی کتاب توتوچان</h2><div class="bookDescription_bookDescriptionContent__BKsT2"><p>کتاب&nbsp;<b>توتوچان؛&nbsp;<span>دخترکی آن سوی پنجره</span><span>&nbsp;</span></b><span>نوشتهٔ&nbsp;</span><b>تتسوکو کورویاناگی</b><span> و ترجمهٔ&nbsp;</span><b>سیمین محسنی</b><span> است و&nbsp;</span><span>نشر <b>نی </b>آن را منتشر کرده است.&nbsp;</span><span>شیوهٔ آموزش و پرورش آزاد در ژاپن در این داستان روایت می&zwnj;شود.</span></p><h2><span>درباره&nbsp;</span><span>کتاب توتوچان</span></h2><p>در مدرسه&zwnj;ٔ توموئه که دانش&zwnj;آموزان آن مجاز بودند روی هر موضوعی که به آن علاقه&zwnj;مندند کار کنند، باید بدون توجه به آنچه در اطرافشان جریان داشت، ذهن خود را روی موضوع موردعلاقه&zwnj;شان متمرکز کنند. به این ترتیب، هیچ&zwnj;کس به بچه&zwnj;ای که آواز «چشم، چشم، دو ابرو» را می&zwnj;خواند، توجهی نمی&zwnj;کرد. یکی دو نفر به این موضوع علاقه&zwnj;مند شده بودند؛ اما بقیه غرق در کتاب&zwnj;های خودشان بودند. کتاب <b>توتوچان </b>قصه&zwnj;ای افسانه&zwnj;ای بود؛ درباره&zwnj;ٔ ماجراهای مرد ثروتمندی که می&zwnj;خواست دخترش ازدواج کند. نقاشی&zwnj;های آن جالب بود و کتاب طرفدار زیادی داشت.</p><p>همه&zwnj;ٔ دانش&zwnj;آموزان مدرسه که مثل ماهی ساردین داخل واگن چپیده بودند، آنچه را در کتاب&zwnj;ها نوشته شده بود، با ولع می&zwnj;خواندند. آفتاب صبحگاهی از ورای پنجره&zwnj;ها به درون می&zwnj;تابید و چشم&zwnj;اندازی پدید می&zwnj;آورد که سبب شادمانی قلبی مدیر مدرسه می&zwnj;شد. همه&zwnj;ٔ دانش&zwnj;آموزان آن روز را در کتابخانه گذراندند.</p><p><b> تتسوکو کورویاناگی </b>در این کتاب کوشیده&zwnj; شیوه&zwnj;های آموزشی آقای کوبایاشی را توصیف کند. او اعتقاد داشت همه کودکان ذاتاً با طبیعت و سرشت خوبی به&zwnj;دنیا می&zwnj;آیند؛ ولی محیط و تأثیر رفتار غلط بزرگسالان به آنان آسیب می&zwnj;رساند. هدف او آن بود که «طبیعت خوب» کودکان را آشکار ساخته و آن را بهبود و تکامل بخشد؛ تا به این ترتیب کودکان مردمانی باشخصیت بار بیایند.</p><p>آقای کوبایاشی «طبیعی&zwnj;بودن» را ارزشمند می&zwnj;دانست و می&zwnj;خواست کاری کند که شخصیت کودکان تا حدّ ممکن طبیعی رشد و تحول یابد. او طبیعت را نیز دوست داشت. میوچان، دختر کوچک او، یک روز به نویسنده گفت پدرش عادت داشت هنگام کودکی، او را برای گردش و قدم&zwnj;زدن ببرد و می&zwnj;گفته است: «بیا در طبیعت دنبال هماهنگی بگردیم.»</p><h2>خواندن کتاب توتوچان را به چه کسانی پیشنهاد می&zwnj;کنیم</h2><p>این کتاب را به دوستداران داستان&zwnj;های ژاپنی و همچنین علاقه&zwnj;مندان به آموزش و پرورش ژاپن پیشنهاد می&zwnj;کنیم.</p><h2>بخشی از کتاب توتوچان</h2><p>«در ایستگاه جیوگائوکا از قطار اویماچی پیاده شدند. مادر دست توتو چان را گرفت تا او را به سمتی که بلیت&zwnj;ها را کنترل می&zwnj;کردند، ببرد. او تا به&zwnj;حال به&zwnj;ندرت سوار قطار شده بود و دوست نداشت بلیتی را که با اشتیاق در چنگ می&zwnj;فشرد، از دست بدهد.</p><p>توتو چان، از کنترل&zwnj;کننده بلیت پرسید: «اجازه می&zwnj;دهید این را برای خودم نگه دارم؟»</p><p>مرد، درحالی&zwnj;که بلیت را می&zwnj;گرفت، پاسخ داد: «نه، نمی&zwnj;توانید!»</p><p>توتو چان، به جعبه پر از بلیت مأمور اشاره کرد و گفت: «همه این&zwnj;ها مال شماست؟»</p><p>مأمور کنترل، درحالی&zwnj;که بلیت&zwnj;ها را از دست مسافران جمع می&zwnj;کرد، پاسخ داد: «نه، این بلیت&zwnj;ها مال اداره راه&zwnj;آهن است.»</p><p>توتو چان، با اشتیاق به جعبه خیره شد و گفت: «وقتی بزرگ شدم، فروشنده بلیت راه&zwnj;آهن خواهم شد.»</p><p>مأمور کنترل، برای اولین&zwnj;بار نگاهی به او انداخت و گفت: «پسر کوچک من هم می&zwnj;خواهد در ایستگاه کار کند. بنابراین، با یکدیگر همکار خواهید شد.»</p><p>توتو چان، قدمی به عقب برداشت و نگاه دقیقی به مأمور جمع&zwnj;کننده بلیت انداخت. او آدمی چاق و عینکی بود که نسبتاً مهربان به&zwnj;نظر می&zwnj;رسید. دست&zwnj;هایش را به پشت برد تا درباره این پیشنهاد به&zwnj;دقت فکر کند. سپس به مأمور گفت: «هوم! اصلا در این فکر نبودم که با پسر شما همکار شوم؛ اما بعداً در این باره فکر می&zwnj;کنم. فعلا گرفتارم، چون دارم به مدرسه جدید می&zwnj;روم.»</p><p>توتو چان، به سوی محلی که مادرش منتظر بود دوید و فریاد زد: «می&zwnj;خواهم بلیت&zwnj;فروش بشوم!»</p><p>مادر شگفت&zwnj;زده نشد، اما گفت: «فکر می&zwnj;کردم می&zwnj;خواهی جاسوس بشوی!»</p><p>توتو چان درحالی&zwnj;که دست در دست مادر در کنارش راه می&zwnj;رفت، به&zwnj;خاطر آورد تا روز پیش کاملا مطمئن بوده است که می&zwnj;خواهد جاسوس بشود. ولی این&zwnj;که آدم مسئول جعبه&zwnj;ای پر از بلیت باشد نیز کار لذت&zwnj;بخشی بود!</p><p>ناگهان، فکر درخشانی به سرش زد: «درستش همین است.» به مادرش نگاه کرد و با صدای بلند او را از فکرش آگاه ساخت و گفت: «نمی&zwnj;توانم بلیت&zwnj;فروشی باشم که درواقع جاسوس است؟»</p><p>مادر پاسخی نداد. سیمای دوست&zwnj;داشتنی&zwnj;اش، زیر کلاه نمدی&zwnj;اش که گل&zwnj;های کوچک بر آن نقش بسته بود، جدی می&zwnj;نمود. حقیقت این بود که مادر در نگرانی عمیقی به&zwnj;سر می&zwnj;برد. اگر توتو چان را در مدرسه جدید نمی&zwnj;پذیرفتند، چه می&zwnj;شد؟ به توتو چان نگریست که در کنار جاده، جست&zwnj;وخیز می&zwnj;کرد و تندتند با خودش حرف می&zwnj;زد. توتو چان نمی&zwnj;دانست مادرش چقدر نگران اوست؛ بنابراین، هنگامی که نگاهشان با هم گره خورد، با خوشحالی گفت: «عقیده&zwnj;ام را عوض کردم. فکر کنم بهتر است همراه و همکار گروه نوازندگان خیابانی شوم که برای تبلیغ فروشگاه&zwnj;های جدید آهنگ می&zwnj;زنند!»</p><p>در صدای مادر یأس و نومیدی احساس می&zwnj;شد، گفت: «بدو بیا، دیر می&zwnj;شود. نباید آقای مدیر را منتظر بگذاریم. دیگر وراجی نکن. مواظب باش کجا می&zwnj;روی و درست راه بیا.»</p><p>کمی آن سوتر، دروازه مدرسه&zwnj;ای کوچک، کم&zwnj;کم، در مقابل آنان پدیدار شد.»</p></div>
+      `,
+      price: 68000,
+      publisherId: 6,
+      status: 1,
+      image: imageUUID3,
+    },
   ]);
   console.log("Books seed has been finished");
 
@@ -274,20 +331,20 @@ const password = hash("1230");
   //category
 
   await Category.bulkCreate([
-    { name: "کلاسیک" },
-    { name: "ترسناک" },
-    { name: "تاریخی" },
-    { name: "کمدی" },
-    { name: "ادبیات" },
-    { name: "اسلام", parentId: 3 },
-    { name: "ایران", parentId: 3 },
-    { name: "علمی", parentId: 3 },
-    { name: "دیالوگ", parentId: 4 },
-    { name: "مونولوگ", parentId: 4 },
-    { name: "هزل", parentId: 4 },
-    { name: "نمایشنامه", parentId: 5 },
-    { name: "رمان", parentId: 5 },
-    { name: "داستان خارجی", parentId: 5 },
+    { name: "کلاسیک", image: imageUUID7, icon: imageUUID13, main: true },
+    { name: "ترسناک", image: imageUUID8, icon: imageUUID13, main: true },
+    { name: "تاریخی", image: imageUUID9, icon: imageUUID13, main: true },
+    { name: "کمدی", image: imageUUID10, icon: imageUUID13, main: true },
+    { name: "ادبیات", image: imageUUID11, icon: imageUUID13, main: true },
+    { name: "اسلام", image: imageUUID12, icon: imageUUID13, main: true },
+    { name: "ایران", parentId: 3, image: imageUUID8, icon: imageUUID13 },
+    { name: "علمی", parentId: 3, image: imageUUID10, icon: imageUUID13 },
+    { name: "دیالوگ", parentId: 4, image: imageUUID7, icon: imageUUID13 },
+    { name: "مونولوگ", parentId: 4, image: imageUUID10, icon: imageUUID13 },
+    { name: "هزل", parentId: 4, image: imageUUID8, icon: imageUUID13 },
+    { name: "نمایشنامه", parentId: 5, image: imageUUID12, icon: imageUUID13 },
+    { name: "رمان", parentId: 5, image: imageUUID11, icon: imageUUID13 },
+    { name: "داستان خارجی", parentId: 5, image: imageUUID8, icon: imageUUID13 },
   ]);
   console.log("category seed has been finished");
 
@@ -299,6 +356,7 @@ const password = hash("1230");
     { book_id: 5, category_id: 12 },
     { book_id: 6, category_id: 13 },
     { book_id: 6, category_id: 14 },
+    { book_id: 7, category_id: 8 },
   ]);
 
   //Authors
@@ -430,6 +488,16 @@ const password = hash("1230");
       author_id: 7,
       book_id: 6,
     },
+    {
+      authorType: 1,
+      author_id: 7,
+      book_id: 3,
+    },
+    {
+      authorType: 3,
+      author_id: 7,
+      book_id: 7,
+    },
   ]);
   console.log("Book Authors seed has been finished");
 
@@ -452,20 +520,141 @@ const password = hash("1230");
   ]);
   console.log("Off price seed has been finished");
 
+  const sizeArr = ["Kb", "Mb"];
   //Book image
   await File.bulkCreate([
-    { uuid: imageUUID1, name: "1.png", path: "wy.03x3w01c.png" },
-    { uuid: imageUUID2, name: "2.png", path: "13l.ewmzcpshf.png" },
-    { uuid: imageUUID3, name: "3.png", path: "7k.1kyzbxzy.png" },
-    { uuid: imageUUID4, name: "4.png", path: "1dv.xg7x3ijv.png" },
-    { uuid: imageUUID5, name: "5.png", path: "us.r4ooi24k.png" },
-    { uuid: imageUUID6, name: "6.png", path: "1yj.abyz0v2x.png" },
-    { name: "aa.pdf", path: "1cg.517itrhf.pdf", book_id: 1 },
-    { name: "bb.pdf", path: "1n4.dstn1gc9.pdf", book_id: 2 },
-    { name: "cc.pdf", path: "1bf.1hn5rnuj.pdf", book_id: 3 },
-    { name: "dd.pdf", path: "u5.kgqvk4c1l.pdf", book_id: 4 },
-    { name: "ee.pdf", path: "1wl.o4g9dcl4.pdf", book_id: 5 },
-    { name: "ff.pdf", path: "1w2.bc97ivpz.pdf", book_id: 6 },
+    { uuid: imageUUID1, name: "1.jpg", path: "wy.03x3w01c.jpg" },
+    { uuid: imageUUID2, name: "2.jpg", path: "13l.ewmzcpshf.jpg" },
+    { uuid: imageUUID3, name: "3.jpg", path: "7k.1kyzbxzy.jpg" },
+    { uuid: imageUUID4, name: "4.jpg", path: "1dv.xg7x3ijv.jpg" },
+    { uuid: imageUUID5, name: "5.jpg", path: "us.r4ooi24k.jpg" },
+    { uuid: imageUUID6, name: "6.jpg", path: "1yj.abyz0v2x.jpg" },
+    { uuid: imageUUID7, name: "7.jpg", path: "2yj.abyz0v2x.jpg" },
+    { uuid: imageUUID8, name: "8.jpg", path: "3yj.abyz0v2x.jpg" },
+    { uuid: imageUUID9, name: "9.jpg", path: "38j.abyz0v2x.jpg" },
+    { uuid: imageUUID10, name: "10.jpg", path: "9yj.abyz0v2x.jpg" },
+    { uuid: imageUUID11, name: "11.jpg", path: "3yj.aeyz0v2x.jpg" },
+    { uuid: imageUUID12, name: "12.jpg", path: "3yj.abrz0v2x.jpg" },
+    { uuid: imageUUID13, name: "icon.svg", path: "3yj.abrz0e8x.svg" },
+    {
+      name: "aa.pdf",
+      path: "1cg.517itrhf.pdf",
+      book_id: 1,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "bb.pdf",
+      path: "1n4.dstn1gc9.pdf",
+      book_id: 2,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "cc.pdf",
+      path: "1bf.1hn5rnuj.pdf",
+      book_id: 3,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "dd.pdf",
+      path: "u5.kgqvk4c1l.pdf",
+      book_id: 4,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "ee.pdf",
+      path: "1wl.o4g9dcl4.pdf",
+      book_id: 5,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "ff.pdf",
+      path: "1w2.bc97ivpz.pdf",
+      book_id: 6,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "hh.pdf",
+      path: "1wl.o4g9dcl4.pdf",
+      book_id: 6,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
   ]);
   console.log("Book images setup");
 

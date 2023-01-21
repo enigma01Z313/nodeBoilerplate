@@ -43,17 +43,25 @@ const refineAuthor = ({ dataValues: author } = {}) =>
         bookAuthor: undefined,
       };
 
-const refineBookAuthorities = (authors) => {
+const refineBookAuthorities = (authors, isList) => {
   if (!authors) return undefined;
-  const refinedAuthors = {};
+  let refinedAuthors;
 
   authors.sort((a, b) => a.bookAuthor.authorType - b.bookAuthor.authorType);
 
-  for (const author of authors) {
-    const { code, label, key } = authorTypes(author.bookAuthor.authorType);
-    if (!refinedAuthors[key]) refinedAuthors[key] = { label, list: [] };
+  if (isList) {
+    refinedAuthors =
+      authors.length === 1
+        ? `${authors[0].firstName} ${authors[0].lastName}`
+        : "جمعی از نویسندگان";
+  } else {
+    refinedAuthors = {};
+    for (const author of authors) {
+      const { code, label, key } = authorTypes(author.bookAuthor.authorType);
+      if (!refinedAuthors[key]) refinedAuthors[key] = { label, list: [] };
 
-    refinedAuthors[key].list.push(refineAuthor(author));
+      refinedAuthors[key].list.push(refineAuthor(author));
+    }
   }
 
   return refinedAuthors;
@@ -105,16 +113,26 @@ const refinePrice = (price, offPrice) => {
 const refineFileMeta = (fileMeta) =>
   !fileMeta ? { metaData: undefined } : JSON.parse(fileMeta);
 
+const refineFileType = (fileName) => {
+  if (!fileName) return { type: undefined };
+  const fileArr = fileName.split(".");
+  const extention = fileArr[fileArr.length - 1];
+  if (["pdf", "epub"].includes(extention))
+    return { type: "file", label: "فایل" };
+  else if (["ogg", "mp3"].includes(extention))
+    return { type: "sound", label: "فایل صوتی" };
+};
+
 const refineBookFiles = (files) =>
   !files
     ? undefined
     : files.map(({ dataValues: file }) => {
-        console.log(file);
-
+        // console.log(refineFileType(file.name));
         return {
           ...file,
           id: file.uuid,
-          ...refineFileMeta(file.metaData),
+          fileType: { ...refineFileType(file.name) },
+          meta: { ...refineFileMeta(file.metaData) },
           metaData: undefined,
           id: undefined,
           path: undefined,
@@ -127,7 +145,7 @@ const refineBookFiles = (files) =>
 /////////////////////////////////
 /////////////////////////////////
 /////////////////////////////////
-module.exports = (data) => {
+module.exports = (data, isList = false) => {
   const item = data?.dataValues ?? data;
 
   return {
@@ -135,9 +153,10 @@ module.exports = (data) => {
     id: item.uuid,
     status: bookStatus(item.status),
     files: refineBookFiles(item.files),
+    file: refineBookFiles(item.files),
     tags: refineBookTags(item.tags),
     categories: refineBookCategories(item.categories),
-    authors: refineBookAuthorities(item.authors),
+    authors: refineBookAuthorities(item.authors, isList),
     publisher: refinePublisher(item.publisher),
     ...refinePrice(item.price, item.off_price),
     uuid: undefined,

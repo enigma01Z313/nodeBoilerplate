@@ -40,7 +40,7 @@ const updatedCategorySchema = new ValidateF()
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(filteredData()), use(list), serveJson);
+router.get("/", use(list), serveJson);
 
 router.get("/:uuid", use(get), serveJson);
 
