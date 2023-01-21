@@ -489,6 +489,11 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
       book_id: 6,
     },
     {
+      authorType: 1,
+      author_id: 7,
+      book_id: 3,
+    },
+    {
       authorType: 3,
       author_id: 7,
       book_id: 7,
@@ -515,6 +520,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
   ]);
   console.log("Off price seed has been finished");
 
+  const sizeArr = ["Kb", "Mb"];
   //Book image
   await File.bulkCreate([
     { uuid: imageUUID1, name: "1.jpg", path: "wy.03x3w01c.jpg" },
@@ -530,13 +536,125 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
     { uuid: imageUUID11, name: "11.jpg", path: "3yj.aeyz0v2x.jpg" },
     { uuid: imageUUID12, name: "12.jpg", path: "3yj.abrz0v2x.jpg" },
     { uuid: imageUUID13, name: "icon.svg", path: "3yj.abrz0e8x.svg" },
-    { name: "aa.pdf", path: "1cg.517itrhf.pdf", book_id: 1 },
-    { name: "bb.pdf", path: "1n4.dstn1gc9.pdf", book_id: 2 },
-    { name: "cc.pdf", path: "1bf.1hn5rnuj.pdf", book_id: 3 },
-    { name: "dd.pdf", path: "u5.kgqvk4c1l.pdf", book_id: 4 },
-    { name: "ee.pdf", path: "1wl.o4g9dcl4.pdf", book_id: 5 },
-    { name: "ff.pdf", path: "1w2.bc97ivpz.pdf", book_id: 6 },
-    { name: "ff.pdf", path: "1wl.o4g9dcl4.pdf", book_id: 6 },
+    {
+      name: "aa.pdf",
+      path: "1cg.517itrhf.pdf",
+      book_id: 1,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "bb.pdf",
+      path: "1n4.dstn1gc9.pdf",
+      book_id: 2,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "cc.pdf",
+      path: "1bf.1hn5rnuj.pdf",
+      book_id: 3,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "dd.pdf",
+      path: "u5.kgqvk4c1l.pdf",
+      book_id: 4,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "ee.pdf",
+      path: "1wl.o4g9dcl4.pdf",
+      book_id: 5,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "ff.pdf",
+      path: "1w2.bc97ivpz.pdf",
+      book_id: 6,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
+    {
+      name: "hh.pdf",
+      path: "1wl.o4g9dcl4.pdf",
+      book_id: 6,
+      metaData: JSON.stringify({
+        pageCount: {
+          label: "تعداد صفحات",
+          value: Math.floor(Math.random() * 20) + 1,
+        },
+        size: {
+          label: "حجم فایل",
+          value: `${Math.floor(Math.random() * 20) + 1}${
+            sizeArr[Math.floor(Math.random() * 2)]
+          }`,
+        },
+      }),
+    },
   ]);
   console.log("Book images setup");
 

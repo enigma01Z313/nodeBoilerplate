@@ -113,16 +113,26 @@ const refinePrice = (price, offPrice) => {
 const refineFileMeta = (fileMeta) =>
   !fileMeta ? { metaData: undefined } : JSON.parse(fileMeta);
 
+const refineFileType = (fileName) => {
+  if (!fileName) return { type: undefined };
+  const fileArr = fileName.split(".");
+  const extention = fileArr[fileArr.length - 1];
+  if (["pdf", "epub"].includes(extention))
+    return { type: "file", label: "فایل" };
+  else if (["ogg", "mp3"].includes(extention))
+    return { type: "sound", label: "فایل صوتی" };
+};
+
 const refineBookFiles = (files) =>
   !files
     ? undefined
     : files.map(({ dataValues: file }) => {
-        console.log(file);
-
+        // console.log(refineFileType(file.name));
         return {
           ...file,
           id: file.uuid,
-          ...refineFileMeta(file.metaData),
+          fileType: { ...refineFileType(file.name) },
+          meta: { ...refineFileMeta(file.metaData) },
           metaData: undefined,
           id: undefined,
           path: undefined,
@@ -143,6 +153,7 @@ module.exports = (data, isList = false) => {
     id: item.uuid,
     status: bookStatus(item.status),
     files: refineBookFiles(item.files),
+    file: refineBookFiles(item.files),
     tags: refineBookTags(item.tags),
     categories: refineBookCategories(item.categories),
     authors: refineBookAuthorities(item.authors, isList),
