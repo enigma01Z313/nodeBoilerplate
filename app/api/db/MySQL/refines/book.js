@@ -153,7 +153,6 @@ module.exports = (data, isList = false) => {
     id: item.uuid,
     status: bookStatus(item.status),
     files: refineBookFiles(item.files),
-    file: refineBookFiles(item.files),
     tags: refineBookTags(item.tags),
     categories: refineBookCategories(item.categories),
     authors: refineBookAuthorities(item.authors, isList),
