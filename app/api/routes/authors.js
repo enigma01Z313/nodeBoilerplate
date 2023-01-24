@@ -77,6 +77,7 @@ const bookListOption = {
   baseModel: "author",
   includes: [{ model: "Off_price" }],
 };
+
 router.get(
   "/:uuid/books",
   use(get),

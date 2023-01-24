@@ -3,26 +3,24 @@ const { offPrice: refineOffPrice } = require("../../../../db/MySQL/refines");
 
 module.exports = async (req, res, next) => {
   const {
-    chainData: { book },
+    chainData: {
+      book: { id: book_id },
+    },
   } = res;
 
   const { type, amount, startDate, endDate } = req.body;
-
-  const bookId = book.id;
 
   const createOption = {
     type,
     amount,
     startDate,
     endDate,
-    book_id: bookId,
+    book_id,
   };
-
-  console.log(createOption);
 
   await Off_price.destroy({
     where: {
-      book_id: bookId,
+      book_id,
     },
   });
 
