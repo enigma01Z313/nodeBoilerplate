@@ -1,4 +1,5 @@
 const express = require("express");
+const { Op } = require("sequelize");
 const router = express.Router();
 const use = require("../src/utils/use");
 const {
@@ -15,7 +16,7 @@ const {
 } = require("../src/middleware");
 
 const {
-  Tag: { list, get, create, update },
+  Tag: { get, create, update },
 } = require("../src/services");
 
 /**************************/
@@ -26,6 +27,9 @@ const newTagSchema = new ValidateF()
   .requiredString()
   .param("content", "محتوا")
   .string()
+  .param("status", "وضیعیت")
+  .number()
+  .regex(/^(1|2)$/)
   .done();
 
 const updatedTagSchema = new ValidateF()
@@ -33,12 +37,20 @@ const updatedTagSchema = new ValidateF()
   .string()
   .param("content", "محتوا")
   .string()
+  .param("status", "وضیعیت")
+  .number()
+  .regex(/^(1|2)$/)
   .done();
 
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(list), serveJson);
+router.get(
+  "/",
+  filteredData({ status: { [Op.ne]: 0 } }),
+  use(getDataList("Tag", "تگ")),
+  serveJson
+);
 
 router.get("/:uuid", use(get), serveJson);
 
