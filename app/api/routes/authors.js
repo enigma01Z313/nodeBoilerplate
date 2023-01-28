@@ -1,6 +1,7 @@
 const express = require("express");
-const router = express.Router();
+const { Op } = require("sequelize");
 
+const router = express.Router();
 const { use } = require("../src/utils");
 
 const {
@@ -36,6 +37,9 @@ const newAuthorSchema = new ValidateF()
   .string()
   .param("content", "محتوا")
   .string()
+  .param("status", "وضیعیت")
+  .requiredNumber()
+  .regex(/^(1|2)$/)
   .done();
 
 const updateAuthorSchema = new ValidateF()
@@ -51,6 +55,9 @@ const updateAuthorSchema = new ValidateF()
   .string()
   .param("content", "محتوا")
   .string()
+  .param("status", "وضیعیت")
+  .number()
+  .regex(/^(1|2)$/)
   .done();
 
 /**************************/
@@ -66,7 +73,7 @@ router.post(
 
 router.get(
   "/",
-  use(filteredData()),
+  use(filteredData({ status: { [Op.ne]: 0 } })),
   use(getDataList("Author", "مولف")),
   serveJson
 );

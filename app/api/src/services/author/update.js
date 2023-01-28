@@ -2,8 +2,15 @@ const refineData = require("../../../db/MySQL/refines");
 
 module.exports = async (req, res, next) => {
   let uppedData = false;
-  const { firstName, lastName, coutnry, birthDate, deathDate, content } =
-    req.body;
+  const {
+    firstName,
+    lastName,
+    coutnry,
+    birthDate,
+    deathDate,
+    content,
+    status,
+  } = req.body;
   const { author } = res.chainData;
 
   if (firstName && firstName !== author.firstName)
@@ -23,6 +30,8 @@ module.exports = async (req, res, next) => {
 
   if (content && content !== author.content)
     author.content = uppedData = content;
+
+  if (status && status !== author.status) author.status = uppedData = status;
 
   if (uppedData === false) {
     res.statusCode = 204;

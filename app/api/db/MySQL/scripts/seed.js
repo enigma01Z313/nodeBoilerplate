@@ -453,6 +453,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
         new Date().setFullYear(new Date().getFullYear() - 28)
       ).toISOString(),
       content: "فرزین احمدی جوان 28 ساله و با استعداد ایرانی",
+      status: 1,
     },
     {
       firstName: "رابین",
@@ -465,6 +466,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
         new Date().setFullYear(new Date().getFullYear() - 67)
       ).toISOString(),
       content: "رابین شارما در سال ۱۹۶۵ در کانادا متولد شد.",
+      status: 1,
     },
     {
       firstName: "یرواند",
@@ -477,6 +479,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
         new Date().setFullYear(new Date().getFullYear() - 67)
       ).toISOString(),
       content: "",
+      status: 0,
     },
     {
       firstName: "محمدابراهیم",
@@ -489,6 +492,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
         new Date().setFullYear(new Date().getFullYear() - 67)
       ).toISOString(),
       content: "",
+      status: 1,
     },
     {
       firstName: "عبدالله ",
@@ -501,6 +505,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
         new Date().setFullYear(new Date().getFullYear() - 67)
       ).toISOString(),
       content: "",
+      status: 1,
     },
     {
       firstName: "تتسوکو",
@@ -513,6 +518,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
         new Date().setFullYear(new Date().getFullYear() - 67)
       ).toISOString(),
       content: "",
+      status: 0,
     },
     {
       firstName: "سیمین",

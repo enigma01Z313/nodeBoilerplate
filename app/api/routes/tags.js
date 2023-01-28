@@ -47,7 +47,7 @@ const updatedTagSchema = new ValidateF()
 /**************************/
 router.get(
   "/",
-  filteredData({ status: { [Op.ne]: 0 } }),
+  use(filteredData({ status: { [Op.ne]: 0 } })),
   use(getDataList("Tag", "تگ")),
   serveJson
 );

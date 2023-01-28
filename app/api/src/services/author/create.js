@@ -1,8 +1,15 @@
 const { Author } = require("../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
-  const { firstName, lastName, coutnry, birthDate, deathDate, content } =
-    req.body;
+  const {
+    firstName,
+    lastName,
+    coutnry,
+    birthDate,
+    deathDate,
+    content,
+    status,
+  } = req.body;
 
   const newAuthor = await Author.create({
     firstName,
@@ -11,6 +18,7 @@ module.exports = async (req, res, next) => {
     birthDate,
     deathDate,
     content,
+    status,
   });
 
   res.jsonData = newAuthor;
