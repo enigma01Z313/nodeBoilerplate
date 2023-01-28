@@ -7,15 +7,18 @@ module.exports = async (req, res, next) => {
     chainData: { parentCategory, category },
   } = res;
 
-  const { name, parentId, content } = req.body;
+  const { name, parentId, content, status } = req.body;
 
   if (name && name !== category.name) category.name = uppedData = name;
 
   if (parentId && parentCategory.id !== category.parentId)
     category.parentId = uppedData = parentCategory.id;
 
-  if (content && category !== category.content)
+  if (content && content !== category.content)
     category.content = uppedData = content;
+
+  if (status && status !== category.status)
+    category.status = uppedData = status;
 
   if (uppedData === false) {
     res.statusCode = 204;

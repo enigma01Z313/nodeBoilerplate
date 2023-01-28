@@ -28,7 +28,7 @@ const newTagSchema = new ValidateF()
   .param("content", "محتوا")
   .string()
   .param("status", "وضیعیت")
-  .number()
+  .requiredNumber()
   .regex(/^(1|2)$/)
   .done();
 

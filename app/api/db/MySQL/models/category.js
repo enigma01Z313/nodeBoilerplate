@@ -30,4 +30,9 @@ module.exports = (sequelize, DataTypes) =>
     content: {
       type: DataTypes.STRING(10000),
     },
+    status: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+    },
   });

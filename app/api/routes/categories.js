@@ -1,4 +1,5 @@
 const express = require("express");
+const { Op } = require("sequelize");
 const router = express.Router();
 const use = require("../src/utils/use");
 const {
@@ -29,6 +30,9 @@ const newCategorySchema = new ValidateF()
   .length(36)
   .param("content", "محتوا")
   .string()
+  .param("status", "وضیعیت")
+  .requiredNumber()
+  .regex(/^(1|2)$/)
   .done();
 
 const updatedCategorySchema = new ValidateF()
@@ -39,12 +43,20 @@ const updatedCategorySchema = new ValidateF()
   .length(36)
   .param("content", "محتوا")
   .string()
+  .param("status", "وضیعیت")
+  .number()
+  .regex(/^(1|2)$/)
   .done();
 
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(list), serveJson);
+router.get(
+  "/",
+  filteredData({ status: { [Op.ne]: 0 } }),
+  use(getDataList("Category", "دسته بندی ")),
+  serveJson
+);
 
 router.get("/:uuid", use(get), serveJson);
 
