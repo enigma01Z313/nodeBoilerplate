@@ -1,0 +1,10 @@
+
+GET http://127.0.0.1:30002/api/logs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjA5MzMzOTUwODg5IiwiaWF0IjoxNjcyMTU4MDkyLCJleHAiOjE2ODExNTgwOTJ9.u5rVKN8yG0wIW2WSnMEhALz-xaLY2qhDjXBUN8D2aCc
+
+###
+
+GET http://127.0.0.1:30002/api/logs/2022-12-29
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjA5MzMzOTUwODg5IiwiaWF0IjoxNjcyMTU4MDkyLCJleHAiOjE2ODExNTgwOTJ9.u5rVKN8yG0wIW2WSnMEhALz-xaLY2qhDjXBUN8D2aCc

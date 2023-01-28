@@ -1,4 +1,4 @@
-const url = "http://67.43.234.92:30002/api/docs";
+const url = `${document.location.origin}/api/docs`;
 // const url = "api/docs"
 
 const createApiItem = (apiVersion) => {

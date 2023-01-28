@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) =>
       defaultValue: false,
       type: DataTypes.BOOLEAN,
     },
+    isSample: {
+      allowNull: true,
+      defaultValue: false,
+      type: DataTypes.BOOLEAN,
+    },
     metaData: {
       allowNull: true,
       type: DataTypes.STRING(10000),

@@ -1,9 +1,0 @@
-GET http://127.0.0.1:30005/api/logs
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhY2VhMTA2LTc2MmItNGUzNS1hNThkLWVjZTI5M2MyOTlkMyIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM3Njk2OTksImV4cCI6MTY4Mjc2OTY5OX0.hwf0i1jFJnsfSUvurSwV0Fd2xm1G3nyif1UpJnLg4-s
-
-###
-GET http://127.0.0.1:30005/api/logs/2023-01-02
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhY2VhMTA2LTc2MmItNGUzNS1hNThkLWVjZTI5M2MyOTlkMyIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM3Njk2OTksImV4cCI6MTY4Mjc2OTY5OX0.hwf0i1jFJnsfSUvurSwV0Fd2xm1G3nyif1UpJnLg4-s
-

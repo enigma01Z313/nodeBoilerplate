@@ -8,6 +8,8 @@ module.exports = async (req, res, next) => {
     where: { uuid },
   });
 
+  if (!tag) return fError(404, "Tag not found", "تگ مورد نظر وجود ندارد");
+
   res.chainData.tag = tag;
   res.jsonData = refineTag(tag);
 

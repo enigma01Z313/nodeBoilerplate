@@ -1,4 +1,5 @@
 const { User } = require("../../../db/MySQL/models");
+const { user: refinedUser } = require("../../../db/MySQL/refines");
 const updateMetaData = require("./_updateMeta");
 
 module.exports = async (req, res, next) => {
@@ -39,6 +40,6 @@ module.exports = async (req, res, next) => {
   newUser.setUserMeta(userMeta);
 
   res.statusCode = 201;
-  res.jsonData = newUser;
+  res.jsonData = refinedUser(newUser);
   next();
 };

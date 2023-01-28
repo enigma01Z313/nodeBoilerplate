@@ -66,7 +66,6 @@ router.post(
 
 router.get(
   "/",
-  use(authentication),
   use(filteredData()),
   use(getDataList("Author", "مولف")),
   serveJson
@@ -78,6 +77,7 @@ const bookListOption = {
   baseModel: "author",
   includes: [{ model: "Off_price" }],
 };
+
 router.get(
   "/:uuid/books",
   use(get),

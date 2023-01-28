@@ -1,12 +1,16 @@
 const express = require("express");
+const { use } = require("../src/utils");
 const router = express.Router();
-const serveJson = require("../src/middleware/serveJson");
+const {
+  serveJson,
+  Auth: { authentication, authorization },
+} = require("../src/middleware");
 
 const {
   Logs: { list, get },
 } = require("../src/services");
 
-router.get("/", list, serveJson);
-router.get("/:target", get);
+router.get("/", use(authentication), list, serveJson);
+router.get("/:target", use(authentication), get);
 
 module.exports = router;

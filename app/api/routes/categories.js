@@ -27,6 +27,8 @@ const newCategorySchema = new ValidateF()
   .param("parentId")
   .string()
   .length(36)
+  .param("content", "محتوا")
+  .string()
   .done();
 
 const updatedCategorySchema = new ValidateF()
@@ -35,12 +37,14 @@ const updatedCategorySchema = new ValidateF()
   .param("parentId")
   .string()
   .length(36)
+  .param("content", "محتوا")
+  .string()
   .done();
 
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(filteredData()), use(list), serveJson);
+router.get("/", use(list), serveJson);
 
 router.get("/:uuid", use(get), serveJson);
 

@@ -34,19 +34,20 @@ const newUserSchema = new ValidateF()
   .length(36)
   .param("status", "وضیعیت کاربری")
   .requiredNumber()
+  .regex(/^(1|2)$/)
   .phoneSchema()
-  .emailSchema()
+  .param("email", "ایمیل")
+  .string()
+  .regex(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
   .done();
 
 const updatedUserSchema = new ValidateF()
   .param("phone", "شماره موبایل")
   .string()
   .regex(/^09[0-9]{9}$/)
-  .param("nationalCode", "کد ملی")
-  .maximum(11)
+  .param("email", "ایمیل")
   .string()
-  .param("employeeCode", "کد مستخدم")
-  .string()
+  .regex(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
   .param("firstName", "نام")
   .string()
   .param("lastName", "نام خانوادگی")
@@ -56,6 +57,7 @@ const updatedUserSchema = new ValidateF()
   .length(36)
   .param("status", "وضعیت")
   .number()
+  .regex(/^(1|2)$/)
   .param("roleId", "آیدی نقش")
   .string()
   .length(36)
@@ -67,7 +69,7 @@ router.get(
   "/",
   use(authentication),
   use(filteredData({})),
-  use(getDataList("User", "کاربر", undefined, undefined, 'userList')),
+  use(getDataList("User", "کاربر", undefined, undefined, "userList")),
   serveJson
 );
 

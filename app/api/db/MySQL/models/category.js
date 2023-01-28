@@ -16,4 +16,18 @@ module.exports = (sequelize, DataTypes) =>
       allowNull: false,
       type: DataTypes.STRING,
     },
+    image: {
+      type: DataTypes.STRING,
+    },
+    icon: {
+      type: DataTypes.STRING,
+    },
+    main: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    content: {
+      type: DataTypes.STRING(10000),
+    },
   });

@@ -1,0 +1,69 @@
+@baseUrl = http://67.43.234.92:30005/api
+@apiUrl = {{baseUrl}}/books
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJlOWZlNDY2LWNkYzQtNDNmOS1hZjdjLTBiYWM1Y2EzYzFmMiIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM4NTU1MzgsImV4cCI6MTY4Mjg1NTUzOH0.__R9lYx10hGqUhnRw1sLzINjvd2k7n5KRifnyVmXj5E
+
+# GET {{apiUrl}}?tags=1,2
+# GET {{apiUrl}}?categories=4
+# GET {{apiUrl}}?categories=4,8
+# GET {{apiUrl}}?publisherIds=3,4
+# GET {{apiUrl}}?authors=2
+# GET {{apiUrl}}?authors=1,2
+# GET {{apiUrl}}?authors=1&limit=4&page=1
+# GET {{apiUrl}}?author=2
+# GET {{apiUrl}}?author=1,2
+# GET {{apiUrl}}?tags=1,2&categories=8&limit=3&page=1
+# GET {{apiUrl}}?author=1&limit=4&page=1
+# GET {{apiUrl}}?limit=2&page=2
+# GET {{apiUrl}}?authors=2
+# GET {{apiUrl}}?authors=1,2
+# GET {{apiUrl}}?authors=1&limit=4&page=1
+GET {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{apiUrl}}/f382750b-9a6d-4634-b5c7-6e4569be4c95
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{apiUrl}}/489da70e-401d-4fbb-a509-fdb37e144854/similar
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{apiUrl}}/e1e169fa-9bae-47d4-8b4e-5e2fea3c937f/offprice
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+POST {{apiUrl}}/55ed0f5c-2876-4c65-813a-11cefa2f2697/offprice
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "type": 1,
+  "amount": 87,
+  "startDate": "2023-03-20T1:00:00.892Z",
+  "endDate": "2023-06-10T12:49:14.892Z"
+}
+
+###
+
+PUT {{apiUrl}}/e1e169fa-9bae-47d4-8b4e-5e2fea3c937f/offprice
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "type": 2,
+  "amount": 6500,
+  "startDate": "2023-03-20T1:00:00.892Z",
+  "endDate": "2023-06-10T12:49:14.892Z"
+}
+
+###
+
+DELETE {{apiUrl}}/4637d357-3e62-49eb-995d-5b8d596fa232/offprice

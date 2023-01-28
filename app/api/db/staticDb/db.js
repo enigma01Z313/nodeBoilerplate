@@ -64,6 +64,10 @@ const statusList = {
     { code: 1, label: "درصدی", key: "percent" },
     { code: 2, label: "قیمت", key: "amount" },
   ],
+  faeze: [
+    { code: 0, label: "غیرفعال", key: "disable" },
+    { code: 1, label: "فعال", key: "enable" },
+  ],
 };
 
 module.exports = statusList;

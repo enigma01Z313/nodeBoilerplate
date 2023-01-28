@@ -178,6 +178,7 @@ class ValidateF {
   phoneSchema() {
     this.param("phone", "تلفن همراه")
       .required()
+      .string()
       .regex(/^09[0-9]{9}$/);
     return this;
   }
@@ -186,6 +187,7 @@ class ValidateF {
   emailSchema() {
     this.param("email", "ایمیل")
       .required()
+      .string()
       .regex(
         /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
       );

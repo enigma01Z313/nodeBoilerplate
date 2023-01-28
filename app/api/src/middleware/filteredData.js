@@ -5,7 +5,7 @@ const filteredData =
   (req, res, next) => {
     const whereOptions = [];
     whereOptions.push(exclude);
-    const { page, limit, status, role } = req.query;
+    const { page, limit, status, role, excludeThis } = req.query;
     const { setLang } = res;
 
     //filters section
@@ -17,6 +17,8 @@ const filteredData =
       });
 
     if (role) whereOptions.push({ [`$Role.uuid$`]: role });
+
+    if (excludeThis) whereOptions.push({ uuid: { [Op.ne]: excludeThis } });
 
     const defaultOptions = { where: { [Op.and]: [...whereOptions] } };
     const paginationedOptions = Object.assign({}, defaultOptions);

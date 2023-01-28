@@ -51,18 +51,15 @@ module.exports = async (req, res, next) => {
     defaultOptions = { ...defaultOptions, include };
   }
 
-  if (authors) {
-    queryChunk = {
-      model: Author,
-      as: "authors",
-      attributes: ["id", "uuid"],
-      through: { attributes: [] },
-      where: { uuid: { [Op.or]: authors.split(",") } },
-    };
-
-    include.push(queryChunk);
-    defaultOptions = { ...defaultOptions, include };
-  }
+  queryChunk = {
+    model: Author,
+    as: "authors",
+    attributes: ["id", "uuid", "firstName", "lastName"],
+    through: { attributes: ["authorType"] },
+  };
+  if (authors) queryChunk.where = { uuid: { [Op.or]: authors.split(",") } };
+  include.push(queryChunk);
+  defaultOptions = { ...defaultOptions, include };
 
   if (publishers) {
     queryChunk = {
@@ -82,5 +79,6 @@ module.exports = async (req, res, next) => {
   const pagedOptions = Object.assign({ limit, offset }, defaultOptions);
 
   res.queryOptions = { defaultOptions, pagedOptions };
+
   return next();
 };
