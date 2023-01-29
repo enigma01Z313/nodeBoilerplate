@@ -29,7 +29,7 @@ const newTagSchema = new ValidateF()
   .string()
   .param("status", "وضیعیت")
   .requiredNumber()
-  .regex(/^(1|2)$/)
+  .regex(/^(0|1)$/)
   .done();
 
 const updatedTagSchema = new ValidateF()
@@ -39,13 +39,13 @@ const updatedTagSchema = new ValidateF()
   .string()
   .param("status", "وضیعیت")
   .number()
-  .regex(/^(1|2)$/)
+  .regex(/^(0|1)$/)
   .done();
 
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(list), use(getDataList("Tag", "تگ")), serveJson);
+router.get("/", use(getDataList("Tag", "تگ")), serveJson);
 
 router.get("/:uuid", use(get), serveJson);
 

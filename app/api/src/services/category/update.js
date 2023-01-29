@@ -17,7 +17,7 @@ module.exports = async (req, res, next) => {
   if (content && content !== category.content)
     category.content = uppedData = content;
 
-  if (status && status !== category.status)
+  if (typeof status !== "undefined" && status !== category.status)
     category.status = uppedData = status;
 
   if (uppedData === false) {
