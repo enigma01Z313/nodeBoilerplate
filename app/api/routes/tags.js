@@ -16,7 +16,7 @@ const {
 } = require("../src/middleware");
 
 const {
-  Tag: { get, create, update },
+  Tag: { get, create, update, list },
 } = require("../src/services");
 
 /**************************/
@@ -45,12 +45,7 @@ const updatedTagSchema = new ValidateF()
 /**************************/
 /*         routes         */
 /**************************/
-router.get(
-  "/",
-  use(filteredData({ status: { [Op.ne]: 0 } })),
-  use(getDataList("Tag", "تگ")),
-  serveJson
-);
+router.get("/", use(list), use(getDataList("Tag", "تگ")), serveJson);
 
 router.get("/:uuid", use(get), serveJson);
 
