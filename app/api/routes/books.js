@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { use } = require("../src/utils");
+const { use, inspect } = require("../src/utils");
 
 const {
   serveJson,
@@ -18,11 +18,18 @@ const {
 } = require("../src/middleware");
 
 const {
+  Book,
   Book: {
     list,
     get,
+    create,
     similar: similarBooks,
-    OffPrice: { get: getOffPrice, create, update, remove },
+    OffPrice: {
+      get: getOffPrice,
+      create: createOffPrice,
+      update: updateOffPrice,
+      remove,
+    },
   },
 } = require("../src/services");
 
@@ -41,6 +48,41 @@ const newOffPriceSchema = new ValidateF()
   .requiredString()
   .done();
 
+const bookAuthorsSchema = (function () {
+  const authorTypes = require("../db/staticDb")("authorTypes")();
+
+  const authorsSchema = new ValidateF();
+  authorTypes.forEach(({ key, label }) => {
+    authorsSchema.param(key, label).array("string");
+  });
+  return authorsSchema.done();
+})();
+
+inspect(bookAuthorsSchema);
+
+const newBookSchema = new ValidateF()
+  .param("name", "نام کتاب")
+  .requiredString()
+  .param("image", "تصویر کتاب")
+  .requiredString(36)
+  .param("content", "محتوا")
+  .string()
+  .param("publishedYear", "تاریخ انتشار")
+  .number()
+  .param("price", "قیمت")
+  .number()
+  .param("offPrice", "تخفیف")
+  .requiredObject(newOffPriceSchema)
+  .param("publisher", "ناشر")
+  .requiredString(36)
+  .param("categories", "دسته بندی")
+  .array("string")
+  .param("tags", "دسته بندی")
+  .array("string")
+  .param("authors", "مولف")
+  .array(bookAuthorsSchema)
+  .done();
+
 const updatedOffPriceSchema = new ValidateF()
   .param("type", "نوع")
   .regex(/^(1|2)$/)
@@ -57,6 +99,8 @@ const updatedOffPriceSchema = new ValidateF()
 /*         routes         */
 /**************************/
 router.get("/", use(bookQuery), use(list), serveJson);
+
+router.post("/", use(validator(newBookSchema)), use(create), serveJson);
 
 router.get("/:uuid", use(get), serveJson);
 
@@ -79,7 +123,7 @@ router.post(
   "/:uuid/offprice",
   use(validator(newOffPriceSchema)),
   use(getEntityByUuid({ model: "Book", fields: ["uuid"] })),
-  use(create),
+  use(createOffPrice),
   serveJson
 );
 
@@ -87,7 +131,7 @@ router.put(
   "/:uuid/offprice",
   use(validator(updatedOffPriceSchema)),
   use(getEntityByUuid({ model: "Book", fields: ["uuid"] })),
-  use(update),
+  use(updateOffPrice),
   serveJson
 );
 

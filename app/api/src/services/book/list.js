@@ -1,5 +1,6 @@
 const { Book } = require("../../../db/MySQL/models");
 const { bookList } = require("../../../db/MySQL/refines");
+const { authorTypes, offPriceTypes } = require("../../../db/staticDb/db");
 
 module.exports = async (req, res, next) => {
   const { defaultOptions, pagedOptions } = res.queryOptions;
@@ -7,7 +8,11 @@ module.exports = async (req, res, next) => {
   const books = await Book.findAll(pagedOptions);
   const booksCount = await Book.findAll(defaultOptions);
 
-  res.jsonData = { data: bookList(books), total: booksCount.length };
+  res.jsonData = {
+    data: bookList(books),
+    total: booksCount.length,
+    meta: { authorTypes, offPriceTypes },
+  };
 
   next();
 };

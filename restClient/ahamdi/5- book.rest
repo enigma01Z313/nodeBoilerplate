@@ -2,6 +2,41 @@
 @apiUrl = {{baseUrl}}/books
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhY2VhMTA2LTc2MmItNGUzNS1hNThkLWVjZTI5M2MyOTlkMyIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzM4NDUzMDEsImV4cCI6MTY4Mjg0NTMwMX0.f4igOP_QDijzP8FBXfqLJddv_NaoIm_7pBfx4c3P29o
 
+POST {{apiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "ssssss",
+  "image": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9",
+  "content": "ssswwww",
+  "publishedYear": 1394,
+  "price": 250000,
+  "offPrice": {
+    "type": 1,
+    "amount": 1000,
+    "startDate": "1401-05-03",
+    "endDate": "1401-05-05"
+  },
+  "publisher": "abeaa0a5-dce4-4d32-be14-c743ac0f590b",
+  "categories": [
+    "94be2d55-3479-429d-9a82-4f28554013c1"
+  ],
+  "tags": [
+    "fd86f852-ae76-48df-8778-ea8b8a42787c", 
+    "50891fe0-9a2c-49e1-a2b5-075dd0701170"
+  ],
+  "authors": {
+    "writer": ["aaa", "bbb"],
+    "author": ["aaa", "bbb"],
+    "translator": ["aaa", "bbb"],
+    "resercher": ["aaa", "bbb"],
+    "narrator": ["aaa", "bbb"]
+  }
+}
+
+###
+
 # GET {{apiUrl}}?tags=1,2
 # GET {{apiUrl}}?categories=4
 # GET {{apiUrl}}?categories=4,8
@@ -23,7 +58,7 @@ Authorization: Bearer {{token}}
 
 ###
 
-GET {{apiUrl}}/2d09fb32-5077-4a87-ba8b-22b0ce3e30ae
+GET {{apiUrl}}/049f2479-f8f3-4a9e-8004-3159c42c68d6
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

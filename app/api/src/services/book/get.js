@@ -7,9 +7,9 @@ const {
   Off_price,
   File,
 } = require("../../../db/MySQL/models");
-
 const { book: refineBook } = require("../../../db/MySQL/refines");
 const { fError } = require("../../utils");
+const { authorTypes, offPriceTypes } = require("../../../db/staticDb/db");
 
 module.exports = async (req, res, next) => {
   const { uuid } = req.params;
@@ -30,6 +30,6 @@ module.exports = async (req, res, next) => {
 
   const data = refineBook(book);
 
-  res.jsonData = data;
+  res.jsonData = { ...data, meta: { authorTypes, offPriceTypes } };
   next();
 };
