@@ -31,7 +31,8 @@ module.exports = async (req, res, next) => {
   if (content && content !== author.content)
     author.content = uppedData = content;
 
-  if (status && status !== author.status) author.status = uppedData = status;
+  if (typeof status !== "undefined" && status !== author.status)
+    author.status = uppedData = status;
 
   if (uppedData === false) {
     res.statusCode = 204;

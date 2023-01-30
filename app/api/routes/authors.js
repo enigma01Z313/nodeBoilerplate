@@ -39,7 +39,7 @@ const newAuthorSchema = new ValidateF()
   .string()
   .param("status", "وضیعیت")
   .requiredNumber()
-  .regex(/^(1|2)$/)
+  .regex(/^(0|1)$/)
   .done();
 
 const updateAuthorSchema = new ValidateF()
@@ -57,7 +57,7 @@ const updateAuthorSchema = new ValidateF()
   .string()
   .param("status", "وضیعیت")
   .number()
-  .regex(/^(1|2)$/)
+  .regex(/^(0|1)$/)
   .done();
 
 /**************************/
@@ -71,12 +71,7 @@ router.post(
   serveJson
 );
 
-router.get(
-  "/",
-  use(filteredData({ status: { [Op.ne]: 0 } })),
-  use(getDataList("Author", "مولف")),
-  serveJson
-);
+router.get("/", use(getDataList("Author", "مولف")), serveJson);
 
 router.get("/:uuid", use(get), serveJson);
 
