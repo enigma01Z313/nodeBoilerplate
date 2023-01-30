@@ -35,5 +35,6 @@ module.exports = (item) => {
     accessToken: undefined,
     refreshToken: undefined,
     role_id: undefined,
+    userMeta: undefined,
   };
 };

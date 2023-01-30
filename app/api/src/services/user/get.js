@@ -16,6 +16,10 @@ module.exports = async (req, res, next) => {
     ],
   });
 
+  console.log(user);
+  console.log("salam");
+  console.log(refinedUser(user));
+
   res.jsonData = refinedUser(user);
   next();
 };
