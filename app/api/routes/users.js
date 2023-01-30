@@ -101,14 +101,6 @@ router.get(
   serveJson
 );
 
-// router.get(
-//   "/:uuid",
-//   use(authentication),
-//   use(theSameUser),
-//   use(getDataByUUID("User", "کاربر", "Role")),
-//   serveJson
-// );
-
 router.put(
   "/:uuid",
   use(validator(updatedUserSchema)),
@@ -119,6 +111,7 @@ router.put(
   use(isUnique("User", "کاربر", "email", "ایمیل")),
   use(getEntityByUuid({ model: "User" })),
   use(update),
+  use(get),
   serveJson
 );
 

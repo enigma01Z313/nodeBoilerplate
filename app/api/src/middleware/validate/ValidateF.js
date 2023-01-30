@@ -53,6 +53,12 @@ class ValidateF {
     return this;
   }
 
+  boolean() {
+    const lastItem = this.items[this.items.length - 1];
+    lastItem.validations["dataType"] = setType(lastItem, "boolean", "بولین");
+    return this;
+  }
+
   //validations
   required() {
     const lastItem = this.items[this.items.length - 1];
