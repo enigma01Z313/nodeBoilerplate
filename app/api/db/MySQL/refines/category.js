@@ -1,5 +1,3 @@
-const status = require("../../staticDb")("defaultStatus");
-
 module.exports = (item) => {
   const data = item?.dataValues ?? item;
 
@@ -17,7 +15,6 @@ module.exports = (item) => {
         id: category.uuid,
         uuid: undefined,
         parentId: undefined,
-        status: status(data.status),
       }));
     }
     refinData.categories = undefined;

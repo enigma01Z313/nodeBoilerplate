@@ -58,8 +58,6 @@ const bookAuthorsSchema = (function () {
   return authorsSchema.done();
 })();
 
-inspect(bookAuthorsSchema);
-
 const newBookSchema = new ValidateF()
   .param("name", "نام کتاب")
   .requiredString()

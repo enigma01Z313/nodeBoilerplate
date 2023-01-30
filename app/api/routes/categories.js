@@ -51,7 +51,7 @@ const updatedCategorySchema = new ValidateF()
   .string()
   .param("status", "وضیعیت")
   .number()
-  .regex(/^(1|2)$/)
+  .regex(/^(0|1)$/)
   .done();
 
 /**************************/
@@ -59,7 +59,7 @@ const updatedCategorySchema = new ValidateF()
 /**************************/
 router.get(
   "/",
-  filteredData({ status: { [Op.ne]: 0 } }),
+  use(list),
   use(getDataList("Category", "دسته بندی ")),
   serveJson
 );

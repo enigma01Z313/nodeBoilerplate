@@ -1,5 +1,3 @@
-const status = require("../../staticDb")("defaultStatus");
-
 module.exports = (item) => {
   const data = item?.dataValues ?? item;
 
@@ -7,6 +5,5 @@ module.exports = (item) => {
     ...data,
     id: data.uuid,
     uuid: undefined,
-    status: status(data.status),
   };
 };
