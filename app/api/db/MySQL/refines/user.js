@@ -1,21 +1,21 @@
 const status = require("../../staticDb")("defaultStatus");
 
-const refineRole = (role) => ({
-  id: role.dataValues.uuid,
-  name: role.dataValues.name,
-  permissions: JSON.parse(role.dataValues.permissions),
+const refineRole = ({ dataValues: { uuid: id, name, permissions } }) => ({
+  id,
+  name,
+  permissions: permissions[0] === "[" ? JSON.parse(permissions) : [permissions],
 });
 
-const refineMeta = (userMeta) => {
-  let refinedMeta = [];
-  for (let meta of userMeta) {
-    refinedMeta.push({
-      key: meta.dataValues.key,
-      value: meta.dataValues.value,
-    });
-  }
-  return refinedMeta;
-};
+const refineMeta = (userMeta) =>
+  !userMeta || userMeta.length === 0
+    ? undefined
+    : userMeta.map(({ dataValues: { key, value } }) => ({ key, value }));
+
+const refineFullname = (firstName, lastName) =>
+  (firstName && lastName && `${firstName} ${lastName}`) ||
+  (firstName && !lastName && firstName) ||
+  (!firstName && lastName && lastName) ||
+  "";
 
 module.exports = (item) => {
   const { dataValues: data } = item;
@@ -23,7 +23,7 @@ module.exports = (item) => {
   return {
     ...data,
     id: data.uuid,
-    fullName: `${item.firstName ?? ""} ${item.lastName ?? ""}`,
+    fullName: refineFullname(item.firstName, item.lastName),
     role: item.role && refineRole(item.role),
     meta: item.userMeta && refineMeta(item.userMeta),
     status: status(data.status),
