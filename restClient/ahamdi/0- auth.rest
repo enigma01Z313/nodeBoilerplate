@@ -1,4 +1,4 @@
-@baseUrl = http://127.0.0.1:30005/api
+@baseUrl = http://185.128.137.193:30008/api
 @apiUrl = {{baseUrl}}/auth
 
 POST {{apiUrl}}
