@@ -28,7 +28,8 @@ const validateErrors = (i, v, t, parameterName, parameterNameFa, fullBody) => {
     typeof t !== typeof undefined &&
     t !== null &&
     ((v.value === "string" && typeof t !== "string") ||
-      (v.value === "number" && typeof t !== "number"))
+      (v.value === "number" && typeof t !== "number") ||
+      (v.value === "boolean" && typeof t !== "boolean"))
   )
     return fError(400, v.violations[0], v.violations[1]);
   else if (

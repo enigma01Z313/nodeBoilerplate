@@ -25,6 +25,6 @@ module.exports = async (req, res, next) => {
     status: 0,
   });
 
-  res.jsonData = { id: newUser.toJSON().id, code };
+  res.jsonData = { id: newUser.toJSON().uuid, code };
   next();
 };
