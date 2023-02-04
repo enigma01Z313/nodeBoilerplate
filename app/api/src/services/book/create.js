@@ -1,19 +1,14 @@
 module.exports = (req, res, next) => {
+  const { name, content, publishedYear, price, offPrice, image, publisher } =
+    req.body;
   const {
-    name,
-    content,
-    publishedYear,
-    price,
-    offPrice,
-    image,
-    publisher,
-    categories,
-    tags,
-    authors,
-  } = req.body;
+    chainData: { tags, categories, authors },
+  } = res;
 
-  console.log(name);
-  console.log(content);
+
+  // console.log(name);
+  // console.log(content);
+  // console.log(res.chainData);
 
   return res.end("111111111");
 };

@@ -55,31 +55,53 @@ const bookAuthorsSchema = (function () {
   authorTypes.forEach(({ key, label }) => {
     authorsSchema.param(key, label).array("string");
   });
+
   return authorsSchema.done();
 })();
 
-const newBookSchema = new ValidateF()
-  .param("name", "نام کتاب")
-  .requiredString()
-  .param("image", "تصویر کتاب")
-  .requiredString(36)
-  .param("content", "محتوا")
+const filesSchema = new ValidateF()
+  .param("main", "فایل اصلی")
   .string()
-  .param("publishedYear", "تاریخ انتشار")
-  .number()
-  .param("price", "قیمت")
-  .number()
-  .param("offPrice", "تخفیف")
-  .requiredObject(newOffPriceSchema)
-  .param("publisher", "ناشر")
-  .requiredString(36)
-  .param("categories", "دسته بندی")
-  .array("string")
-  .param("tags", "دسته بندی")
-  .array("string")
-  .param("authors", "مولف")
-  .array(bookAuthorsSchema)
+  .length(36)
+  .param("sample", "فایل نمونه")
+  .string()
   .done();
+
+const fileTypesSchema = new ValidateF()
+  .param("epub", "فایل epub")
+  .object(filesSchema)
+  .param("pdf", "فایل pdf")
+  .object(filesSchema)
+  .param("sound", "فایل صوتی")
+  .object(filesSchema)
+  .done();
+
+const newBookSchema = new ValidateF()
+  // .param("name", "نام کتاب")
+  // .requiredString()
+  // .param("image", "تصویر کتاب")
+  // .requiredString(36)
+  // .param("content", "محتوا")
+  // .string()
+  // .param("publishedYear", "تاریخ انتشار")
+  // .number()
+  // .param("price", "قیمت")
+  // .number()
+  // .param("offPrice", "تخفیف")
+  // .requiredObject(newOffPriceSchema)
+  // .param("publisher", "ناشر")
+  // .requiredString(36)
+  // .param("categories", "دسته بندی")
+  // .array("string")
+  // .param("tags", "دسته بندی")
+  // .array("string")
+  // .param("authors", "مولف")
+  // .object(bookAuthorsSchema)
+  .param("files", "فایل")
+  .object(fileTypesSchema)
+  .done();
+
+// inspect(newBookSchema);
 
 const updatedOffPriceSchema = new ValidateF()
   .param("type", "نوع")
@@ -98,7 +120,34 @@ const updatedOffPriceSchema = new ValidateF()
 /**************************/
 router.get("/", use(bookQuery), use(list), serveJson);
 
-router.post("/", use(validator(newBookSchema)), use(create), serveJson);
+router.post(
+  "/",
+  use(validator(newBookSchema)),
+  (req, res) => res.end("2222222222222"),
+  use(
+    getEntitiesByUuid({
+      model: "Category",
+      field: "categories",
+      chainKey: "categories",
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "Tag",
+      field: "tags",
+      chainKey: "tags",
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "Author",
+      field: "authors",
+      chainKey: "authors",
+    })
+  ),
+  use(create),
+  serveJson
+);
 
 router.get("/:uuid", use(get), serveJson);
 
