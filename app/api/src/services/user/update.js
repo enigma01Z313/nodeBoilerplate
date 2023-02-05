@@ -16,10 +16,9 @@ module.exports = async (req, res, next) => {
     ...metaFields
   } = req.body;
 
-  const { role } = res.chainData;
-  const { uuid } = req.params;
-
-  const user = await User.findOne({ where: { uuid } });
+  const {
+    chainData: { user, role },
+  } = res;
 
   const roleId = role?.id;
 
@@ -43,7 +42,6 @@ module.exports = async (req, res, next) => {
   )
     user.status = uppedData = status;
 
-
   if (!theSameUser && roleId && roleId !== user.roleId)
     user.roleId = uppedData = roleId;
 
@@ -56,7 +54,6 @@ module.exports = async (req, res, next) => {
   }
 
   const userMeta = await updateMetaData(metaFields, req.body);
-
   await user.setUserMeta(userMeta);
 
   res.jsonData = await user.save();
