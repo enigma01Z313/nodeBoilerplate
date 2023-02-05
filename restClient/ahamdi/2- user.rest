@@ -1,5 +1,5 @@
-# @baseUrl = http://185.128.137.193:30008/api
-@baseUrl = https://sanab.farzinahmadi.com/api
+@baseUrl = http://localhost:30005/api
+# @baseUrl = https://sanab.farzinahmadi.com/api
 @apiUrl = {{baseUrl}}/users
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5NjgzODk1LWU0N2YtNDBjNy05ZjczLTZmOTJhNTRjMjRkYiIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzU1OTk1MTksImV4cCI6MTY4NDU5OTUxOX0.Nfkk17QIBmqV9fbUfC39DO4lvp4Rjp6V8wKlQ1Waye8
 
