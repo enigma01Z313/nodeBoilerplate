@@ -1,7 +1,7 @@
-@baseUrl = http://67.43.234.92:30005/api
+@baseUrl = http://185.128.137.193:30008/api
 @apiUrl = {{baseUrl}}/roles
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY1YmVmYmE4LWVmNmUtNGZmZi1hYTQ0LTAzYTM2OGQ4ODNjMiIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzI1NzUyODYsImV4cCI6MTY4MTU3NTI4Nn0.WerpZ0V3o1_YzH9gjlnpp4o_je1eGR5n3aQ_EWp-_LM
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhOGQ5MGIzLWQwZjQtNDc2MC05ZGI0LTQ3YzFkYTA3ZGM0OSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzQzNjYzMTAsImV4cCI6MTY4MzM2NjMxMH0.SkAezgrMcOOp4wXILtuS1fMx4iFomOmH2dFe-taHAAU
 
 GET {{apiUrl}}/permissions
 Content-Type: application/json
@@ -15,7 +15,7 @@ Authorization: Bearer {{token}}
 
 ###
 
-GET {{apiUrl}}/
+GET {{apiUrl}}/c95cf70a-39e7-4e3f-82f5-acbf7210bd10
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -26,6 +26,6 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
- "name" : "manager",
+ "name" : "manager1",
  "permissions" : ["SEE_ROLES"]
 }

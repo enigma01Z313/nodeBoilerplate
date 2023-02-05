@@ -1,7 +1,7 @@
 const { Category } = require("../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
-  const { name, content, status } = req.body;
+  const { name, content, status, image, icon, isMain: main } = req.body;
 
   const {
     chainData: { category: { id: parentId } = {} },
@@ -12,6 +12,8 @@ module.exports = async (req, res, next) => {
     content,
     parentId,
     status,
+    image,
+    icon,
   };
 
   const category = await Category.create(createCategory);

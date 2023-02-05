@@ -1,13 +1,31 @@
 const Models = require("../../db/MySQL/models");
 
+const extractUuidsFromObject = (obj) => {
+  const uuids = [];
+  for (const i in obj) {
+    const theData = obj[i];
+    if (typeof theData !== "object") uuids.push(theData);
+    else if (Array.isArray(theData)) uuids.push(theData);
+    else uuids.push(extractUuidsFromObject(theData));
+  }
+  return uuids.flat();
+};
+
+const extractUuids = (data) =>
+  !data ? undefined : extractUuidsFromObject(data);
+
 module.exports = (info) => {
   return async (req, res, next) => {
     try {
       const model = info.model;
       const field = info.field;
       const name = info.chainKey;
-      const uuids = req.body[field];
+      const data = req.body[field];
+      let uuids = Array.isArray(data) ? data : extractUuids(data);
+      uuids = [...new Set(uuids)];
 
+      console.log(uuids);
+      return res.end("000000");
       if (!uuids) return next();
 
       const whereOption = { where: { uuid: uuids } };
@@ -15,7 +33,9 @@ module.exports = (info) => {
       const items = await Models[model].findAll(whereOption);
 
       if (uuids && uuids.length !== items.length)
-        return res.status(404).end(`some of uuids doesn't exist`);
+        return res
+          .status(404)
+          .end(`some uuid of field "${field}" doesn't exist`);
 
       res.chainData[name] = items;
 

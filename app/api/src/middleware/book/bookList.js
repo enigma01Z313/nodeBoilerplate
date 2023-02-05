@@ -11,7 +11,6 @@ module.exports =
     paginationedOptions.include = includes.map((include) => {
       return { ...include, model: Models[include.model] };
     });
-    inspect(paginationedOptions.where);
 
     const base = res.chainData[baseModel];
     const books = await base.getBooks(paginationedOptions);

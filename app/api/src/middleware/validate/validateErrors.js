@@ -1,6 +1,14 @@
 const fError = require("../../utils/fError");
 
-const validateErrors = (i, v, t, parameterName, parameterNameFa, fullBody) => {
+const validateErrors = (
+  i,
+  v,
+  t,
+  parameterName,
+  parameterNameFa,
+  fullBody,
+  depth = 0
+) => {
   if (
     i === "required" &&
     v.value === true &&
@@ -28,7 +36,8 @@ const validateErrors = (i, v, t, parameterName, parameterNameFa, fullBody) => {
     typeof t !== typeof undefined &&
     t !== null &&
     ((v.value === "string" && typeof t !== "string") ||
-      (v.value === "number" && typeof t !== "number"))
+      (v.value === "number" && typeof t !== "number") ||
+      (v.value === "boolean" && typeof t !== "boolean"))
   )
     return fError(400, v.violations[0], v.violations[1]);
   else if (
@@ -86,14 +95,26 @@ const validateErrors = (i, v, t, parameterName, parameterNameFa, fullBody) => {
           v,
           tmpData,
           item.parameter,
-          item.faName
+          item.faName,
+          fullBody,
+          depth + 1
         );
-        if (validateRes)
-          return fError(
-            400,
-            `${parameterName}.${v.violations[0]}`,
-            `${parameterNameFa}.${v.violations[1]}`
-          );
+
+        if (validateRes) {
+          const isErrorType = validateRes instanceof Error;
+          return depth === 0
+            ? fError(
+                400,
+                isErrorType
+                  ? `${parameterName}.${v?.violations?.[0]}`
+                  : `${parameterName}.${validateRes.parameterName}.${validateRes.v.violations[0]}`,
+                isErrorType
+                  ? `${parameterName}.${v?.violations?.[1]}`
+                  : `${parameterName}.${validateRes.parameterName}.${validateRes.v.violations[1]}`
+              )
+            : { v, parameterName };
+        }
+        //  else return v;
       }
     }
   }

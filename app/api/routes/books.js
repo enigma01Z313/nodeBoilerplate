@@ -55,10 +55,26 @@ const bookAuthorsSchema = (function () {
   authorTypes.forEach(({ key, label }) => {
     authorsSchema.param(key, label).array("string");
   });
+
   return authorsSchema.done();
 })();
 
-inspect(bookAuthorsSchema);
+const filesSchema = new ValidateF()
+  .param("main", "فایل اصلی")
+  .string()
+  .length(36)
+  .param("sample", "فایل نمونه")
+  .string()
+  .done();
+
+const fileTypesSchema = new ValidateF()
+  .param("epub", "فایل epub")
+  .object(filesSchema)
+  .param("pdf", "فایل pdf")
+  .object(filesSchema)
+  .param("sound", "فایل صوتی")
+  .object(filesSchema)
+  .done();
 
 const newBookSchema = new ValidateF()
   .param("name", "نام کتاب")
@@ -80,8 +96,12 @@ const newBookSchema = new ValidateF()
   .param("tags", "دسته بندی")
   .array("string")
   .param("authors", "مولف")
-  .array(bookAuthorsSchema)
+  .object(bookAuthorsSchema)
+  .param("files", "فایل")
+  .object(fileTypesSchema)
   .done();
+
+// inspect(newBookSchema);
 
 const updatedOffPriceSchema = new ValidateF()
   .param("type", "نوع")
@@ -100,7 +120,40 @@ const updatedOffPriceSchema = new ValidateF()
 /**************************/
 router.get("/", use(bookQuery), use(list), serveJson);
 
-router.post("/", use(validator(newBookSchema)), use(create), serveJson);
+router.post(
+  "/",
+  use(validator(newBookSchema)),
+  use(
+    getEntitiesByUuid({
+      model: "Category",
+      field: "categories",
+      chainKey: "categories",
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "Tag",
+      field: "tags",
+      chainKey: "tags",
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "Author",
+      field: "authors",
+      chainKey: "authors",
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "File",
+      field: "files",
+      chainKey: "files",
+    })
+  ),
+  use(create),
+  serveJson
+);
 
 router.get("/:uuid", use(get), serveJson);
 

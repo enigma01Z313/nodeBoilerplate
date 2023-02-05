@@ -1,9 +1,11 @@
 const Models = require("../../db/MySQL/models");
 const fError = require("../utils/fError");
 
+const isTheSame = (uuid, item) => (uuid && uuid === item.uuid ? true : false);
+
 const isUnique = (model, modelFa, param, paramFa) => async (req, res, next) => {
   const keyParam = req.body[param];
-  const { authenticatedUser, jsonData: userData } = res;
+  const { authenticatedUser, jsonData: userData, theSameUser } = res;
 
   if (
     !keyParam ||
@@ -14,7 +16,7 @@ const isUnique = (model, modelFa, param, paramFa) => async (req, res, next) => {
 
   const item = await Models[model].findOne({ where: { [param]: keyParam } });
 
-  if (item)
+  if (item && !theSameUser && !isTheSame(req.params.uuid, item))
     return next(
       fError(
         400,
