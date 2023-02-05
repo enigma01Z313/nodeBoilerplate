@@ -101,11 +101,6 @@ const validateErrors = (
         );
 
         if (validateRes) {
-          // console.log("-------------------------");
-          // console.log(item.parameter);
-          // console.log(parameterName);
-          // console.log(depth);
-
           const isErrorType = validateRes instanceof Error;
           return depth === 0
             ? fError(

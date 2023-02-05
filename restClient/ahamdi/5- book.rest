@@ -32,16 +32,16 @@ Authorization: Bearer {{token}}
   "content": "ssswwww",
   "files": {
     "epub": {
-      "main": "bbbb",
-      "sample": "aaaaaaa"
+      "main": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9",
+      "sample": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9"
     },
     "pdf": {
-      "main": "bbbb",
-      "sample": "aaaaaaa"
+      "main": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9",
+      "sample": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9"
     },
     "sound": {
       "main": "0a047a33-c8b3-4d17-9e48-504d672f9679",
-      "sample": "wwwww"
+      "sample": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9"
     }
   },
   "image": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9",

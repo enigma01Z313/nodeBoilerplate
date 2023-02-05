@@ -77,26 +77,26 @@ const fileTypesSchema = new ValidateF()
   .done();
 
 const newBookSchema = new ValidateF()
-  // .param("name", "نام کتاب")
-  // .requiredString()
-  // .param("image", "تصویر کتاب")
-  // .requiredString(36)
-  // .param("content", "محتوا")
-  // .string()
-  // .param("publishedYear", "تاریخ انتشار")
-  // .number()
-  // .param("price", "قیمت")
-  // .number()
-  // .param("offPrice", "تخفیف")
-  // .requiredObject(newOffPriceSchema)
-  // .param("publisher", "ناشر")
-  // .requiredString(36)
-  // .param("categories", "دسته بندی")
-  // .array("string")
-  // .param("tags", "دسته بندی")
-  // .array("string")
-  // .param("authors", "مولف")
-  // .object(bookAuthorsSchema)
+  .param("name", "نام کتاب")
+  .requiredString()
+  .param("image", "تصویر کتاب")
+  .requiredString(36)
+  .param("content", "محتوا")
+  .string()
+  .param("publishedYear", "تاریخ انتشار")
+  .number()
+  .param("price", "قیمت")
+  .number()
+  .param("offPrice", "تخفیف")
+  .requiredObject(newOffPriceSchema)
+  .param("publisher", "ناشر")
+  .requiredString(36)
+  .param("categories", "دسته بندی")
+  .array("string")
+  .param("tags", "دسته بندی")
+  .array("string")
+  .param("authors", "مولف")
+  .object(bookAuthorsSchema)
   .param("files", "فایل")
   .object(fileTypesSchema)
   .done();
@@ -123,7 +123,6 @@ router.get("/", use(bookQuery), use(list), serveJson);
 router.post(
   "/",
   use(validator(newBookSchema)),
-  (req, res) => res.end("2222222222222"),
   use(
     getEntitiesByUuid({
       model: "Category",
@@ -143,6 +142,13 @@ router.post(
       model: "Author",
       field: "authors",
       chainKey: "authors",
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "File",
+      field: "files",
+      chainKey: "files",
     })
   ),
   use(create),

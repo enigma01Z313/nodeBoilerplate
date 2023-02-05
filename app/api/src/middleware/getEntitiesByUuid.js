@@ -1,11 +1,18 @@
 const Models = require("../../db/MySQL/models");
 
+const extractUuidsFromObject = (obj) => {
+  const uuids = [];
+  for (const i in obj) {
+    const theData = obj[i];
+    if (typeof theData !== "object") uuids.push(theData);
+    else if (Array.isArray(theData)) uuids.push(theData);
+    else uuids.push(extractUuidsFromObject(theData));
+  }
+  return uuids.flat();
+};
+
 const extractUuids = (data) =>
-  (!data && undefined) ||
-  (Object.values(data) &&
-    Object.values(data)
-      .map((items) => items.map((item) => item))
-      .flat());
+  !data ? undefined : extractUuidsFromObject(data);
 
 module.exports = (info) => {
   return async (req, res, next) => {
@@ -17,6 +24,8 @@ module.exports = (info) => {
       let uuids = Array.isArray(data) ? data : extractUuids(data);
       uuids = [...new Set(uuids)];
 
+      console.log(uuids);
+      return res.end("000000");
       if (!uuids) return next();
 
       const whereOption = { where: { uuid: uuids } };
