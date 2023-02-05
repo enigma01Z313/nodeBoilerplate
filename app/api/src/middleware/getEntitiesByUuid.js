@@ -24,8 +24,6 @@ module.exports = (info) => {
       let uuids = Array.isArray(data) ? data : extractUuids(data);
       uuids = [...new Set(uuids)];
 
-      console.log(uuids);
-      return res.end("000000");
       if (!uuids) return next();
 
       const whereOption = { where: { uuid: uuids } };
