@@ -1,26 +1,35 @@
 const { Op } = require("sequelize");
+const { inspect } = require("../../utils");
 const {
   Tag,
   Category,
   Author,
   User,
   Off_price,
+  Book,
 } = require("../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
-  const { page: pageNum, limit: pageLimit } = req.query;
+  const {
+    page: pageNum,
+    limit: pageLimit,
+    s: search,
+    tags,
+    categories,
+    authors,
+    publishers,
+  } = req.query;
 
-  const tags = req.query.tags ?? res.chaindata?.similar?.tags;
-  const categories = req.query.categories ?? res.chaindata?.similar?.categories;
-  const authors = req.query.authors ?? res.chaindata?.similar?.authors;
-  const publishers = req.query.publishers ?? res.chaindata?.similar?.publishers;
-
-  let defaultOptions = {};
-  const include = [];
   let queryChunk;
+  const include = [{ model: Off_price }];
+  let defaultOptions = { include };
 
   queryChunk = {
-    model: Off_price,
+    model: Author,
+    as: "authors",
+    attributes: ["id", "uuid", "firstName", "lastName"],
+    through: { attributes: ["authorType"] },
+    where: !authors ? undefined : { uuid: { [Op.or]: authors.split(",") } },
   };
   include.push(queryChunk);
   defaultOptions = { ...defaultOptions, include };
@@ -51,16 +60,6 @@ module.exports = async (req, res, next) => {
     defaultOptions = { ...defaultOptions, include };
   }
 
-  queryChunk = {
-    model: Author,
-    as: "authors",
-    attributes: ["id", "uuid", "firstName", "lastName"],
-    through: { attributes: ["authorType"] },
-  };
-  if (authors) queryChunk.where = { uuid: { [Op.or]: authors.split(",") } };
-  include.push(queryChunk);
-  defaultOptions = { ...defaultOptions, include };
-
   if (publishers) {
     queryChunk = {
       model: User,
@@ -72,6 +71,17 @@ module.exports = async (req, res, next) => {
     include.push(queryChunk);
     defaultOptions = { ...defaultOptions, include };
   }
+
+  inspect(defaultOptions);
+  if (search) {
+    defaultOptions.where = {
+      name: {
+        [Op.like]: `%${search}%`,
+      },
+    };
+  }
+  inspect(defaultOptions);
+  
 
   const limit = pageLimit ? +pageLimit : 10;
   const page = pageNum ? +pageNum : 1;
