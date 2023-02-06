@@ -1,9 +1,10 @@
 @baseUrl = http://localhost:30005/api
 # @baseUrl = https://sanab.farzinahmadi.com/api
 @apiUrl = {{baseUrl}}/users
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5NjgzODk1LWU0N2YtNDBjNy05ZjczLTZmOTJhNTRjMjRkYiIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzU1OTk1MTksImV4cCI6MTY4NDU5OTUxOX0.Nfkk17QIBmqV9fbUfC39DO4lvp4Rjp6V8wKlQ1Waye8
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzU2MzYyLTM4ZjYtNDUxNi05N2E5LTk1MzRiYzUzYTBjOSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzU2NjY0MjIsImV4cCI6MTY4NDY2NjQyMn0.2wOUSItof2Vcz4Dhk10WhVkbuKWWI3-oRb2KZBlNjQE
 
 GET {{apiUrl}}
+# GET {{apiUrl}}?limit=2
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

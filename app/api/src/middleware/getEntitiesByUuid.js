@@ -1,15 +1,16 @@
 const Models = require("../../db/MySQL/models");
 
 const extractUuidsFromObject = (obj) => {
-  const uuids = [];
+  let uuids = [];
   for (const i in obj) {
     const theData = obj[i];
     if (typeof theData !== "object") uuids.push(theData);
     else if (Array.isArray(theData)) uuids.push(theData);
     else uuids.push(extractUuidsFromObject(theData));
   }
-  // console.log(uuids.flat());
-  return uuids.flat();
+  uuids = uuids.flat();
+
+  return uuids.filter((item) => typeof item === "string");
 };
 
 const extractUuids = (data) =>

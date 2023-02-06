@@ -28,8 +28,8 @@ const setAuthors = (bookId, authors, bodyAuthors) =>
 
     for (const authorType in bodyAuthors) {
       const authorTypeCode = getAuthorTypeCode(authorType);
-
       const thisTypeAuthorsUuids = bodyAuthors[authorType];
+
       for (const thisTypeAuthorsUuid of thisTypeAuthorsUuids) {
         const authorId = authors.find(
           ({ dataValues: item }) => item.uuid === thisTypeAuthorsUuid
@@ -55,9 +55,38 @@ const getfileTypeCode = (fileKey) => {
 
 const setFiles = (bookId, files, bodyFiles) =>
   new Promise(async (res, rej) => {
+    let sampleFilesUuis = [
+      bodyFiles?.epub?.sample?.file,
+      bodyFiles?.pdf?.sample?.file,
+      bodyFiles?.sound?.sample?.file,
+    ];
+    sampleFilesUuis = sampleFilesUuis.filter((item) => item);
+
     bookFilesPackage = [];
 
-    console.log(bookFilesPackage);
+    for (const file of files) {
+      file.book_id = bookId;
+      file.hasOwner = true;
+      if (sampleFilesUuis.includes(file.dataValues.uuid)) file.isSample = true;
+
+      // await file.save();
+      console.log(file);
+    }
+    // for (const bodyFile in bodyFiles) {
+    //   const fileTypeCode = getfileTypeCode(bodyFile);
+    // const mainUuid = bodyFiles[bodyFile].main.file;
+    // const sampleUuid = bodyFiles[bodyFile].sample.file;
+
+    // const mainFileId = files.find(
+    //   ({ dataValues: item }) => item.uuid === mainUuid
+    // ).dataValues.id;
+    // const sampleFileId = files.find(
+    //   ({ dataValues: item }) => item.uuid === sampleUuid
+    // ).dataValues.id;
+
+    // console.log(mainFileId);
+    // console.log(sampleFileId);
+    // }
     res();
   });
 

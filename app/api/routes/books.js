@@ -59,12 +59,20 @@ const bookAuthorsSchema = (function () {
   return authorsSchema.done();
 })();
 
+const filePachageSchema = new ValidateF()
+  .param("file", "آیدی فایل")
+  .requiredString(36)
+  .param("pageCount", "تعداد صفحات")
+  .number()
+  .param("fileLength", "مدت زمان")
+  .number()
+  .done();
+
 const filesSchema = new ValidateF()
   .param("main", "فایل اصلی")
-  .string()
-  .length(36)
+  .requiredObject(filePachageSchema)
   .param("sample", "فایل نمونه")
-  .string(36)
+  .object(filePachageSchema)
   .done();
 
 const fileTypesSchema = new ValidateF()
