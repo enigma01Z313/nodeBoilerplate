@@ -6,7 +6,10 @@ module.exports =
   ({ baseModel, includes }) =>
   async (req, res, next) => {
     const defaultOptions = res?.dbOptions?.defaultOptions ?? {};
-    const paginationedOptions = res?.dbOptions?.paginationedOptions ?? {};
+    const paginationedOptions = res?.dbOptions?.paginationedOptions ?? {
+      limit: 10,
+      page: 0,
+    };
 
     paginationedOptions.include = includes.map((include) => {
       return { ...include, model: Models[include.model] };
