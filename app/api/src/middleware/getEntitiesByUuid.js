@@ -8,6 +8,7 @@ const extractUuidsFromObject = (obj) => {
     else if (Array.isArray(theData)) uuids.push(theData);
     else uuids.push(extractUuidsFromObject(theData));
   }
+  // console.log(uuids.flat());
   return uuids.flat();
 };
 

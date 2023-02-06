@@ -3,6 +3,7 @@ const fError = require("../../utils/fError");
 const createJWT = require("../../utils/createJWT");
 const { oneTimeLoginTime } = require("../../../../../config/oneTimeLoginTime");
 const statusList = require("../../../db/staticDb/db");
+const { user: refinedUser } = require("../../../db/MySQL/refines");
 
 module.exports = async (req, res, next) => {
   const { user } = res;
@@ -40,7 +41,7 @@ module.exports = async (req, res, next) => {
   res.jsonData = {
     accessToken,
     refreshToken,
-    user: updatedUser,
+    user: refinedUser(updatedUser),
     meta: { ...statusList },
   };
   next();

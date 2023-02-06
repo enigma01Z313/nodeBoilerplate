@@ -1,6 +1,7 @@
-@baseUrl = http://185.128.137.193:30008/api
+@baseUrl = http://localhost:30005/api
+# @baseUrl = https://sanab.farzinahmadi.com/api
 @apiUrl = {{baseUrl}}/users
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhOGQ5MGIzLWQwZjQtNDc2MC05ZGI0LTQ3YzFkYTA3ZGM0OSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzQzNjYzMTAsImV4cCI6MTY4MzM2NjMxMH0.SkAezgrMcOOp4wXILtuS1fMx4iFomOmH2dFe-taHAAU
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5NjgzODk1LWU0N2YtNDBjNy05ZjczLTZmOTJhNTRjMjRkYiIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzU1OTk1MTksImV4cCI6MTY4NDU5OTUxOX0.Nfkk17QIBmqV9fbUfC39DO4lvp4Rjp6V8wKlQ1Waye8
 
 GET {{apiUrl}}
 Content-Type: application/json
@@ -29,10 +30,10 @@ Authorization: Bearer {{token}}
 }
 
 ###
-PUT {{apiUrl}}/6987dc6e-9955-49da-8847-1e1a8a1c2d70
+PUT {{apiUrl}}/89683895-e47f-40c7-9f73-6f92a54c24db
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-"brand": "Gucci"
+"email": "t@m30.com"
 }

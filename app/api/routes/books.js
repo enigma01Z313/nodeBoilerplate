@@ -10,6 +10,7 @@ const {
   },
   Auth: { authentication, authorization },
   Book: { query: bookQuery },
+  Publisher: { checkPublisher },
   getDataByUUID,
   getDataList,
   getEntityByUuid,
@@ -18,7 +19,6 @@ const {
 } = require("../src/middleware");
 
 const {
-  Book,
   Book: {
     list,
     get,
@@ -151,7 +151,9 @@ router.post(
       chainKey: "files",
     })
   ),
+  use(checkPublisher()),
   use(create),
+  use(get),
   serveJson
 );
 

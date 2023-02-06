@@ -9,12 +9,10 @@ Authorization: Bearer {{token}}
 {
   "authors": {
     "author": [
-      "9397fbbe-573b-46ad-868c-09df6ab0b0f1", 
-      "0a047a33-c8b3-4d17-9e48-504d672f9679"
+      "9397fbbe-573b-46ad-868c-09df6ab0b0f1"
     ],
     "narrator": [
-      "f7515aa2-8b3a-469f-a397-c92c5ec2eabb", 
-      "7c49a02d-892d-4061-bd81-0e3a298fc1ee"
+      "f7515aa2-8b3a-469f-a397-c92c5ec2eabb"
     ],
     "resercher": [
       "7c49a02d-892d-4061-bd81-0e3a298fc1ee",
@@ -32,29 +30,29 @@ Authorization: Bearer {{token}}
   "content": "ssswwww",
   "files": {
     "epub": {
-      "main": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9",
-      "sample": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9"
+      "main": "3a681d91-57f0-4619-b1f7-6367ee49b790",
+      "sample": "3a681d91-57f0-4619-b1f7-6367ee49b790"
     },
     "pdf": {
-      "main": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9",
-      "sample": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9"
+      "main": "3a681d91-57f0-4619-b1f7-6367ee49b790",
+      "sample": "3a681d91-57f0-4619-b1f7-6367ee49b790"
     },
     "sound": {
-      "main": "0a047a33-c8b3-4d17-9e48-504d672f9679",
-      "sample": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9"
+      "main": "b0a4d823-c88b-49a6-a53b-214320316335",
+      "sample": "3a681d91-57f0-4619-b1f7-6367ee49b790"
     }
   },
-  "image": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9",
+  "image": "w2fc95de-886e-4c80-85ca-25ad9dc8c3a9",
   "name": "ssssss",
   "offPrice": {
     "type": 1,
     "amount": 1000,
-    "startDate": "1401-05-03",
-    "endDate": "1401-05-05"
+    "startDate": "2023-01-16T12:49:14.892Z",
+    "endDate": "2023-01-16T12:49:14.892Z"
   },
   "price": 250000,
+  "publisher": "aeff165f-70a0-46f3-b96a-a67f64327ae5",
   "publishedYear": 1394,
-  "publisher": "abeaa0a5-dce4-4d32-be14-c743ac0f590b",
   "tags": [
     "fd86f852-ae76-48df-8778-ea8b8a42787c", 
     "50891fe0-9a2c-49e1-a2b5-075dd0701170"

@@ -16,6 +16,7 @@ const {
   getDataList,
   theSameUser,
   getEntityByUuid,
+  getDataByUUID,
 } = require("../src/middleware");
 
 const {
@@ -116,7 +117,7 @@ router.put(
   use(getEntityByUuid({ model: "Role", fields: ["roleId"] })),
   use(isUnique("User", "کاربر", "phone", "شماره موبایل")),
   use(isUnique("User", "کاربر", "email", "ایمیل")),
-  use(getEntityByUuid({ model: "User" })),
+  use(getDataByUUID("User", "کاربر")),
   use(update),
   use(get),
   serveJson
