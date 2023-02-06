@@ -11,6 +11,7 @@ const {
   isUnique,
   doesExist,
   filteredData,
+  filteredSearch,
   sortedData,
   getDataList,
   theSameUser,
@@ -68,7 +69,13 @@ const updatedUserSchema = new ValidateF()
 router.get(
   "/",
   use(authentication),
-  use(filteredData({})),
+  use(filteredData({ id: { [Op.ne]: 1 } })),
+  use(
+    filteredSearch({
+      model: "User",
+      fields: ["firstName", "lastName", "phone", "email"],
+    })
+  ),
   use(getDataList("User", "کاربر", undefined, undefined, "userList")),
   serveJson
 );
@@ -92,14 +99,14 @@ router.post(
   serveJson
 );
 
-router.get(
-  "/",
-  use(authentication),
-  filteredData({ id: { [Op.ne]: 1 } }),
-  sortedData,
-  use(getDataList("User", "کاربر", "Role")),
-  serveJson
-);
+// router.get(
+//   "/",
+//   use(authentication),
+//   filteredData({ id: { [Op.ne]: 1 } }),
+//   sortedData,
+//   use(getDataList("User", "کاربر", "Role")),
+//   serveJson
+// );
 
 router.put(
   "/:uuid",
