@@ -15,7 +15,10 @@ const getDataList =
   (model, modelFa, includeModels, orderColumn = "createdAt", refiner) =>
   async (req, res, next) => {
     const defaultOptions = res?.dbOptions?.defaultOptions ?? {};
-    const paginationedOptions = res?.dbOptions?.paginationedOptions ?? {};
+    const paginationedOptions = res?.dbOptions?.paginationedOptions ?? {
+      limit: 10,
+      page: 0,
+    };
 
     const { sortOptions } = res;
 

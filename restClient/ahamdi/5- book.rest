@@ -7,6 +7,18 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
+  "files": {
+    "pdf": {
+      "main": {
+        "file": "b179d8e8-32fe-4bca-b024-8017d7e34b55",
+        "pageCount": 115
+      },
+      "sample": {
+        "file": "b0d83cdf-f63c-4e78-adfa-99aea5efd320",
+        "pageCount": 15
+      }
+    }
+  },
   "authors": {
     "author": [
       "9397fbbe-573b-46ad-868c-09df6ab0b0f1"
@@ -28,20 +40,6 @@ Authorization: Bearer {{token}}
     "94be2d55-3479-429d-9a82-4f28554013c1"
   ],
   "content": "ssswwww",
-  "files": {
-    "epub": {
-      "main": "3a681d91-57f0-4619-b1f7-6367ee49b790",
-      "sample": "3a681d91-57f0-4619-b1f7-6367ee49b790"
-    },
-    "pdf": {
-      "main": "3a681d91-57f0-4619-b1f7-6367ee49b790",
-      "sample": "3a681d91-57f0-4619-b1f7-6367ee49b790"
-    },
-    "sound": {
-      "main": "b0a4d823-c88b-49a6-a53b-214320316335",
-      "sample": "3a681d91-57f0-4619-b1f7-6367ee49b790"
-    }
-  },
   "image": "w2fc95de-886e-4c80-85ca-25ad9dc8c3a9",
   "name": "ssssss",
   "offPrice": {

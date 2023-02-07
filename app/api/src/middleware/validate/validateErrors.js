@@ -101,16 +101,18 @@ const validateErrors = (
         );
 
         if (validateRes) {
+          console.log(validateRes);
+
           const isErrorType = validateRes instanceof Error;
           return depth === 0
             ? fError(
                 400,
                 isErrorType
                   ? `${parameterName}.${v?.violations?.[0]}`
-                  : `${parameterName}.${validateRes.parameterName}.${validateRes.v.violations[0]}`,
+                  : `${parameterName}.${validateRes?.parameterName}.${validateRes?.v?.violations?.[0]}`,
                 isErrorType
                   ? `${parameterName}.${v?.violations?.[1]}`
-                  : `${parameterName}.${validateRes.parameterName}.${validateRes.v.violations[1]}`
+                  : `${parameterName}.${validateRes?.parameterName}.${validateRes?.v?.violations?.[1]}`
               )
             : { v, parameterName };
         }

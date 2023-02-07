@@ -23,7 +23,10 @@ const filteredData =
 
     const whereAnd = Op.and;
     const defaultOptions = { where: { [whereAnd]: [...whereOptions] } };
-    const paginationedOptions = Object.assign({}, defaultOptions);
+    const paginationedOptions = Object.assign(
+      { limit: 10, page: 0 },
+      defaultOptions
+    );
 
     //pagination section
     if (limit && limit !== "undefined")
