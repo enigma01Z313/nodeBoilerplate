@@ -12,6 +12,7 @@ const {
   isUnique,
   getEntityByUuid,
   filteredData,
+  filteredSearch,
   Book: { bookList },
 } = require("../src/middleware");
 
@@ -42,6 +43,12 @@ router.get(
   "/:uuid/books",
   use(get),
   use(filteredData({})),
+  use(
+    filteredSearch({
+      model: "Book",
+      fields: ["name"],
+    })
+  ),
   use(bookList(publisherBooksOption)),
   serveJson
 );
