@@ -72,7 +72,6 @@ module.exports = async (req, res, next) => {
     defaultOptions = { ...defaultOptions, include };
   }
 
-  inspect(defaultOptions);
   if (search) {
     defaultOptions.where = {
       name: {
@@ -80,8 +79,6 @@ module.exports = async (req, res, next) => {
       },
     };
   }
-  inspect(defaultOptions);
-  
 
   const limit = pageLimit ? +pageLimit : 10;
   const page = pageNum ? +pageNum : 1;

@@ -13,7 +13,7 @@ const {
   getEntityByUuid,
   filteredData,
   filteredSearch,
-  Book: { bookList },
+  Book: { bookList, query: bookQuery },
 } = require("../src/middleware");
 
 const {
@@ -48,7 +48,7 @@ const updatedTagSchema = new ValidateF()
 /**************************/
 router.get("/", use(getDataList("Tag", "تگ")), serveJson);
 
-router.get("/:uuid", use(get), serveJson);
+router.get("/:uuid", use(bookQuery), use(get), serveJson);
 
 const bookListOption = {
   baseModel: "tag",
