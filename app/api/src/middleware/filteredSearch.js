@@ -12,6 +12,7 @@ module.exports = (data) => async (req, res, next) => {
   const fields = data.fields;
   const whichField = [];
 
+  inspect(data);
   if (search) {
     for (const field of fields) {
       whichField.push({
@@ -28,6 +29,9 @@ module.exports = (data) => async (req, res, next) => {
     defaultOptions.where[whereAnd].push(whereOption);
     paginationedOptions.where[whereAnd].push(whereOption);
   }
+  console.log(defaultOptions);
+  console.log(search);
+
   // inspect(whereAnd);
   // inspect(defaultOptions.where);
   // inspect(defaultOptions.where[whereAnd]);
