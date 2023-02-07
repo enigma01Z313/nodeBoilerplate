@@ -1,6 +1,5 @@
 const { Op } = require("sequelize");
-const { fError } = require("../utils");
-const { inspect } = require("../utils");
+const { fError, inspect } = require("../utils");
 const Model = require("../../db/MySQL/models");
 
 module.exports = (data) => async (req, res, next) => {

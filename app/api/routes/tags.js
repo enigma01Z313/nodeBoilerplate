@@ -65,6 +65,7 @@ router.get(
       fields: ["name"],
     })
   ),
+  use(bookList(bookListOption)),
   serveJson
 );
 
