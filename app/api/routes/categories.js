@@ -13,7 +13,7 @@ const {
   getEntityByUuid,
   filteredData,
   filteredSearch,
-  Book: { bookList },
+  Book: { bookList, query: bookQuery },
 } = require("../src/middleware");
 
 const {
@@ -58,21 +58,18 @@ const updatedCategorySchema = new ValidateF()
 /**************************/
 /*         routes         */
 /**************************/
-router.get(
-  "/",
-  use(list),
-  use(getDataList("Category", "دسته بندی ")),
-  serveJson
-);
+router.get("/", use(getDataList("Category", "دسته بندی ")), serveJson);
 
-router.get("/:uuid", use(get), serveJson);
+router.get("/:uuid", use(bookQuery), use(get), serveJson);
 
 const bookListOption = {
   baseModel: "category",
   includes: [{ model: "Off_price" }],
 };
+
 router.get(
   "/:uuid/books",
+  use(bookQuery),
   use(get),
   use(filteredData({})),
   use(
