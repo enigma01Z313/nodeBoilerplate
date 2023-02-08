@@ -10,7 +10,8 @@ const setAuthors = require("./_/setAuthors");
 const setFiles = require("./_/setFiles");
 
 module.exports = async (req, res, next) => {
-  const { name, content, publishedYear, price, offPrice, image } = req.body;
+  const { name, content, publishedYear, price, offPrice, image, main } =
+    req.body;
   const {
     chainData: { tags, categories, authors, publisher, files },
   } = res;
@@ -23,11 +24,12 @@ module.exports = async (req, res, next) => {
     image,
     publisherId: publisher.id,
   });
+  console.log(main);
 
   await book.setTags(tags);
   await book.setCategories(categories);
   await setOffPrice(book.id, offPrice);
-  await setAuthors(book.id, authors, req.body.authors);
+  await setAuthors(book.id, authors, req.body.authors, main);
   await setFiles(book.id, files, req.body.files);
 
   res.chainData.createdUuid = book.uuid;
