@@ -1,3 +1,5 @@
+const { tag: refinedTag } = require("../../../db/MySQL/refines");
+
 module.exports = async (req, res, next) => {
   let uppedData = false;
   const {
@@ -19,6 +21,6 @@ module.exports = async (req, res, next) => {
   }
   const updatedTag = await tag.save();
 
-  res.jsonData = updatedTag;
+  res.jsonData = refinedTag(updatedTag);
   next();
 };

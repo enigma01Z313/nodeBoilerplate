@@ -46,7 +46,7 @@ const updatedTagSchema = new ValidateF()
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(getDataList("Tag", "تگ")), serveJson);
+router.get("/", use(list), serveJson);
 
 router.get("/:uuid", use(bookQuery), use(get), serveJson);
 

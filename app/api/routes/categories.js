@@ -58,7 +58,7 @@ const updatedCategorySchema = new ValidateF()
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(getDataList("Category", "دسته بندی ")), serveJson);
+router.get("/", use(list), serveJson);
 
 router.get("/:uuid", use(bookQuery), use(get), serveJson);
 

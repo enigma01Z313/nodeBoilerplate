@@ -52,7 +52,7 @@ router.get(
   use(authentication),
   // use(authorization.def("SEE_ROLES")),
   filteredData({ id: { [Op.ne]: 1 } }),
-  use(getDataList("Role", "نقش کاربری")),
+  use(getDataList("Role", "نقش کاربری", undefined, undefined, "roleList")),
   serveJson
 );
 

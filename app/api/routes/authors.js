@@ -19,7 +19,7 @@ const {
 } = require("../src/middleware");
 
 const {
-  Author: { create, get, update },
+  Author: { create, get, update, list },
 } = require("../src/services");
 
 /**************************/
@@ -72,7 +72,7 @@ router.post(
   serveJson
 );
 
-router.get("/", use(getDataList("Author", "مولف")), serveJson);
+router.get("/", use(list), serveJson);
 
 router.get("/:uuid", use(bookQuery), use(get), serveJson);
 
