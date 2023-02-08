@@ -1,4 +1,5 @@
 const bookStatus = require("../../staticDb")("bookStatus");
+const defaultStatus = require("../../staticDb")("defaultStatus");
 const authorTypes = require("../../staticDb")("authorTypes");
 
 /////////////////////////////////
@@ -33,11 +34,13 @@ const refineAuthor = ({ dataValues: author } = {}) =>
         ...author,
         id: author.uuid,
         fullName: `${author.firstName} ${author.lastName}`,
+        main: author.bookAuthor.isMain,
+        status: defaultStatus(author.status),
+        content: author.bookAuthor.isMain ? author.content : undefined,
         uuid: undefined,
         coutnry: undefined,
         birthDate: undefined,
         deathDate: undefined,
-        content: undefined,
         createdAt: undefined,
         updatedAt: undefined,
         bookAuthor: undefined,

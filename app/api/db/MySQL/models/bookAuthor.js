@@ -6,4 +6,10 @@ module.exports = (sequelize, DataTypes) =>
       type: DataTypes.INTEGER,
       field: "author_type",
     },
+    isMain: {
+      type: DataTypes.BOOLEAN,
+      field: "is_main",
+      allowNull: false,
+      defaultValue: false,
+    },
   });
