@@ -22,7 +22,9 @@ module.exports = async (req, res, next) => {
     ],
   });
   if (!category)
-    return fError(404, "category not found", "دسته بندی مورد نظر وجود ندارد");
+    return next(
+      fError(404, "category not found", "دسته بندی مورد نظر وجود ندارد")
+    );
 
   if (withBook && withBook === "true") {
     books = await category.getBooks(pagedOptions);
