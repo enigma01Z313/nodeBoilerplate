@@ -12,7 +12,8 @@ const {
   isUnique,
   getEntityByUuid,
   filteredData,
-  Book: { bookList },
+  filteredSearch,
+  Book: { bookList, query: bookQuery },
 } = require("../src/middleware");
 
 const {
@@ -45,18 +46,26 @@ const updatedTagSchema = new ValidateF()
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(getDataList("Tag", "تگ")), serveJson);
+router.get("/", use(list), serveJson);
 
-router.get("/:uuid", use(get), serveJson);
+router.get("/:uuid", use(bookQuery), use(get), serveJson);
 
 const bookListOption = {
   baseModel: "tag",
   includes: [{ model: "Off_price" }],
 };
+
 router.get(
   "/:uuid/books",
+  use(bookQuery),
   use(get),
   use(filteredData({})),
+  use(
+    filteredSearch({
+      model: "Book",
+      fields: ["name"],
+    })
+  ),
   use(bookList(bookListOption)),
   serveJson
 );

@@ -10,6 +10,7 @@ const {
   },
   Auth: { authentication, authorization },
   Book: { query: bookQuery },
+  Publisher: { checkPublisher },
   getDataByUUID,
   getDataList,
   getEntityByUuid,
@@ -18,7 +19,6 @@ const {
 } = require("../src/middleware");
 
 const {
-  Book,
   Book: {
     list,
     get,
@@ -55,8 +55,34 @@ const bookAuthorsSchema = (function () {
   authorTypes.forEach(({ key, label }) => {
     authorsSchema.param(key, label).array("string");
   });
+
   return authorsSchema.done();
 })();
+
+const filePachageSchema = new ValidateF()
+  .param("file", "آیدی فایل")
+  .requiredString(36)
+  .param("pageCount", "تعداد صفحات")
+  .number()
+  .param("fileLength", "مدت زمان")
+  .number()
+  .done();
+
+const filesSchema = new ValidateF()
+  .param("main", "فایل اصلی")
+  .requiredObject(filePachageSchema)
+  .param("sample", "فایل نمونه")
+  .object(filePachageSchema)
+  .done();
+
+const fileTypesSchema = new ValidateF()
+  .param("epub", "فایل epub")
+  .object(filesSchema)
+  .param("pdf", "فایل pdf")
+  .object(filesSchema)
+  .param("sound", "فایل صوتی")
+  .object(filesSchema)
+  .done();
 
 const newBookSchema = new ValidateF()
   .param("name", "نام کتاب")
@@ -70,7 +96,7 @@ const newBookSchema = new ValidateF()
   .param("price", "قیمت")
   .number()
   .param("offPrice", "تخفیف")
-  .requiredObject(newOffPriceSchema)
+  .object(newOffPriceSchema)
   .param("publisher", "ناشر")
   .requiredString(36)
   .param("categories", "دسته بندی")
@@ -78,8 +104,12 @@ const newBookSchema = new ValidateF()
   .param("tags", "دسته بندی")
   .array("string")
   .param("authors", "مولف")
-  .array(bookAuthorsSchema)
+  .object(bookAuthorsSchema)
+  .param("files", "فایل")
+  .object(fileTypesSchema)
   .done();
+
+// inspect(newBookSchema);
 
 const updatedOffPriceSchema = new ValidateF()
   .param("type", "نوع")
@@ -98,7 +128,42 @@ const updatedOffPriceSchema = new ValidateF()
 /**************************/
 router.get("/", use(bookQuery), use(list), serveJson);
 
-router.post("/", use(validator(newBookSchema)), use(create), serveJson);
+router.post(
+  "/",
+  use(validator(newBookSchema)),
+  use(
+    getEntitiesByUuid({
+      model: "Category",
+      field: "categories",
+      chainKey: "categories",
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "Tag",
+      field: "tags",
+      chainKey: "tags",
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "Author",
+      field: "authors",
+      chainKey: "authors",
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "File",
+      field: "files",
+      chainKey: "files",
+    })
+  ),
+  use(checkPublisher()),
+  use(create),
+  use(get),
+  serveJson
+);
 
 router.get("/:uuid", use(get), serveJson);
 

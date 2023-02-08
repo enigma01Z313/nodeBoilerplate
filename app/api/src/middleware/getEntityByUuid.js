@@ -37,6 +37,8 @@ module.exports = (info) => {
 
     const item = await Models[model].findOne(whereOptions);
 
+    console.log(item);
+
     if (!item)
       return next(fError(404, " This id is not found", "این شناسه پیدا نشد"));
 

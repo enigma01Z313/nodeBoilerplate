@@ -64,6 +64,11 @@ const statusList = {
     { code: 1, label: "درصدی", key: "percent" },
     { code: 2, label: "قیمت", key: "amount" },
   ],
+  fileTypes: [
+    { code: 1, label: "فایل pdf", key: "pdf" },
+    { code: 2, label: "فایل epub", key: "epub" },
+    { code: 3, label: "فایل صوتی", key: "sound" },
+  ]
 };
 
 module.exports = statusList;

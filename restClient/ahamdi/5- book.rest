@@ -7,32 +7,54 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "ssssss",
-  "image": "42fc95de-886e-4c80-85ca-25ad9dc8c3a9",
-  "content": "ssswwww",
-  "publishedYear": 1394,
-  "price": 250000,
-  "offPrice": {
-    "type": 1,
-    "amount": 1000,
-    "startDate": "1401-05-03",
-    "endDate": "1401-05-05"
+  "files": {
+    "pdf": {
+      "main": {
+        "file": "b179d8e8-32fe-4bca-b024-8017d7e34b55",
+        "pageCount": 115
+      },
+      "sample": {
+        "file": "b0d83cdf-f63c-4e78-adfa-99aea5efd320",
+        "pageCount": 15
+      }
+    }
   },
-  "publisher": "abeaa0a5-dce4-4d32-be14-c743ac0f590b",
+  "authors": {
+    "author": [
+      "9397fbbe-573b-46ad-868c-09df6ab0b0f1"
+    ],
+    "narrator": [
+      "f7515aa2-8b3a-469f-a397-c92c5ec2eabb"
+    ],
+    "resercher": [
+      "7c49a02d-892d-4061-bd81-0e3a298fc1ee",
+      "cf7c8cba-b1f7-4a9c-ab8f-5aa4101aa8d7"
+    ],
+    "translator": [
+      "b57657f3-661f-462a-9370-2c5ca62fa2b4", 
+      "0402e2c9-9312-4cf4-a5d0-f64e05dc9e99"
+    ],
+    "writer": ["0a047a33-c8b3-4d17-9e48-504d672f9679"]
+  },
   "categories": [
     "94be2d55-3479-429d-9a82-4f28554013c1"
   ],
+  "content": "ssswwww",
+  "image": "w2fc95de-886e-4c80-85ca-25ad9dc8c3a9",
+  "name": "ssssss",
+  "offPrice": {
+    "type": 1,
+    "amount": 1000,
+    "startDate": "2023-01-16T12:49:14.892Z",
+    "endDate": "2023-01-16T12:49:14.892Z"
+  },
+  "price": 250000,
+  "publisher": "aeff165f-70a0-46f3-b96a-a67f64327ae5",
+  "publishedYear": 1394,
   "tags": [
     "fd86f852-ae76-48df-8778-ea8b8a42787c", 
     "50891fe0-9a2c-49e1-a2b5-075dd0701170"
-  ],
-  "authors": {
-    "writer": ["aaa", "bbb"],
-    "author": ["aaa", "bbb"],
-    "translator": ["aaa", "bbb"],
-    "resercher": ["aaa", "bbb"],
-    "narrator": ["aaa", "bbb"]
-  }
+  ]
 }
 
 ###

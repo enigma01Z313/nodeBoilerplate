@@ -12,7 +12,7 @@ const { fError } = require("../../utils");
 const { authorTypes, offPriceTypes } = require("../../../db/staticDb/db");
 
 module.exports = async (req, res, next) => {
-  const { uuid } = req.params;
+  const uuid = req?.params?.uuid ?? res?.chainData?.createdUuid;
 
   const bookOption = {
     where: { uuid },

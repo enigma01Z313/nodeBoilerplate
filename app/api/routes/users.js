@@ -11,10 +11,12 @@ const {
   isUnique,
   doesExist,
   filteredData,
+  filteredSearch,
   sortedData,
   getDataList,
   theSameUser,
   getEntityByUuid,
+  getDataByUUID,
 } = require("../src/middleware");
 
 const {
@@ -68,7 +70,13 @@ const updatedUserSchema = new ValidateF()
 router.get(
   "/",
   use(authentication),
-  use(filteredData({})),
+  use(filteredData({ id: { [Op.ne]: 1 } })),
+  use(
+    filteredSearch({
+      model: "User",
+      fields: ["firstName", "lastName", "phone", "email"],
+    })
+  ),
   use(getDataList("User", "کاربر", undefined, undefined, "userList")),
   serveJson
 );
@@ -92,14 +100,14 @@ router.post(
   serveJson
 );
 
-router.get(
-  "/",
-  use(authentication),
-  filteredData({ id: { [Op.ne]: 1 } }),
-  sortedData,
-  use(getDataList("User", "کاربر", "Role")),
-  serveJson
-);
+// router.get(
+//   "/",
+//   use(authentication),
+//   filteredData({ id: { [Op.ne]: 1 } }),
+//   sortedData,
+//   use(getDataList("User", "کاربر", "Role")),
+//   serveJson
+// );
 
 router.put(
   "/:uuid",
@@ -109,7 +117,7 @@ router.put(
   use(getEntityByUuid({ model: "Role", fields: ["roleId"] })),
   use(isUnique("User", "کاربر", "phone", "شماره موبایل")),
   use(isUnique("User", "کاربر", "email", "ایمیل")),
-  use(getEntityByUuid({ model: "User" })),
+  use(getDataByUUID("User", "کاربر")),
   use(update),
   use(get),
   serveJson

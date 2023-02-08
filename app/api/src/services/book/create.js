@@ -1,19 +1,35 @@
-module.exports = (req, res, next) => {
+const {
+  Book,
+  Off_price,
+  BookAuthor,
+  File,
+} = require("../../../db/MySQL/models");
+
+const setOffPrice = require("./_/setOffPrice");
+const setAuthors = require("./_/setAuthors");
+const setFiles = require("./_/setFiles");
+
+module.exports = async (req, res, next) => {
+  const { name, content, publishedYear, price, offPrice, image } = req.body;
   const {
+    chainData: { tags, categories, authors, publisher, files },
+  } = res;
+
+  const book = await Book.create({
     name,
-    content,
     publishedYear,
+    content,
     price,
-    offPrice,
     image,
-    publisher,
-    categories,
-    tags,
-    authors,
-  } = req.body;
+    publisherId: publisher.id,
+  });
 
-  console.log(name);
-  console.log(content);
+  await book.setTags(tags);
+  await book.setCategories(categories);
+  await setOffPrice(book.id, offPrice);
+  await setAuthors(book.id, authors, req.body.authors);
+  await setFiles(book.id, files, req.body.files);
 
-  return res.end("111111111");
+  res.chainData.createdUuid = book.uuid;
+  next();
 };

@@ -1,4 +1,5 @@
-@baseUrl = http://185.128.137.193:30008/api
+@baseUrl = http://localhost:30005/api
+# @baseUrl = https://sanab.farzinahmadi.com/api
 @apiUrl = {{baseUrl}}/auth
 
 POST {{apiUrl}}

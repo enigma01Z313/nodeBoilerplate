@@ -4,6 +4,7 @@ const hash = require("../../utils/hash");
 const fError = require("../../utils/fError");
 const createJWT = require("../../utils/createJWT");
 const statusList = require("../../../db/staticDb/db");
+const { user: refinedUser } = require("../../../db/MySQL/refines");
 
 module.exports = async (req, res, next) => {
   const { password, username } = req.body;
@@ -34,7 +35,7 @@ module.exports = async (req, res, next) => {
   res.jsonData = {
     accessToken,
     refreshToken,
-    user,
+    user: refinedUser(user),
     meta: { ...statusList },
   };
   next();
