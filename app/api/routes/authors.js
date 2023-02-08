@@ -15,7 +15,7 @@ const {
   getEntityByUuid,
   filteredData,
   filteredSearch,
-  Book: { bookList },
+  Book: { bookList, query: bookQuery },
 } = require("../src/middleware");
 
 const {
@@ -74,7 +74,7 @@ router.post(
 
 router.get("/", use(getDataList("Author", "مولف")), serveJson);
 
-router.get("/:uuid", use(get), serveJson);
+router.get("/:uuid", use(bookQuery), use(get), serveJson);
 
 const bookListOption = {
   baseModel: "author",
@@ -83,6 +83,7 @@ const bookListOption = {
 
 router.get(
   "/:uuid/books",
+  use(bookQuery),
   use(get),
   use(filteredData({})),
   use(

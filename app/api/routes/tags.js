@@ -57,6 +57,7 @@ const bookListOption = {
 
 router.get(
   "/:uuid/books",
+  use(bookQuery),
   use(get),
   use(filteredData({})),
   use(
