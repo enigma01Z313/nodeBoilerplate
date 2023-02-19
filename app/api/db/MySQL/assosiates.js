@@ -12,10 +12,10 @@ module.exports = (db) => {
     BookAuthor,
     Off_price,
     File,
+    Wallet,
   } = db;
 
   User.belongsTo(Role, { foreignKey: "role_id" });
-
   User.hasMany(UserMeta, { foreignKey: "userId" });
   UserMeta.belongsTo(User, { foreignKey: "userId" });
 

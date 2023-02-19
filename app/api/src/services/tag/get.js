@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
   } = res;
 
   const tag = await Tag.findOne({ where: { uuid } });
-  if (!tag) return fError(404, "Tag not found", "تگ مورد نظر وجود ندارد");
+  if (!tag) return next(fError(404, "Tag not found", "تگ مورد نظر وجود ندارد"));
 
   if (withBook && withBook === "true") {
     books = await tag.getBooks(pagedOptions);
