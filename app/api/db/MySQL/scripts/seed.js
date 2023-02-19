@@ -14,6 +14,7 @@ const {
   Book_tag,
   Book_category,
   Off_price,
+  Wallet,
   File,
 } = require("../models");
 const models = require("../models");
@@ -329,7 +330,6 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
   console.log("book tag seed has been finished");
 
   //category
-
   await Category.bulkCreate([
     {
       name: "کلاسیک",
@@ -443,7 +443,6 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
   ]);
 
   //Authors
-
   await Author.bulkCreate([
     {
       firstName: "فرزین",
@@ -610,6 +609,17 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
     },
   ]);
   console.log("Off price seed has been finished");
+
+  await Wallet.bulkCreate([
+    {
+      ownerId: 2,
+      amount: 10000,
+    },
+    {
+      ownerId: 3,
+      amount: 2000,
+    },
+  ]);
 
   const sizeArr = ["Kb", "Mb"];
   //Book image
