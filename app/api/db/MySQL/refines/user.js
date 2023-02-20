@@ -17,6 +17,10 @@ const refineFullname = (firstName, lastName) =>
   (!firstName && lastName && lastName) ||
   "";
 
+const refineWallet = ({ dataValues: { amount } }) => ({
+  amount,
+});
+
 module.exports = (item) => {
   const { dataValues: data } = item;
 
@@ -27,6 +31,7 @@ module.exports = (item) => {
     role: item.role && refineRole(item.role),
     meta: item.userMeta && refineMeta(item.userMeta),
     status: status(data.status),
+    wallet: refineFullname(item.wallet),
     uuid: undefined,
     ip: undefined,
     password: undefined,

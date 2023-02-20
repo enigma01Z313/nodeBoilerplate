@@ -1,4 +1,4 @@
-const { User } = require("../../../db/MySQL/models");
+const { User, Wallet } = require("../../../db/MySQL/models");
 const { user: refinedUser } = require("../../../db/MySQL/refines");
 const updateMetaData = require("./_updateMeta");
 
