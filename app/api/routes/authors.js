@@ -72,7 +72,11 @@ router.post(
   serveJson
 );
 
-router.get("/", use(list), serveJson);
+router.get(
+  "/",
+  use(getDataList("Author", "مولف", undefined, undefined, "authorList")),
+  serveJson
+);
 
 router.get("/:uuid", use(bookQuery), use(get), serveJson);
 
