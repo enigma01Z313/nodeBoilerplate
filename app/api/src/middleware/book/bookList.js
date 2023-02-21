@@ -5,19 +5,23 @@ const { bookList: refiner } = require("../../../db/MySQL/refines");
 module.exports =
   ({ baseModel, includes }) =>
   async (req, res, next) => {
-    const defaultOptions = res?.dbOptions?.defaultOptions ?? {};
-    const paginationedOptions = res?.dbOptions?.paginationedOptions ?? {
-      limit: 10,
-      page: 0,
-    };
+    const defaultOptions = res?.queryOptions?.defaultOptions ?? {};
+    const pagedOptions = res?.queryOptions?.pagedOptions ?? {};
 
-    paginationedOptions.include = includes.map((include) => {
-      return { ...include, model: Models[include.model] };
-    });
+    // inspect(pagedOptions);
+    // inspect(defaultOptions);
+    // pagedOptions.include = includes.map((include) => {
+    //   return { ...include, model: Models[include.model] };
+    // });
 
     const base = res.chainData[baseModel];
-    const books = await base.getBooks(paginationedOptions);
+    const books = await base.getBooks(pagedOptions);
     const total = await base.getBooks(defaultOptions);
+
+    // console.log('----------------------------------');
+    // inspect(pagedOptions);
+    // inspect(defaultOptions);
+    // console.log(books[0]);
 
     res.jsonData = { data: refiner(books), total: total.length };
     next();

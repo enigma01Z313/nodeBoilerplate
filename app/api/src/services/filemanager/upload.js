@@ -22,12 +22,13 @@ module.exports =
           )
         );
 
-      console.log(fileName);
-
       const theFile = files[fileName][0];
       const theFileName = theFile.originalFilename;
       const theFileExtension = theFileName.split(".").slice(-1)[0];
       const theFileSize = theFile.size;
+
+      console.log(fileName);
+      console.log(theFileSize);
 
       if (!sizeValidation(theFileSize, fileMaxAllowedSize))
         return next(

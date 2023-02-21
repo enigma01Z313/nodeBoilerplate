@@ -1,14 +1,6 @@
 const fError = require("../../utils/fError");
 
-const validateErrors = (
-  i,
-  v,
-  t,
-  parameterName,
-  parameterNameFa,
-  fullBody,
-  depth = 0
-) => {
+const validateErrors = (i, v, t, parameterName, parameterNameFa, fullBody) => {
   if (
     i === "required" &&
     v.value === true &&
@@ -95,28 +87,14 @@ const validateErrors = (
           v,
           tmpData,
           item.parameter,
-          item.faName,
-          fullBody,
-          depth + 1
+          item.faName
         );
-
-        if (validateRes) {
-          console.log(validateRes);
-
-          const isErrorType = validateRes instanceof Error;
-          return depth === 0
-            ? fError(
-                400,
-                isErrorType
-                  ? `${parameterName}.${v?.violations?.[0]}`
-                  : `${parameterName}.${validateRes?.parameterName}.${validateRes?.v?.violations?.[0]}`,
-                isErrorType
-                  ? `${parameterName}.${v?.violations?.[1]}`
-                  : `${parameterName}.${validateRes?.parameterName}.${validateRes?.v?.violations?.[1]}`
-              )
-            : { v, parameterName };
-        }
-        //  else return v;
+        if (validateRes)
+          return fError(
+            400,
+            `${parameterName}.${v.violations[0]}`,
+            `${parameterNameFa}.${v.violations[1]}`
+          );
       }
     }
   }
