@@ -43,4 +43,12 @@ module.exports = (sequelize, DataTypes) =>
     image: {
       type: DataTypes.STRING,
     },
+    sound: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    text: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });

@@ -242,6 +242,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
       publisherId: 7,
       status: 1,
       image: imageUUID1,
+      sound: true,
     },
     {
       name: "جرئت داشته باش",
@@ -251,6 +252,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
       publisherId: 7,
       status: 1,
       image: imageUUID2,
+      sound: true,
     },
     {
       name: "قلعه حیوانات",
@@ -260,6 +262,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
       publisherId: 5,
       status: 1,
       image: imageUUID3,
+      sound: true,
     },
     {
       name: "تاریخ ایران مدرن",
@@ -271,6 +274,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
       publisherId: 6,
       status: 1,
       image: imageUUID4,
+      text: true,
     },
     {
       name: "آیسخولوس",
@@ -282,6 +286,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
       publisherId: 6,
       status: 1,
       image: imageUUID5,
+      text: true,
     },
     {
       name: "توتوچان",
@@ -293,6 +298,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
       publisherId: 6,
       status: 1,
       image: imageUUID6,
+      sound: true,
     },
     {
       name: "چک لیست",
@@ -304,6 +310,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
       publisherId: 6,
       status: 1,
       image: imageUUID3,
+      text: true,
     },
   ]);
   console.log("Books seed has been finished");
