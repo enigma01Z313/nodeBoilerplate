@@ -20,7 +20,13 @@ const {
 } = require("../src/middleware");
 
 const {
-  User: { create, update, get, list },
+  User: {
+    create,
+    update,
+    get,
+    list,
+    Wallet: { get: getWallet },
+  },
 } = require("../src/services");
 
 /**************************/
@@ -86,6 +92,14 @@ router.get(
   use(authentication),
   use(theSameUser),
   use(get),
+  serveJson
+);
+
+router.get(
+  "/:uuid/wallet",
+  use(authentication),
+  use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
+  use(getWallet),
   serveJson
 );
 

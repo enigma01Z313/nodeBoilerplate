@@ -17,6 +17,7 @@ module.exports = (db) => {
 
   User.belongsTo(Role, { foreignKey: "role_id" });
 
+  User.hasOne(Wallet, { foreignKey: "ownerId" });
   Wallet.belongsTo(User, { foreignKey: "ownerId" });
 
   User.hasMany(UserMeta, { foreignKey: "userId" });

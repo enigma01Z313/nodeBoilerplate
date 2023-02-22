@@ -614,12 +614,40 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
 
   await Wallet.bulkCreate([
     {
+      ownerId: 1,
+      amount: 0,
+    },
+    {
       ownerId: 2,
-      amount: 10000,
+      amount: 0,
     },
     {
       ownerId: 3,
-      amount: 2000,
+      amount: 0,
+    },
+    {
+      ownerId: 4,
+      amount: 10000,
+    },
+    {
+      ownerId: 5,
+      amount: 14000,
+    },
+    {
+      ownerId: 6,
+      amount: 15000,
+    },
+    {
+      ownerId: 7,
+      amount: 0,
+    },
+    {
+      ownerId: 8,
+      amount: 0,
+    },
+    {
+      ownerId: 9,
+      amount: 0,
     },
   ]);
 
