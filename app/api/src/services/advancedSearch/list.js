@@ -6,7 +6,7 @@ const { inspect } = require("../../utils");
 
 module.exports = async (req, res, next) => {
   const criteria = req.query.criteria ?? "book";
-  const bookType = req.query.bookType ?? "text";
+  const bookType = req.query.bookType ?? "all";
   const { s: search, limit, page } = req.query;
 
   if (!search) {
