@@ -19,6 +19,8 @@ info:
 tags:
   - name: auth
     description: login/confirmation endpoints to get access token
+  - name: books
+    description: book's management
   - name: roles
     description: Role's management
   - name: users
@@ -33,8 +35,6 @@ tags:
     description: offprice's management
   - name: authors
     description: author's management
-  - name: books
-    description: book's management
   - name: advanced search
     description: books advanced search
   - name: publishers
@@ -1711,6 +1711,8 @@ paths:
         - books
       operationId: getBooks
       description: Get book's details <br> Parameters are used to filter and sort data
+      security:
+        - bearerAuth: []
       parameters:
         - name: tags
           in: query
@@ -2099,6 +2101,73 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /books/{bookId}/buy:
+    post:
+      tags:
+        - books
+      operationId: buyBook
+      description: Buy this book
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          description: book's uuid
+          default: 94526768-4e6d-4e3d-8db2-aa78c1e2c5e2
+          format: uuid
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  format: uuid
+                  description: set user's access token here
+                  default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY1ZjFjMzZlLWUwMjEtNDFhYS04NjIxLTI0ZjA0MmJmYjRhYSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzcyNjM3NTksImV4cCI6MTY4NjI2Mzc1OX0.bQHEI2gaO8WPZ7f_teSmuQe7kJzfA4v51ofOzepQtO8
+                from:
+                  description: set current page url here to return after payment
+                  default: http://localhost:8080/books/1234
+      # consumes:
+      #   - multipart/form-data
+      # parameters:
+      #   - name: token
+      #     in: fomData
+      #     description: set user's access token here
+      #     default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY1ZjFjMzZlLWUwMjEtNDFhYS04NjIxLTI0ZjA0MmJmYjRhYSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzcyNjM3NTksImV4cCI6MTY4NjI2Mzc1OX0.bQHEI2gaO8WPZ7f_teSmuQe7kJzfA4v51ofOzepQtO8
+      #   - name: from
+      #     in: formData
+      #     description: set current page url here to return after payment
+      #     default: http://localhost:8080/books/1234
+      responses:
+        "200":
+          description: shows the Authors list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Book"
+                  total:
+                    type: number
+        "401":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /publishers:
     get:
       tags:
