@@ -83,7 +83,7 @@ router.get(
       fields: ["firstName", "lastName", "phone", "email"],
     })
   ),
-  use(getDataList("User", "کاربر", undefined, undefined, "userList")),
+  use(getDataList("User", "کاربر", "Wallet", undefined, "userList")),
   serveJson
 );
 

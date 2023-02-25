@@ -1,4 +1,4 @@
-const { User, UserMeta, Role } = require("../../../db/MySQL/models");
+const { User, UserMeta, Role, Wallet } = require("../../../db/MySQL/models");
 const { user: refinedUser } = require("../../../db/MySQL/refines");
 
 module.exports = async (req, res, next) => {
@@ -12,6 +12,9 @@ module.exports = async (req, res, next) => {
       },
       {
         model: Role,
+      },
+      {
+        model: Wallet,
       },
     ],
   });

@@ -5,6 +5,9 @@ const fError = require("../../utils/fError");
 const notification = require("../../utils/notifications");
 const hash = require("../../utils/hash");
 const nodemailer = require("nodemailer");
+const createWallet = require("../wallet/_/createWallet.js");
+
+console.log(createWallet);
 
 module.exports = async (req, res, next) => {
   const { phone } = req.body;
@@ -24,6 +27,8 @@ module.exports = async (req, res, next) => {
     creditTime: new Date().getTime(),
     status: 0,
   });
+
+  await createWallet(newUser.id);
 
   res.jsonData = { id: newUser.toJSON().uuid, code };
   next();
