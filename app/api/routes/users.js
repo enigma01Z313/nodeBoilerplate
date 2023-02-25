@@ -26,6 +26,7 @@ const {
     get,
     list,
     Wallet: { get: getWallet },
+    Card: { list: listCards },
   },
 } = require("../src/services");
 
@@ -100,6 +101,15 @@ router.get(
   use(authentication),
   use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
   use(getWallet),
+  serveJson
+);
+
+router.get(
+  "/:uuid/cards",
+  use(authentication),
+  use(filteredData({})),
+  use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
+  use(listCards),
   serveJson
 );
 

@@ -13,9 +13,13 @@ module.exports = (db) => {
     Off_price,
     File,
     Wallet,
+    Card,
   } = db;
 
   User.belongsTo(Role, { foreignKey: "role_id" });
+
+  User.hasMany(Card, { foreignKey: "wallet_id" });
+  Card.belongsTo(User, { foreignKey: "wallet_id" });
 
   User.hasOne(Wallet, { foreignKey: "ownerId" });
   Wallet.belongsTo(User, { foreignKey: "ownerId" });

@@ -16,6 +16,7 @@ const {
   Off_price,
   Wallet,
   File,
+  Card,
 } = require("../models");
 const models = require("../models");
 
@@ -619,6 +620,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
   ]);
   console.log("Off price seed has been finished");
 
+  //Wallet
   await Wallet.bulkCreate([
     {
       ownerId: 1,
@@ -657,6 +659,42 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
       amount: 0,
     },
   ]);
+  console.log("Wallet seed has been finished");
+
+  //Card
+  await Card.bulkCreate([
+    {
+      name: "بانک ملی",
+      card_number: "6037998125000000",
+      sheba_number: "IR350170000000000023359231",
+      wallet_id: 1,
+    },
+    {
+      name: "بانک پارسیان",
+      card_number: "6221061069056044",
+      sheba_number: "IR350170000000000023782312",
+      wallet_id: 2,
+    },
+    {
+      name: "بانک سینا",
+      card_number: "6393461092436905",
+      sheba_number: "IR350170000000000012362312",
+      wallet_id: 2,
+    },
+    {
+      name: "بانک ملی",
+      card_number: "6037998125073400",
+      sheba_number: "IR350170000683204023359231",
+      wallet_id: 2,
+    },
+    {
+      name: "بانک ملت",
+      card_number: "5027998125876001",
+      sheba_number: "IR530170000000034223351431",
+      wallet_id: 1,
+    },
+  ]);
+  console.log("Card seed has been finished");
 
   const sizeArr = ["Kb", "Mb"];
   //Book image
