@@ -1,10 +1,13 @@
 "use strinct";
 
-const { User, Wallet } = require("../../../db/MySQL/models");
+const { User } = require("../../../db/MySQL/models");
 const fError = require("../../utils/fError");
 const notification = require("../../utils/notifications");
 const hash = require("../../utils/hash");
 const nodemailer = require("nodemailer");
+const createWallet = require("../wallet/_/createWallet.js");
+
+console.log(createWallet);
 
 module.exports = async (req, res, next) => {
   const { phone } = req.body;
@@ -25,7 +28,7 @@ module.exports = async (req, res, next) => {
     status: 0,
   });
 
-  await Wallet.create({ ownerId: newUser.id });
+  await createWallet(newUser.id);
 
   res.jsonData = { id: newUser.toJSON().uuid, code };
   next();

@@ -1,6 +1,7 @@
-const { User, Wallet } = require("../../../db/MySQL/models");
+const { User } = require("../../../db/MySQL/models");
 const { user: refinedUser } = require("../../../db/MySQL/refines");
 const updateMetaData = require("./_updateMeta");
+const createWallet = require("../wallet/_/createWallet.js");
 
 module.exports = async (req, res, next) => {
   const {
@@ -35,7 +36,7 @@ module.exports = async (req, res, next) => {
 
   const newUser = await User.create(userData);
 
-  await Wallet.create({ ownerId: newUser.id });
+  await createWallet(newUser.id);
 
   const userMeta = await updateMetaData(metaFields, req.body);
 
