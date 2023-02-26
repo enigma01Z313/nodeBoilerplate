@@ -26,7 +26,7 @@ const {
     get,
     list,
     Wallet: { get: getWallet },
-    Card: { list: listCards },
+    Card: { list: listCards, create: createCard },
   },
 } = require("../src/services");
 
@@ -71,6 +71,18 @@ const updatedUserSchema = new ValidateF()
   .string()
   .length(36)
   .done();
+
+const newCardSchema = new ValidateF()
+  .param("name", "نام")
+  .requiredString()
+  .param("card_number", "شماره کارت")
+  .requiredString()
+  .length(16)
+  .param("sheba_number", "شماره شبا")
+  .requiredString()
+  .length(26)
+  .done();
+
 /**************************/
 /*         routes         */
 /**************************/
@@ -110,6 +122,15 @@ router.get(
   use(filteredData({})),
   use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
   use(listCards),
+  serveJson
+);
+
+router.post(
+  "/:uuid/cards",
+  use(validator(newCardSchema)),
+  use(authentication),
+  use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
+  use(createCard),
   serveJson
 );
 
