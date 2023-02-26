@@ -75,12 +75,12 @@ const updatedUserSchema = new ValidateF()
 const newCardSchema = new ValidateF()
   .param("name", "نام")
   .requiredString()
-  .param("card_number", "شماره کارت")
+  .param("cardNumber", "شماره کارت")
   .requiredString()
-  .length(16)
-  .param("sheba_number", "شماره شبا")
+  .regex(/^[0-9]{16}$/)
+  .param("shebaNumber", "شماره شبا")
   .requiredString()
-  .length(26)
+  .regex(/^IR[0-9]{24}$/)
   .done();
 
 /**************************/
@@ -129,6 +129,8 @@ router.post(
   "/:uuid/cards",
   use(validator(newCardSchema)),
   use(authentication),
+  use(isUnique("Card", "کارد", "cardNumber", "شماره کارت")),
+  use(isUnique("Card", "کارد", "shebaNumber", "شماره شبا")),
   use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
   use(createCard),
   serveJson

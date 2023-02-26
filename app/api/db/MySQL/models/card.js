@@ -20,12 +20,14 @@ module.exports = (sequelize, DataTypes) =>
       allowNull: false,
       type: DataTypes.STRING,
     },
-    card_number: {
+    cardNumber: {
       allowNull: false,
       type: DataTypes.STRING,
+      field: "card_number",
     },
-    sheba_number: {
+    shebaNumber: {
       allowNull: false,
       type: DataTypes.STRING,
+      field: "sheba_number",
     },
   });

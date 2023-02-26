@@ -1,16 +1,18 @@
 const { card: cardRefiner } = require("../../../../db/MySQL/refines");
 
 module.exports = async (req, res, next) => {
-  const { name, card_number, sheba_number } = req.body;
+  const { name, cardNumber, shebaNumber } = req.body;
 
   const {
     chainData: { user },
   } = res;
 
+  console.log(name, cardNumber, shebaNumber);
+
   const defaultOption = {
     name,
-    card_number,
-    sheba_number,
+    cardNumber,
+    shebaNumber,
   };
   const card = await user.createCard(defaultOption);
 
