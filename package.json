@@ -6,11 +6,10 @@
   "scripts": {
     "sqlReset": "set RUN_ENV=development&& node ./app/api/db/MySQL/scripts/reset.js",
     "sqlSeed": "set RUN_ENV=development&& node ./app/api/db/MySQL/scripts/seed.js",
-    "sqlResetServer": "set RUN_ENV=server&& node ./app/api/db/MySQL/scripts/reset.js",
-    "sqlSeedServer": "set RUN_ENV=server&& node ./app/api/db/MySQL/scripts/seed.js",
     "dev": "set RUN_ENV=development&& nodemon server.js",
-    "server": "set RUN_ENV=server&& nodemon server.js",
-    "staging": "set STAGING=TRUE&&RUN_ENV=server&& nodemon server.js",
+    "sqlResetServer": "env RUN_ENV=server node ./app/api/db/MySQL/scripts/reset.js",
+    "sqlSeedServer": "env RUN_ENV=server node ./app/api/db/MySQL/scripts/seed.js",
+    "server": "env RUN_ENV=server nodemon server.js",
     "test": "set RUN_ENV=test&& jest --runInBand --detectOpenHandles --forceExit",
     "swaggerBuild": "webpack --env",
     "swagger": "webpack-dev-server --open"
