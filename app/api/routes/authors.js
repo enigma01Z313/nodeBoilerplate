@@ -38,9 +38,6 @@ const newAuthorSchema = new ValidateF()
   .string()
   .param("content", "محتوا")
   .string()
-  .param("status", "وضیعیت")
-  .requiredNumber()
-  .regex(/^(0|1)$/)
   .done();
 
 const updateAuthorSchema = new ValidateF()
@@ -56,9 +53,6 @@ const updateAuthorSchema = new ValidateF()
   .string()
   .param("content", "محتوا")
   .string()
-  .param("status", "وضیعیت")
-  .number()
-  .regex(/^(0|1)$/)
   .done();
 
 /**************************/

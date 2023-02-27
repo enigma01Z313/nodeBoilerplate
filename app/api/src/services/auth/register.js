@@ -7,8 +7,6 @@ const hash = require("../../utils/hash");
 const nodemailer = require("nodemailer");
 const createWallet = require("../wallet/_/createWallet.js");
 
-console.log(createWallet);
-
 module.exports = async (req, res, next) => {
   const { phone } = req.body;
 

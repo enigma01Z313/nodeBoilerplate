@@ -37,7 +37,7 @@ app.get("/robots.txt", (req, res) => {
   res.end("robots file");
 });
 app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname, "public/index.html"), function (err) {
+  res.sendFile(path.join(__dirname, "public/index.php"), function (err) {
     if (err) {
       res.status(500).send(err);
     }
