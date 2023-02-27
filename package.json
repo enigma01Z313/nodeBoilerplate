@@ -12,7 +12,7 @@
     "server": "set RUN_ENV=server&& nodemon server.js",
     "staging": "set STAGING=TRUE&&RUN_ENV=server&& nodemon server.js",
     "test": "set RUN_ENV=test&& jest --runInBand --detectOpenHandles --forceExit",
-    "buildSwagger": "webpack",
+    "swaggerBuild": "webpack --env",
     "swagger": "webpack-dev-server --open"
   },
   "jest": {
