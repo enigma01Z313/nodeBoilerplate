@@ -1,5 +1,7 @@
 const { dbHost, dbName, dbUser, dbPass } = require("./dbMysql");
 
+console.log(dbHost, dbName, dbUser, dbPass);
+
 module.exports = {
   development: {
     username: dbUser,
