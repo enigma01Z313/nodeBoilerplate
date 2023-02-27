@@ -786,6 +786,44 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /users/{userId}/wallet:
+    get:
+      tags:
+        - users
+      operationId: getWallet
+      description: Get wallet details
+      parameters:
+        - name: userId
+          in: path
+          description: unique id of wallet
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the wallet with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Wallet with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /tags:
     get:
       tags:
@@ -2168,7 +2206,186 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-
+  /books/{bookId}/offprice:
+    get:
+      tags:
+        - books
+      operationId: getOffprice
+      description: Get offprice details
+      parameters:
+        - name: bookId
+          in: path
+          description: unique id of offprices
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the offprice with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SingleOffprice"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Offprices with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - books
+      operationId: addOffprice
+      description: Add new Offprice to system
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookId
+          in: path
+          description: book's id of the new Offprice
+          format: uuid
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  description: type of the new Offprice
+                  type: number
+                amount:
+                  description: amount of the new Offprice
+                  type: number
+                startDate:
+                  description: start Date of the new Offprice
+                  type: string
+                endDate:
+                  description: end Date of the new Offprice
+                  type: string
+              required:
+                - type
+                - amount
+                - startDate
+                - endDate
+      responses:
+        "200":
+          description: returns the new added offprice
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SingleOffprice"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - books
+      operationId: updateOffprice
+      description: Update offprice's
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookId
+          in: path
+          description: update Offprice
+          format: uuid
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  description: type of the new Offprice
+                  type: number
+                amount:
+                  description: amount of the new Offprice
+                  type: number
+                startDate:
+                  description: start Date of the new Offprice
+                  type: string
+                endDate:
+                  description: end Date of the new Offprice
+                  type: string
+      responses:
+        "200":
+          description: return the updated offprice's detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SingleOffprice"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: offprice with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - books
+      operationId: deleteOffprice
+      description: Delete Offprice from books
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookId
+          in: path
+          description: book's id of the Offprice
+          format: uuid
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Offprice of sent ids have been deleted
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /publishers:
     get:
       tags:
@@ -2685,6 +2902,20 @@ components:
         createdAt:
           type: string
         updatedAt:
+          type: string
+    SingleOffprice:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: number
+        amount:
+          type: number
+        startDate:
+          type: string
+        endDate:
           type: string
     BookList:
       type: object
