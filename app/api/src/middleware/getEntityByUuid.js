@@ -1,5 +1,4 @@
 const { Op } = require("sequelize");
-
 const Models = require("../../db/MySQL/models");
 const refineData = require("../../db/MySQL/refines");
 const { fError } = require("../utils");
@@ -45,9 +44,9 @@ module.exports = (info) => {
       : model[0].toLowerCase() + model.substring(1);
 
     const refiner = refineData[model.toLowerCase()];
+
     res.chainData[name] = item;
     res.chainData[`refined${name}`] = refiner ? refiner(item) : item;
-
     next();
   };
 };

@@ -1,7 +1,6 @@
 require("dotenv").config();
 
-const { User, Role } = require("../../../db/MySQL/models");
-const fError = require("../../utils/fError");
+const getUser = require("./getUser");
 
 const authentication = async (req, res, next) => {
   const { authorization } = req?.headers;
@@ -9,14 +8,9 @@ const authentication = async (req, res, next) => {
   if (!authorization)
     return next(fError(403, "Authorization not sent", "خطای اطلاعات ارسالی"));
 
-  const user = await User.findOne({
-    where: { accessToken: authorization.split(" ")[1] },
-    // include: Role,
-  });
+  const user = await getUser(authorization);
 
-  if (!user)
-    return next(fError(401, "Token not valid", "توکن نا معتبر میباشد"));
-
+  res.loggedIn = true;
   res.authenticatedUser = user;
   next();
 };

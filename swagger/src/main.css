@@ -1,0 +1,15 @@
+.scheme-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.opblock-tag-section h3 {
+  position: sticky;
+  top: 105px;
+  background: #fff;
+  z-index: 100;
+}
+.opblock-tag-section h3:hover {
+  background: #fff !important;
+}
