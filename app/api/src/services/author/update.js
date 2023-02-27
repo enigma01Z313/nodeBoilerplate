@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
   const {
     firstName,
     lastName,
-    coutnry,
+    country: coutnry,
     birthDate,
     deathDate,
     content,
