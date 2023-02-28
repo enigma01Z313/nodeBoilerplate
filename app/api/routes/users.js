@@ -96,6 +96,7 @@ router.get(
       fields: ["firstName", "lastName", "phone", "email"],
     })
   ),
+  use(sortedData),
   use(getDataList("User", "کاربر", "Wallet", undefined, "userList")),
   serveJson
 );
