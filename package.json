@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "sqlReset": "node ./app/api/db/MySQL/scripts/reset.js",
-    "sqlSeed": "node ./app/api/db/MySQL/scripts/seed.js",
-    "dev": "set RUN_ENV=development && nodemon server.js",
-    "server": "RUN_ENV=server && nodemon server.js",
-    "staging": "STAGING=TRUE RUN_ENV=server nodemon server.js",
-    "test": "set RUN_ENV=test && jest --runInBand --detectOpenHandles --forceExit",
-    "buildSwagger": "webpack",
+    "sqlReset": "set RUN_ENV=development&& node ./app/api/db/MySQL/scripts/reset.js",
+    "sqlSeed": "set RUN_ENV=development&& node ./app/api/db/MySQL/scripts/seed.js",
+    "dev": "set RUN_ENV=development&& nodemon server.js",
+    "staging": "env RUN_ENV=development nodemon server.js",
+    "sqlResetServer": "env RUN_ENV=server node ./app/api/db/MySQL/scripts/reset.js",
+    "sqlSeedServer": "env RUN_ENV=server node ./app/api/db/MySQL/scripts/seed.js",
+    "server": "env RUN_ENV=server nodemon server.js",
+    "test": "set RUN_ENV=test&& jest --runInBand --detectOpenHandles --forceExit",
+    "swaggerBuild": "webpack --env",
     "swagger": "webpack-dev-server --open"
   },
   "jest": {
@@ -38,20 +40,20 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
-    "jest": "^27.5.1",
-    "nodemon": "^2.0.15",
-    "sequelize-cli": "^6.4.1",
-    "supertest": "^6.2.2",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
+    "jest": "^27.5.1",
+    "json-loader": "^0.5.7",
+    "nodemon": "^2.0.15",
+    "sequelize-cli": "^6.4.1",
+    "style-loader": "^3.3.1",
+    "supertest": "^6.2.2",
+    "swagger-ui": "^4.14.0",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.0",
-    "css-loader": "^6.7.1",
-    "json-loader": "^0.5.7",
-    "style-loader": "^3.3.1",
-    "swagger-ui": "^4.14.0",
     "yaml-loader": "^0.8.0"
   }
 }

@@ -13,3 +13,28 @@
 .opblock-tag-section h3:hover {
   background: #fff !important;
 }
+.col-8.col-8-desktop {
+  width: 75%;
+}
+.col-4.col-4-desktop {
+  width: 25%;
+}
+.wrapper:has(#swagger-navigation) {
+  display: flex;
+  align-items: flex-start;
+}
+#swagger-navigation {
+  padding-right: 30px;
+  position: sticky;
+  top: 105px;
+}
+#swagger-navigation nav a {
+  display: block;
+  cursor: pointer;
+  padding: 10px 5px;
+  border-bottom: 1px solid #333;
+  font-size: 20px;
+}
+#swagger-navigation nav a:hover {
+  background: #a5f0fd;
+}

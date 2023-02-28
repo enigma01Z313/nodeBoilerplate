@@ -1,20 +1,32 @@
 const path = require("path");
 require("dotenv").config({ path: path.resolve("./config/.env") });
+const {
+  RUN_ENV,
+  MYSQL_HOST_ONLINE,
+  MYSQL_NAME_ONLINE,
+  MYSQL_USER_ONLINE,
+  MYSQL_PASS_ONLINE,
+  MYSQL_HOST,
+  MYSQL_NAME,
+  MYSQL_USER,
+  MYSQL_PASS,
+  MYSQL_NAME_TEST,
+  MONGOOSE_URL,
+} = process.env;
 
 module.exports = {
-  dbHost: process.env.MYSQL_HOST,
+  dbHost:
+    (RUN_ENV === "server" && MYSQL_HOST_ONLINE) ||
+    (RUN_ENV === "development" && MYSQL_HOST),
   dbName:
-    process.env.RUN_ENV === "server"
-      ? process.env.MYSQL_NAME_ONLINE
-      : process.env.MYSQL_NAME,
+    (RUN_ENV === "server" && MYSQL_NAME_ONLINE) ||
+    (RUN_ENV === "development" && MYSQL_NAME),
   dbUser:
-    process.env.RUN_ENV === "server"
-      ? process.env.MYSQL_USER_ONLINE
-      : process.env.MYSQL_USER,
+    (RUN_ENV === "server" && MYSQL_USER_ONLINE) ||
+    (RUN_ENV === "development" && MYSQL_USER),
   dbPass:
-    process.env.RUN_ENV === "server"
-      ? process.env.MYSQL_PASS_ONLINE
-      : process.env.MYSQL_PASS,
-  dbNameTest: process.env.MYSQL_NAME_TEST,
-  dbUrl: process.env.MONGOOSE_URL,
+    (RUN_ENV === "server" && MYSQL_PASS_ONLINE) ||
+    (RUN_ENV === "development" && MYSQL_PASS),
+  dbNameTest: MYSQL_NAME_TEST,
+  dbUrl: MONGOOSE_URL,
 };
