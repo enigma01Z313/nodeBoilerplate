@@ -27,16 +27,15 @@ module.exports = (sequelize, DataTypes) =>
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    attachment: {
-      type: DataTypes.STRING,
-    },
-    type: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-    },
     status: {
       allowNull: false,
       type: DataTypes.INTEGER,
       defaultValue: 1,
+    },
+    paymentId: {
+      type: DataTypes.STRING,
+    },
+    attachment: {
+      type: DataTypes.STRING,
     },
   });
