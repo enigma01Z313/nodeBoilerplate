@@ -10,7 +10,8 @@ const createWallet = require("../wallet/_/createWallet.js");
 module.exports = async (req, res, next) => {
   const { phone } = req.body;
 
-  const code = Math.floor(Math.random() * 900000 + 100000);
+  const random = Math.random();
+  const code = (random === 0 && 1000) || Math.floor(Math.random() * 9000 + 999);
   // const emailTemplate = `<h1>کد تایید: ${code}</h1><table border="1"><tr><td>ss</td><td>ww</td></tr></table>`;
   // const notifRes = await notification.email({
   //   to: email,
