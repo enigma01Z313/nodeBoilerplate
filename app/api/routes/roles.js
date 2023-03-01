@@ -11,6 +11,7 @@ const getDataByUUID = require("../src/middleware/getDataByUUID");
 const validatePermissions = require("../src/middleware/validatePermissions");
 const filteredData = require("../src/middleware/filteredData");
 const getDataList = require("../src/middleware/getDataList");
+const sortedData = require("../src/middleware/sortedData");
 
 const { roleSchema } = require("../src/utils/schema");
 
@@ -51,7 +52,8 @@ router.get(
   "/",
   use(authentication),
   // use(authorization.def("SEE_ROLES")),
-  filteredData({ id: { [Op.ne]: 1 } }),
+  use(filteredData({ id: { [Op.ne]: 1 } })),
+  use(sortedData),
   use(getDataList("Role", "نقش کاربری", undefined, undefined, "roleList")),
   serveJson
 );

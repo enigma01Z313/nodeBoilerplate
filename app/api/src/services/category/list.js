@@ -1,4 +1,5 @@
 const { Category } = require("../../../db/MySQL/models");
+const { inspect } = require("../../utils");
 
 const {
   categoryList: refinedCategoryList,
@@ -10,12 +11,20 @@ module.exports = async (req, res, next) => {
     order: [["parentId", "ASC"]],
   };
 
+  inspect(defaultOption);
+  
+  const { sortOptions } = res;
+
+  defaultOption.order.push(sortOptions);
+
+  inspect(defaultOption);
+  
   if (isMain) {
     defaultOption.where = { main: true };
   }
 
-  const category = await Category.findAll(defaultOption);
+  const categories = await Category.findAll(defaultOption);
 
-  res.jsonData = refinedCategoryList(category);
+  res.jsonData = refinedCategoryList(categories);
   next();
 };

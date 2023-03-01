@@ -13,6 +13,7 @@ const {
   getEntityByUuid,
   filteredData,
   filteredSearch,
+  sortedData,
   Book: { bookList, query: bookQuery },
 } = require("../src/middleware");
 
@@ -29,6 +30,7 @@ const {
 router.get(
   "/",
   use(filteredData({ roleId: 4 })),
+  use(sortedData),
   use(getDataList("User", "انتشارات", undefined, undefined, "publisherList")),
   serveJson
 );

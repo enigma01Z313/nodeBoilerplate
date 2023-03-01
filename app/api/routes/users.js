@@ -122,6 +122,7 @@ router.get(
   use(authentication),
   use(filteredData({})),
   use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
+  use(sortedData),
   use(listCards),
   serveJson
 );

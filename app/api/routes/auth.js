@@ -38,7 +38,7 @@ const emailSchema = new ValidateF()
 const confirmCodeSchema = new ValidateF()
   .param("confirmCode", "کد تایید")
   .required()
-  .length(6)
+  .length(4)
   .done();
 
 /**************************/

@@ -1,12 +1,13 @@
 openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
-  - description: main server with ip
-    url: https://sanab.farzinahmadi.com/api
+
+  - description: local api server
+    url: http://localhost:30005/api
   - description: mock api server
     url: http://67.43.234.92:3005/api
-  - description: local api server
-    url: http://localhost:3000/api
+  - description: main server with ip
+    url: https://sanab.farzinahmadi.com/api
 
 info:
   description: This is a simple API
