@@ -821,7 +821,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
     },
     {
       name: "dd.epub",
-      path: "u5.kgqvk4c1l.epub",
+      path: "u5.kgqvk4cil.epub",
       book_id: 4,
       metaData: JSON.stringify({
         pageCount: {
