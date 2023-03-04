@@ -32,6 +32,9 @@ module.exports = (sequelize, DataTypes) =>
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },
+    from: {
+      type: DataTypes.STRING,
+    },
     paymentId: {
       type: DataTypes.STRING,
     },

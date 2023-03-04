@@ -1,36 +1,43 @@
-const Zibal = require("zibal");
+const open = require("open");
 const { Transaction } = require("../../../db/MySQL/models");
-const { merchantCode: merchant } = require("../../../../../config/shop");
 const { host } = require("../../../../../config/general");
-
-console.log(Zibal.init);
+const zibalGateway = require("./createGateway")();
 
 module.exports = async (req, res, next) => {
   const {
-    authenticatedUser: user,
+    authenticatedUser: { phone: mobile, id: userId },
     chainData: {
       refinedbook: { price },
-      book,
+      book: { id: bookId, name: bookName },
     },
   } = res;
   const { from } = req.body;
 
+  //////////////////////
+  //craete transaction
   const transaction = await Transaction.create({
     amount: price,
-    userId: user.id,
-    bookId: book.id,
+    userId,
+    bookId,
+    from,
     action: 1,
   });
+  const { amount, uuid: transactionId } = transaction;
 
-  const { uuid: transactionId } = transaction;
+  //////////////////////
+  //get payment link
+  const gatewayReuest = await zibalGateway.request({
+    amount,
+    callbackUrl: `${host}/payments`,
+    orderId: transactionId,
+    description: `خرید کتاب ${bookName}.`,
+    mobile,
+  });
+  const { trackId, paymentUrl } = gatewayReuest;
 
-  // Zibal.init({
-  //   merchant,
-  //   callbackUrl: `${host}/payment?transaction=${transactionId}`,
-  //   logLevel: 2,
-  // });
-  // const gatewayResult = await Zibal.request(1500);
-  // console.log(gatewayResult);
+  //////////////////////
+  console.log(trackId, paymentUrl);
+  open(paymentUrl, "_self");
 
-  return res.end("haaaa");
+  return res.end("در حال انتقال به درگاه");
 };
