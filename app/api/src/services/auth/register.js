@@ -19,9 +19,12 @@ module.exports = async (req, res, next) => {
   //   html: emailTemplate,
   // });
 
+  const c = "" + code;
+  const hashw = hash(c);
+
   const newUser = await User.create({
     phone,
-    confirmCode: hash("" + code),
+    confirmCode: hashw,
     roleId: 2,
     creditTime: new Date().getTime(),
     status: 0,

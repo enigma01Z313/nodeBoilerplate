@@ -1,6 +1,10 @@
+const { role: roleRefiner } = require("../../../db/MySQL/refines");
+
 module.exports = async (req, res, next) => {
   let uppedData = false;
-  const { jsonData: role } = res;
+  const {
+    chainData: { role },
+  } = res;
   const { name, permissions, status } = req.body;
 
   if (name && name !== role.name) role.name = uppedData = name;
@@ -16,6 +20,8 @@ module.exports = async (req, res, next) => {
     return next();
   }
 
-  res.jsonData = await role.save();
+  const updatedRole = await role.save();
+
+  res.jsonData = roleRefiner(updatedRole);
   next();
 };

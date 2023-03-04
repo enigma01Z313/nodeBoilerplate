@@ -7,7 +7,7 @@ const authorization = require("../src/middleware/auth/authorization");
 const getDataByUUID = require("../src/middleware/getDataByUUID");
 
 const {
-  Filemanager: { upload, get },
+  Filemanager: { upload, get, getFile },
 } = require("../src/services");
 
 router.post(
@@ -24,6 +24,7 @@ router.post(
 );
 
 // get image route
-router.get("/:uuid", use(getDataByUUID("File", "فایل")), get);
+// router.get("/:uuid", use(getDataByUUID("File", "فایل")), get);
+router.get("/:uuid", use(getFile), get);
 
 module.exports = router;
