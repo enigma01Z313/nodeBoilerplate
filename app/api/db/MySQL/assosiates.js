@@ -6,6 +6,7 @@ module.exports = (db) => {
     Book,
     Tag,
     Category,
+    User_book,
     Book_tag,
     Book_category,
     Author,
@@ -47,11 +48,21 @@ module.exports = (db) => {
     as: "categories",
     foreignKey: "book_id",
   });
-
   Category.belongsToMany(Book, {
     through: Book_category,
     as: "books",
     foreignKey: "category_id",
+  });
+
+  Book.belongsToMany(User, {
+    through: User_book,
+    as: "book_users",
+    foreignKey: "book_id",
+  });
+  User.belongsToMany(Book, {
+    through: User_book,
+    as: "user_books",
+    foreignKey: "user_id",
   });
 
   Category.hasMany(Category, {
