@@ -138,7 +138,7 @@ const refineBookFiles = (files) =>
           meta: { ...refineFileMeta(file.metaData) },
           metaData: undefined,
           id: undefined,
-          path: undefined,
+          // path: undefined,
           book_id: undefined,
           hasOwner: undefined,
           createdAt: undefined,
