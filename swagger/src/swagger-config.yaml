@@ -1,13 +1,12 @@
 openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
-
-  - description: local api server
-    url: http://localhost:30005/api
-  - description: mock api server
-    url: http://67.43.234.92:3005/api
   - description: main server with ip
     url: https://sanab.farzinahmadi.com/api
+  - description: mock api server
+    url: http://67.43.234.92:3005/api
+  - description: local api server
+    url: http://localhost:30005/api
 
 info:
   description: This is a simple API
@@ -844,6 +843,16 @@ paths:
           required: true
           schema:
             type: string
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
       responses:
         "200":
           description: shows the card with specific uuid
@@ -929,6 +938,17 @@ paths:
         - tags
       operationId: getTags
       description: Get tag's details <br> Parameters are used to filter and sort data
+      parameters:
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns list of tags
@@ -1175,6 +1195,16 @@ paths:
           description: page number (default 1)
           schema:
             type: integer
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns list of categories
@@ -1529,6 +1559,16 @@ paths:
           description: page number (default 1)
           schema:
             type: integer
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
       responses:
         "200":
           description: shows the Authors list
@@ -2502,6 +2542,16 @@ paths:
           description: page number (default 1)
           schema:
             type: integer
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
       responses:
         "200":
           description: shows the Publishers list
@@ -2645,6 +2695,16 @@ paths:
           description: page number (default 1)
           schema:
             type: integer
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
       responses:
         "200":
           description: shows the Wallets list
