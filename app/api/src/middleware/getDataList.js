@@ -19,18 +19,6 @@ const getDataList =
 
     const { sortOptions } = res;
 
-    inspect({
-      ...defaultOptions,
-      ...createIncludeArray(includeModels),
-      order: sortOptions,
-    });
-    inspect({
-      ...paginationedOptions,
-      ...createIncludeArray(includeModels),
-      order: sortOptions,
-      subQuery: false,
-    });
-
     const items = await Models[model].findAll({
       ...defaultOptions,
       ...createIncludeArray(includeModels),

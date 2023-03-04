@@ -1,12 +1,12 @@
 openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
-  - description: mock api server
-    url: http://67.43.234.92:30005/api
-  - description: local api server
-    url: http://localhost:3000/api
   - description: main server with ip
     url: https://sanab.farzinahmadi.com/api
+  - description: mock api server
+    url: http://67.43.234.92:3005/api
+  - description: local api server
+    url: http://localhost:30005/api
 
 info:
   description: This is a simple API
@@ -42,6 +42,8 @@ tags:
     description: publisher's management
   - name: wallets
     description: wallet's management
+  - name: cards
+    description: card's management
 paths:
   /auth/register:
     post:
@@ -786,12 +788,167 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /users/{userId}/wallet:
+    get:
+      tags:
+        - users
+      operationId: getWallet
+      description: Get wallet details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: unique id of user
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the wallet with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Wallet with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/{userId}/cards:
+    get:
+      tags:
+        - users
+      operationId: getCard
+      description: Get card details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: unique id of user
+          required: true
+          schema:
+            type: string
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: shows the card with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Card"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Card with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - users
+      operationId: addCard
+      description: Add new Card to system
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: user's id of the new Card
+          format: uuid
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: name of the new card
+                  type: string
+                cardNumber:
+                  description: card number of the new card
+                  type: string
+                  format: UUID
+                shebaNumber:
+                  description: sheba number of the new card
+                  type: string
+                  format: UUID
+              required:
+                - name
+                - cardNumber
+                - shebaNumber
+      responses:
+        "200":
+          description: returns the new added card
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Card"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /tags:
     get:
       tags:
         - tags
       operationId: getTags
       description: Get tag's details <br> Parameters are used to filter and sort data
+      parameters:
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns list of tags
@@ -1038,6 +1195,16 @@ paths:
           description: page number (default 1)
           schema:
             type: integer
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns list of categories
@@ -1392,6 +1559,16 @@ paths:
           description: page number (default 1)
           schema:
             type: integer
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
       responses:
         "200":
           description: shows the Authors list
@@ -2168,7 +2345,186 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-
+  /books/{bookId}/offprice:
+    get:
+      tags:
+        - books
+      operationId: getOffprice
+      description: Get offprice details
+      parameters:
+        - name: bookId
+          in: path
+          description: unique id of books
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the offprice with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SingleOffprice"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Offprices with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - books
+      operationId: addOffprice
+      description: Add new Offprice to system
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookId
+          in: path
+          description: book's id of the new Offprice
+          format: uuid
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  description: type of the new Offprice
+                  type: number
+                amount:
+                  description: amount of the new Offprice
+                  type: number
+                startDate:
+                  description: start Date of the new Offprice
+                  type: string
+                endDate:
+                  description: end Date of the new Offprice
+                  type: string
+              required:
+                - type
+                - amount
+                - startDate
+                - endDate
+      responses:
+        "200":
+          description: returns the new added offprice
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SingleOffprice"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - books
+      operationId: updateOffprice
+      description: Update offprice's
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookId
+          in: path
+          description: unique id of books
+          format: uuid
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  description: type of the new Offprice
+                  type: number
+                amount:
+                  description: amount of the new Offprice
+                  type: number
+                startDate:
+                  description: start Date of the new Offprice
+                  type: string
+                endDate:
+                  description: end Date of the new Offprice
+                  type: string
+      responses:
+        "200":
+          description: return the updated offprice's detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SingleOffprice"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: offprice with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - books
+      operationId: deleteOffprice
+      description: Delete Offprice from books
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookId
+          in: path
+          description: unique id of books
+          format: uuid
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Offprice of sent ids have been deleted
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /publishers:
     get:
       tags:
@@ -2186,6 +2542,16 @@ paths:
           description: page number (default 1)
           schema:
             type: integer
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
       responses:
         "200":
           description: shows the Publishers list
@@ -2329,6 +2695,16 @@ paths:
           description: page number (default 1)
           schema:
             type: integer
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
       responses:
         "200":
           description: shows the Wallets list
@@ -2385,6 +2761,102 @@ paths:
                 $ref: "#/components/schemas/Error"
         "404":
           description: Wallets with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /cards/{cardId}:
+    get:
+      tags:
+        - cards
+      operationId: getCard
+      description: Get card details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cardId
+          in: path
+          description: unique id of cards
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the card with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Card"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Cards with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - cards
+      operationId: upadteCard
+      description: Update card details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cardId
+          in: path
+          description: unique id of cards
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: name of the new card
+                  type: string
+                cardNumber:
+                  description: card number of the new card
+                  type: string
+                  format: UUID
+                shebaNumber:
+                  description: sheba number of the new card
+                  type: string
+                  format: UUID
+      responses:
+        "200":
+          description: return the updated card's detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Card"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Card with specific id does not exist
           content:
             application/json:
               schema:
@@ -2686,6 +3158,20 @@ components:
           type: string
         updatedAt:
           type: string
+    SingleOffprice:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: number
+        amount:
+          type: number
+        startDate:
+          type: string
+        endDate:
+          type: string
     BookList:
       type: object
       properties:
@@ -2866,6 +3352,24 @@ components:
           type: number
         amount:
           type: number
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Card:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        cardNumber:
+          type: string
+          format: uuid
+        shebaNumber:
+          type: string
+          format: uuid
         createdAt:
           type: string
         updatedAt:
