@@ -14,6 +14,7 @@ module.exports = (db) => {
     File,
     Wallet,
     Card,
+    Comment,
   } = db;
 
   User.belongsTo(Role, { foreignKey: "role_id" });
@@ -82,6 +83,16 @@ module.exports = (db) => {
 
   File.belongsTo(Book, { foreignKey: "book_id" });
   Book.hasMany(File, { foreignKey: "book_id" });
+
+  User.hasMany(Comment, { foreignKey: "userId" });
+  Comment.belongsTo(User, { foreignKey: "userId" });
+
+  Book.hasMany(Comment, { foreignKey: "bookId" });
+  Comment.belongsTo(Book, { foreignKey: "bookId" });
+
+  Comment.hasMany(Comment, {
+    foreignKey: "repliesTo",
+  });
 
   return db;
 };
