@@ -20,10 +20,13 @@ const {
 const {
   Publisher: {
     get,
-    // Book: { list: bookList },
+    Card: { list: listCards },
   },
 } = require("../src/services");
 
+const services = require("../src/services");
+
+console.log(services);
 /**************************/
 /*         routes         */
 /**************************/
@@ -31,7 +34,7 @@ router.get(
   "/",
   use(filteredData({ roleId: 4 })),
   use(sortedData),
-  use(getDataList("User", "انتشارات", undefined, undefined, "publisherList")),
+  use(getDataList("User", "انتشارات", "Wallet", undefined, "publisherList")),
   serveJson
 );
 
@@ -41,6 +44,7 @@ const publisherBooksOption = {
   baseModel: "publisher",
   includes: [{ model: "Off_price" }],
 };
+
 router.get(
   "/:uuid/books",
   use(bookQuery),
@@ -53,6 +57,16 @@ router.get(
     })
   ),
   use(bookList(publisherBooksOption)),
+  serveJson
+);
+
+router.get(
+  "/:uuid/cards",
+  use(authentication),
+  use(filteredData({})),
+  use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
+  use(sortedData),
+  use(listCards),
   serveJson
 );
 

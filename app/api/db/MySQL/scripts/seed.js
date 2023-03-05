@@ -217,9 +217,6 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
     },
   ]);
 
-
-
-  
   console.log("User seed has been finished");
 
   //UserMeta
@@ -823,8 +820,8 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
       }),
     },
     {
-      name: "dd.pdf",
-      path: "u5.kgqvk4c1l.pdf",
+      name: "dd.epub",
+      path: "u5.kgqvk4c1l.epub",
       book_id: 4,
       metaData: JSON.stringify({
         pageCount: {
