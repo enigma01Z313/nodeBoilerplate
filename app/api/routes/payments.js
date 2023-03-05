@@ -8,6 +8,6 @@ const {
   Transaction: { get: getTransaction },
 } = require("../src/services");
 
-router.get("/", verify, use(getTransaction), use(addBook));
+router.get("/", use(verify), use(getTransaction), use(addBook));
 
 module.exports = router;

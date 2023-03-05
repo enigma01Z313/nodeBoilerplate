@@ -1,4 +1,3 @@
-const open = require("open");
 const { Transaction } = require("../../../db/MySQL/models");
 const { host } = require("../../../../../config/general");
 const zibalGateway = require("./createGateway")();
@@ -37,7 +36,7 @@ module.exports = async (req, res, next) => {
 
   //////////////////////
   console.log(trackId, paymentUrl);
-  open(paymentUrl, "_self");
-
-  return res.end("در حال انتقال به درگاه");
+  // window.location.href = paymentUrl;
+  // open(paymentUrl, "_self");
+  return res.redirect(paymentUrl);
 };

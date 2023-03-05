@@ -17,9 +17,7 @@ module.exports = async (req, res, next) => {
   const { status: verifyRes, orderId: transactionId } =
     await zibalGateway.verify({ trackId });
 
-  return res.end("11111111111111111");
-
-  if (verifyRes !== 100)
+  if (verifyRes !== 1)
     return next(fError(400, "Payment is not finished", "خطای پرداخت"));
 
   res.chainData.transactionId = transactionId;

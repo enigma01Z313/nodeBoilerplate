@@ -14,10 +14,10 @@
   background: #fff !important;
 }
 .col-8.col-8-desktop {
-  width: 75%;
+  width: calc(75% - 7.5px);
 }
 .col-4.col-4-desktop {
-  width: 25%;
+  width: calc(25% - 7.5px);
 }
 .wrapper:has(#swagger-navigation) {
   display: flex;
