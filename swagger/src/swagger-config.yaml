@@ -788,46 +788,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /users/{userId}/wallet:
-    get:
-      tags:
-        - users
-      operationId: getWallet
-      description: Get wallet details
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: userId
-          in: path
-          description: unique id of user
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: shows the wallet with specific uuid
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Wallet"
-        "403":
-          description: Token is not valid/being expired
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "404":
-          description: Wallet with specific id does not exist
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "500":
-          description: Some server error happened
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
   /users/{userId}/cards:
     get:
       tags:
@@ -2676,6 +2636,56 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /publishers/{publisherId}/cards:
+    get:
+      tags:
+        - publishers
+      operationId: getCard
+      description: Get card details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: unique id of publishe
+          required: true
+          schema:
+            type: string
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: shows the card with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Card"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Card with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /wallets:
     get:
       tags:
@@ -3099,6 +3109,8 @@ components:
           type: array
           items:
             type: string
+        wallet:
+          type: number
     Tag:
       type: object
       properties:
@@ -3342,6 +3354,8 @@ components:
           type: string
         name:
           type: string
+        wallet:
+          type: number
     Wallet:
       type: object
       properties:
@@ -3356,6 +3370,20 @@ components:
           type: string
         updatedAt:
           type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            fullName:
+              type: string
+            phone:
+              type: string
+              format: /09([0-9]{9})/
+            email:
+              type: string
+              format: /[a-zA-Z0-9]@[a-zA-Z0-9].[a-zA-Z0-9]*/
     Card:
       type: object
       properties:

@@ -31,7 +31,7 @@ router.get(
       fields: ["ownerId", "amount"],
     })
   ),
-  use(getDataList("Wallet", "کیف پول", undefined, undefined, "walletList")),
+  use(getDataList("Wallet", "کیف پول", "User", undefined, "walletList")),
   serveJson
 );
 
