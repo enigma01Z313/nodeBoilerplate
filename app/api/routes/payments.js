@@ -5,8 +5,9 @@ const use = require("../src/utils/use");
 const {
   Payment: { verify },
   Book: { addBook },
+  Transaction: { get: getTransaction },
 } = require("../src/services");
 
-router.get("/", use(verify), use(addBook), (req, res) => res.end("1111111"));
+router.get("/", verify, use(getTransaction), use(addBook));
 
 module.exports = router;

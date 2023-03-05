@@ -1,6 +1,7 @@
 const axios = require("axios");
 const { merchantCode: merchant } = require("../../../../../config/shop");
 const { fError } = require("../../utils");
+const zibalGateway = require("../book/createGateway")();
 
 module.exports = async (req, res, next) => {
   const { success, trackId, orderId } = req.query;
@@ -13,16 +14,14 @@ module.exports = async (req, res, next) => {
       )
     );
 
-  const result = await axios.post({
-    method: "post",
-    url: "https://gateway.zibal.ir/v1/verify",
-    data: {
-      merchant,
-      trackId,
-    },
-  });
+  const { status: verifyRes, orderId: transactionId } =
+    await zibalGateway.verify({ trackId });
 
-  console.log("result form gateway verify", result);
+  return res.end("11111111111111111");
 
-  const { status, amount, orderId: transactionId } = result;
+  if (verifyRes !== 100)
+    return next(fError(400, "Payment is not finished", "خطای پرداخت"));
+
+  res.chainData.transactionId = transactionId;
+  next();
 };

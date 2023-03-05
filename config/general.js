@@ -5,5 +5,6 @@ module.exports = {
   oneTimeLoginTime: process.env.ONE_TIME_LOGIN_TIME,
   host:
     (process.env.RUN_ENV === "server" && process.env.HOST_ONLINE) ||
-    (process.env.RUN_ENV === "development" && process.env.HOST),
+    (process.env.RUN_ENV === "development" &&
+      `${process.env.HOST}:${process.env.PORT}`),
 };

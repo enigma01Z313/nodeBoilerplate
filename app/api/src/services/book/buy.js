@@ -28,7 +28,7 @@ module.exports = async (req, res, next) => {
   //get payment link
   const gatewayReuest = await zibalGateway.request({
     amount,
-    callbackUrl: `${host}/payments`,
+    callbackUrl: `${host}/api/payments`,
     orderId: transactionId,
     description: `خرید کتاب ${bookName}.`,
     mobile,
