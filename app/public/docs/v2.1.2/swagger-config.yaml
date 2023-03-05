@@ -1,0 +1,2915 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: mock api server
+    url: http://67.43.234.92:30005/api
+  - description: local api server
+    url: http://localhost:3000/api
+  - description: main server with ip
+    url: https://sanab.farzinahmadi.com/api
+
+info:
+  description: This is a simple API
+  version: 1.3.3
+  title: Admin Panel
+  contact:
+    email: f.ahmadyf94@gmail.com
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+  - name: auth
+    description: login/confirmation endpoints to get access token
+  - name: books
+    description: book's management
+  - name: roles
+    description: Role's management
+  - name: users
+    description: User's management
+  - name: filemanager
+    description: Filemanager's management
+  - name: tags
+    description: Tag's management
+  - name: categories
+    description: Category's management
+  - name: offprices
+    description: offprice's management
+  - name: authors
+    description: author's management
+  - name: advanced search
+    description: books advanced search
+  - name: publishers
+    description: publisher's management
+  - name: wallets
+    description: wallet's management
+paths:
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: register
+      operationId: registerUser
+      description: 1- use this end point for registeration <br>
+        2- after <b>200</b> response use endpoint <b>POST /auth/{uuid}</b> use userId as <b>"uuid</b> as uuid prameter in url and code as "confirmCode" in body <br>
+        3- <b>Point:</b> parameter <b>code</b> won't be returned on final production version<br>
+        4- <b>Point:</b> parameter <b>skipCaptcha</b> only should be sent when testing on swagger ui
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  description: refresh toekn which is used to refresh access token
+                  type: string
+                  format: /^09(1[0-9]|3[0-9]|2[0-9])-?[0-9]{3}-?[0-9]{4}$/
+                captcha:
+                  description: google recaptcha response (only on production)
+                  type: string
+                skipCaptcha:
+                  description: on swagger ter instead of captcha parameter you should use this paramaeter as true
+                  type: boolean
+              required:
+                - phone
+      responses:
+        "200":
+          description: sends one time login code to phone <br> <b>Point:</b> parameter <b>code</b> wont be returned on final production version
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    description: uuid of user created
+                    type: "string"
+                    format: UUID
+                  code:
+                    description: confirmation code which will be send to provided email
+                    type: "string"
+        "400":
+          description: refresh token has not been sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: refresh token sent does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /auth:
+    post:
+      tags:
+        - auth
+      summary: forgot/onetimelogin
+      operationId: forgetPassword
+      description:
+        When trying to login by on time login code or forgot password use this endpoint <br>
+        1- use this end point for registeration <br>
+        2- after <b>200</b> response use endpoint <b>POST /auth/{uuid}</b> use userId as <b>"uuid</b> as uuid prameter in url and code as "confirmCode" in body <br>
+        3- <b>Point:</b> parameter <b>skipCaptcha</b> only should be sent when testing on swagger ui
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  description: User's phone
+                  type: string
+                  format: /^09(1[0-9]|3[0-9]|2[0-9])-?[0-9]{3}-?[0-9]{4}$/
+                skipCaptcha:
+                  description: on swagger ter instead of captcha parameter you should use this paramaeter as true
+                  type: boolean
+              required:
+                - phone
+      responses:
+        "200":
+          description: sends one time login code to phone <br> <b>Point:</b> parameter <b>code</b> wont be returned on final production version
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: user's unique id
+                    type: string
+                    format: uid
+                  code:
+                    description: confirmation code which will be sent to user as email
+                    type: string
+                required:
+                  - id
+        "400":
+          description: Parameter phone has not been sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: User with specified phone does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /auth/{uuid}:
+    post:
+      tags:
+        - auth
+      summary: Confirm user's phone
+      operationId: confirmCode
+      description:
+        1- this endpoint needs <b>confirmCode</b> and <b>uuid</b> created from endpoints <b>"POST /auth/register"</b> or <b>"POST /auth"</b> <br>
+        2- after successful process with <b>200</b> status you can use <b>accessToken</b> to access other apis as <b>Header
+        - Bearer TOKEN</b><br>
+        3- <b>Point:</b> inside swagger you should set accessToken on Authorize lock icon at the top right of documentation<br>
+        4- <b>Point:</b> parameter <b>skipCaptcha</b> only should be sent when testing on swagger ui
+      parameters:
+        - name: uuid
+          in: path
+          description: user's unique id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confirmCode:
+                  description: "Code that has been sent to user's phone"
+                  type: "string"
+                skipCaptcha:
+                  description: on swagger ter instead of captcha parameter you should use this paramaeter as true
+                  type: boolean
+              required:
+                - "confirmCode"
+        description: Inventory item to add
+      responses:
+        "200":
+          description: Details about a user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    description: "access token for authentication"
+                    type: "string"
+                    format: JWT token
+                  refreshToken:
+                    description: "refresh token for refreshing token"
+                    type: "string"
+                    format: JWT token
+                  user:
+                    $ref: "#/components/schemas/User"
+        "400":
+          description: parameter 'confirmCode' has not been sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: confirm code is wrong
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: user with specified uuid nubmer does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "406":
+          description: confirmation code has expired"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: login
+      operationId: userLogin
+      description:
+        1- use this endpoint when trying to login by email/phone and password <br>
+        you can either enter <b>email</b> and <b>password</b> or <b>phone</b> and <b>password</b> <br>
+        2- after successful process with <b>200</b> status you can use <b>accessToken</b> to access other apis as <b>Header Authorization - Bearer TOKEN</b><br>
+        3- <b>Point:</b> inside swagger you should set accessToken on Authorize lock icon at the top right of documentation<br>
+        4- <b>Point:</b> parameter <b>skipCaptcha</b> only should be sent when testing on swagger ui
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  description: user's email or phone
+                  type: string
+                  format: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-z]+)|09[0-9]{9}$/
+                  default: "09333950889"
+                password:
+                  description: user's password
+                  type: string
+                  default: "1230"
+                skipCaptcha:
+                  description: on swagger ter instead of captcha parameter you should use this paramaeter as true
+                  type: boolean
+                  default: true
+
+              required:
+                - username
+                - password
+      responses:
+        "200":
+          description: Details about a user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    description: "access token for authentication"
+                    type: "string"
+                    format: JWT token
+                  refreshToken:
+                    description: "refresh token for refreshing token"
+                    type: "string"
+                    format: JWT token
+                  user:
+                    $ref: "#/components/schemas/User"
+        "400":
+          description: refresh token has not been sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: refresh token sent does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /roles/permissions:
+    get:
+      tags:
+        - roles
+      operationId: getPermissions
+      description: Get list of system permissions
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: shows list of permissions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  label:
+                    type: string
+                  permissions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        label:
+                          type: string
+                        permission:
+                          type: string
+  /roles:
+    get:
+      tags:
+        - roles
+      operationId: getRoles
+      description: Get list of system roles
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: returns list of roles
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Role"
+                  total:
+                    type: number
+        "401":
+          description: anthrorized access to route or expired token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - roles
+      operationId: addRole
+      description: Add new role to system
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: name of the new role
+                  type: string
+                permissions:
+                  description: list of permissions key
+                  type: array
+                  items:
+                    type: string
+              required:
+                - name
+                - permissions
+      responses:
+        "200":
+          description: returns the new added role
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Role"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /roles/{roleId}:
+    get:
+      tags:
+        - roles
+      operationId: getRole
+      description: Get role details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: roleId
+          in: path
+          description: unique id of department
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the role with specific uuid
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Role"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Role with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - roles
+      operationId: updateRole
+      description: Update role's name
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: roleId
+          in: path
+          description: unique id of department
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: name of the new role
+                  type: string
+                permissions:
+                  description: list of permissions key
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: return the updated department's detail
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Role"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Role with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users:
+    get:
+      tags:
+        - users
+      operationId: getUsers
+      description: Get user's details <br> Parameters are used to filter and sort data
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          description: post's count you want to retrieve
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page you want too retrieve
+          schema:
+            type: integer
+        - name: s
+          in: query
+          description: query to search, it searchs in firstName and lastName
+          schema:
+            type: integer
+        - name: role
+          in: query
+          description: role/roles you want to search, if you want to search multiple role with OR condition use "|" between role unique ids
+          schema:
+            type: integer
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: shows the role with specific uuid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+                  total:
+                    type: number
+        "403":
+          description: Token is not valid/being expired or user with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - users
+      operationId: addUser
+      description: Add new user to system
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  description: phone of the user
+                  type: string
+                password:
+                  description: user's password to use on login
+                  type: string
+                firstName:
+                  description: firstName of the user
+                  type: string
+                lastName:
+                  description: lastName of the user
+                  type: string
+                imageId:
+                  description: imageId of the user
+                  type: string
+                  format: uuid
+                status:
+                  description: status of the user
+                  type: integer
+                roleId:
+                  description: role of the user
+                  type: string
+                content:
+                  description: content of the publisher
+                  type: string
+
+      responses:
+        "200":
+          description: return the new added user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: anthrorized access to route or expired token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/{userId}:
+    get:
+      tags:
+        - users
+      operationId: getUser
+      description: Get user's details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: unique id of user
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the role with specific uuid
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: User with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - users
+      operationId: updateUser
+      description: Update users's detail
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: unique id of user
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  description: phone of the user
+                  type: string
+                password:
+                  description: user's password to use on login
+                  type: string
+                firstName:
+                  description: firstName of the user
+                  type: string
+                lastName:
+                  description: lastName of the user
+                  type: string
+                imageId:
+                  description: name of the user
+                  type: string
+                  format: uuid
+                status:
+                  description: name of the user
+                  type: integer
+                roleId:
+                  description: name of the user
+                  type: string
+      responses:
+        "200":
+          description: return the updated user's detail
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: User with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /tags:
+    get:
+      tags:
+        - tags
+      operationId: getTags
+      description: Get tag's details <br> Parameters are used to filter and sort data
+      responses:
+        "200":
+          description: returns list of tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Tag"
+        "401":
+          description: anthrorized access to route or expired token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - tags
+      operationId: addTag
+      description: Add new tag to system
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: name of the new tag
+                  type: string
+                content:
+                  description: content of the new tag
+                  type: string
+                status:
+                  description: status of tag
+                  type: integer
+              required:
+                - name
+                - status
+      responses:
+        "200":
+          description: returns the new added tag
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tag"
+        "401":
+          description: anthrorized access to route or expired token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /tags/{tagId}:
+    get:
+      tags:
+        - tags
+      operationId: getTag
+      description: Get tag details
+      parameters:
+        - name: tagId
+          in: path
+          description: unique id of tag
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the tag with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tag"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Tag with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - tags
+      operationId: updateTag
+      description: Update tag's name
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: tagId
+          in: path
+          description: unique id of tag
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: name of the new tag
+                  type: string
+                content:
+                  description: content of the new tag
+                  type: string
+                status:
+                  description: status of tag
+                  type: integer
+      responses:
+        "200":
+          description: return the updated tag's detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tag"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Tag with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /tags/{tagId}/books:
+    get:
+      tags:
+        - tags
+      operationId: getTagBooks
+      description: return list of books with specific tags
+      parameters:
+        - name: tagId
+          in: path
+          description: unique id of tag
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+        - name: s
+          in: query
+          description: search of data
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns list of books
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BookList"
+                  total:
+                    type: number
+        "401":
+          description: anthrorized access to route or expired token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /categories:
+    get:
+      tags:
+        - categories
+      operationId: getCategories
+      description: Get Category's details <br> Parameters are used to filter and sort data
+      parameters:
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: returns list of categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Category"
+                  total:
+                    type: number
+        "401":
+          description: anthrorized access to route or expired token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - categories
+      operationId: addCategory
+      description: Add new category to system
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: name of the new category
+                  type: string
+                content:
+                  description: content of the new category
+                  type: string
+                status:
+                  description: status of category
+                  type: integer
+                parentId:
+                  description: name of the new category parent
+                  type: string
+              required:
+                - name
+                - status
+      responses:
+        "200":
+          description: returns the new added category
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /categories/{categoryId}:
+    get:
+      tags:
+        - categories
+      operationId: getCategory
+      description: Get category details
+      parameters:
+        - name: categoryId
+          in: path
+          description: unique id of categories
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: shows the category with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Category with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - categories
+      operationId: updateCategory
+      description: Update category's name
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: categoryId
+          in: path
+          description: unique id of category
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: name of the new category
+                  type: string
+                content:
+                  description: content of the new category
+                  type: string
+                status:
+                  description: status of category
+                  type: integer
+                parentId:
+                  description: name of the new category parent
+                  type: string
+      responses:
+        "200":
+          description: return the updated department's detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Category with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /categories/{categoryId}/books:
+    get:
+      tags:
+        - categories
+      operationId: getCategoryBooks
+      description: return list of books with specific categories
+      parameters:
+        - name: categoryId
+          in: path
+          description: unique id of category
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+        - name: s
+          in: query
+          description: search of data
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns list of books
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BookList"
+                  total:
+                    type: number
+        "401":
+          description: anthrorized access to route or expired token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /offprices:
+    post:
+      tags:
+        - offprices
+      operationId: addOffprice
+      description: Add new Offprice to system
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  description: type of the new Offprice
+                  type: number
+                amount:
+                  description: amount of the new Offprice
+                  type: number
+                startDate:
+                  description: start Date of the new Offprice
+                  type: string
+                endDate:
+                  description: end Date of the new Offprice
+                  type: string
+                book_id:
+                  description: book's id of the new Offprice
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+              required:
+                - type
+                - amount
+                - startDate
+                - endDate
+                - book_id
+      responses:
+        "200":
+          description: returns the new added offprice
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Offprice"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - offprices
+      operationId: deleteOffprice
+      description: Delete Offprice from books
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                book_id:
+                  description: Delete Offprice from books
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+              required:
+                - book_id
+      responses:
+        "204":
+          description: Offprice of sent ids have been deleted
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /authors:
+    get:
+      tags:
+        - authors
+      operationId: getAuthors
+      description: Get author's details <br> Parameters are used to filter and sort data
+      parameters:
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: shows the Authors list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Author"
+                  total:
+                    type: number
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - authors
+      operationId: addAuthor
+      description: Add new author to system
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  description: firstName of the new author
+                  type: string
+                lastName:
+                  description: lastName of the new author
+                  type: string
+                coutnry:
+                  description: coutnry of the new author
+                  type: string
+                birthDate:
+                  description: birth Date of the new author
+                  type: string
+                deathDate:
+                  description: death Date of the new author
+                  type: string
+                content:
+                  description: content of the new author
+                  type: string
+                status:
+                  description: status of author
+                  type: integer
+              required:
+                - firstName
+                - lastName
+                - birthDate
+                - content
+                - status
+      responses:
+        "200":
+          description: returns the new added author
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Author"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /authors/{authorId}:
+    get:
+      tags:
+        - authors
+      operationId: getAuthor
+      description: Get author details
+      parameters:
+        - name: authorId
+          in: path
+          description: unique id of authors
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the author with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Author"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Authors with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - authors
+      operationId: updateAuthor
+      description: Update author's
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: authorId
+          in: path
+          description: unique id of authors
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  description: firstName of the new author
+                  type: string
+                lastName:
+                  description: lastName of the new author
+                  type: string
+                coutnry:
+                  description: coutnry of the new author
+                  type: string
+                birthDate:
+                  description: birth Date of the new author
+                  type: string
+                deathDate:
+                  description: death Date of the new author
+                  type: string
+                content:
+                  description: content of the new author
+                  type: string
+                status:
+                  description: status of author
+                  type: integer
+      responses:
+        "200":
+          description: return the updated author's detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Author"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Author with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /authors/{authorId}/books:
+    get:
+      tags:
+        - authors
+      operationId: getAuthorBooks
+      description: return list of books with specific authors
+      parameters:
+        - name: authorId
+          in: path
+          description: unique id of department
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+        - name: s
+          in: query
+          description: search of data
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns list of books
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BookList"
+                  total:
+                    type: number
+        "401":
+          description: anthrorized access to route or expired token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /search:
+    get:
+      tags:
+        - advanced search
+      operationId: booksAdvancedSearch
+      description: get a list of books based on advanced search
+      parameters:
+        - name: s
+          in: query
+          description: word to search
+          schema:
+            type: string
+        - name: criteria
+          in: query
+          description: search criteria, acceptable values are as follows<br>
+            <b>all</b> search spesific on book's name, books author's names, publisher's name<br>
+            <b>book - (Default)</b> search spesific on book's name<br>
+            <b>author</b> search spesific on books author's names<br>
+            <b>publisher</b> search spesific on publisher's name<br>
+          schema:
+            type: string
+        - name: bookType
+          in: query
+          description: book types to search<br>
+            <b>all - (Default)</b> search spesific on book's name, books author's names, publisher's name<br>
+            <b>text</b> search spesific on book's name<br>
+            <b>sound</b> search spesific on books author's names<br>
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: shows the Books list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BookList"
+                  total:
+                    type: number
+        "403":
+          description: Token is not valid/being expired or user with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /books:
+    get:
+      tags:
+        - books
+      operationId: getBooks
+      description: Get book's details <br> Parameters are used to filter and sort data
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: tags
+          in: query
+          description: list of tag uuid<br>
+            Separate tag ids with comma ","<br>
+            Those with a comma between have an "or" condition
+          schema:
+            type: string
+        - name: categories
+          in: query
+          description: list of category uuid<br>
+            Separate category ids with comma ","<br>
+            Those with a comma between have an "or" condition
+          schema:
+            type: string
+        - name: publisherIds
+          in: query
+          description: list of publisherId uuid<br>
+            Separate publisher ids with comma ","<br>
+            Those with a comma between have an "or" condition
+          schema:
+            type: string
+        - name: authors
+          in: query
+          description: list of author uuid<br>
+            Separate author ids with comma ","<br>
+            Those with a comma between have an "or" condition
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+        - name: s
+          in: query
+          description: search of data
+          schema:
+            type: string
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: shows the Books list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BookList"
+                  total:
+                    type: number
+        "403":
+          description: Token is not valid/being expired or user with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - books
+      operationId: addBook
+      description: Insert new book
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: name of the new book
+                  type: string
+                image:
+                  description: image of the new book
+                  type: string
+                  format: UUID
+                content:
+                  description: content of the new book
+                  type: string
+                publishedYear:
+                  description: published year of the new book
+                  type: number
+                price:
+                  description: price of the new book
+                  type: number
+                offPrice:
+                  description: offPrice of the new book
+                  type: object
+                  properties:
+                    type:
+                      type: number
+                      description: it should be only 1 for price discount or 2 for percentag discount
+                    amount:
+                      type: number
+                      description: amount of discount
+                    startDate:
+                      type: string
+                      description: start date of price
+                      format: ISO Date
+                    endDate:
+                      type: number
+                      description: amount of discount
+                      format: ISO Date
+                publisher:
+                  description: publisher of the new book
+                  type: string
+                  format: UUID
+                categories:
+                  description: categories list of the new book
+                  type: array
+                  items:
+                    type: string
+                    format: UUID
+                tags:
+                  description: tags list of the new book
+                  type: array
+                  items:
+                    type: string
+                    format: UUID
+                authors:
+                  description: authors list of the new book
+                  type: object
+                  properties:
+                    writer:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    author:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    translator:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    resercher:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    narrator:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                main:
+                  type: string
+                  description: main author's uuid
+                  format: UUID
+              required:
+                - name
+                - image
+                - content
+                - publishedYear
+                - price
+                - publisher
+                - categories
+                - tags
+                - authors
+      responses:
+        "200":
+          description: shows the Authors list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Book"
+                  total:
+                    type: number
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /books/{bookId}:
+    get:
+      tags:
+        - books
+      operationId: getBook
+      description: Get book details
+      parameters:
+        - name: bookId
+          in: path
+          description: unique id of book
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the book with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Books with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - books
+      operationId: upadteBook
+      description: Update book details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookId
+          in: path
+          description: unique id of book
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: name of the new book
+                  type: string
+                image:
+                  description: image of the new book
+                  type: string
+                  format: UUID
+                content:
+                  description: content of the new book
+                  type: string
+                publishedYear:
+                  description: published year of the new book
+                  type: number
+                price:
+                  description: price of the new book
+                  type: number
+                offPrice:
+                  description: offPrice of the new book
+                  type: object
+                  properties:
+                    type:
+                      type: number
+                      description: it should be only 1 for price discount or 2 for percentag discount
+                    amount:
+                      type: number
+                      description: amount of discount
+                    startDate:
+                      type: string
+                      description: start date of price
+                      format: ISO Date
+                    endDate:
+                      type: number
+                      description: amount of discount
+                      format: ISO Date
+                publisher:
+                  description: publisher of the new book
+                  type: string
+                  format: UUID
+                categories:
+                  description: categories list of the new book
+                  type: array
+                  items:
+                    type: string
+                    format: UUID
+                tags:
+                  description: tags list of the new book
+                  type: array
+                  items:
+                    type: string
+                    format: UUID
+                authors:
+                  description: authors list of the new book
+                  type: object
+                  properties:
+                    writer:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    author:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    translator:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    resercher:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    narrator:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                main:
+                  type: string
+                  description: main author's uuid
+                  format: UUID
+              required:
+                - name
+                - image
+                - content
+                - publishedYear
+                - price
+                - publisher
+                - categories
+                - tags
+                - authors
+      responses:
+        "200":
+          description: shows the book with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Books with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /books/{bookId}/buy:
+    post:
+      tags:
+        - books
+      operationId: buyBook
+      description: Buy this book
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          description: book's uuid
+          default: 94526768-4e6d-4e3d-8db2-aa78c1e2c5e
+          format: uuid
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  format: uuid
+                  description: set user's access token here
+                  default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY1ZjFjMzZlLWUwMjEtNDFhYS04NjIxLTI0ZjA0MmJmYjRhYSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzcyNjM3NTksImV4cCI6MTY4NjI2Mzc1OX0.bQHEI2gaO8WPZ7f_teSmuQe7kJzfA4v51ofOzepQtO8
+                from:
+                  description: set current page url here to return after payment
+                  default: http://localhost:8080/books/1234
+      # consumes:
+      #   - multipart/form-data
+      # parameters:
+      #   - name: token
+      #     in: fomData
+      #     description: set user's access token here
+      #     default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY1ZjFjMzZlLWUwMjEtNDFhYS04NjIxLTI0ZjA0MmJmYjRhYSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzcyNjM3NTksImV4cCI6MTY4NjI2Mzc1OX0.bQHEI2gaO8WPZ7f_teSmuQe7kJzfA4v51ofOzepQtO8
+      #   - name: from
+      #     in: formData
+      #     description: set current page url here to return after payment
+      #     default: http://localhost:8080/books/1234
+      responses:
+        "200":
+          description: shows the Authors list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Book"
+                  total:
+                    type: number
+        "401":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /publishers:
+    get:
+      tags:
+        - publishers
+      operationId: getPublishers
+      description: Get publisher's details <br> Parameters are used to filter and sort data
+      parameters:
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: shows the Publishers list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Publisher"
+                  total:
+                    type: number
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /publishers/{publisherId}:
+    get:
+      tags:
+        - publishers
+      operationId: getPublisher
+      description: Get publisher details
+      parameters:
+        - name: publisherId
+          in: path
+          description: unique id of publishers
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the publisher with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Publisher"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Publishers with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /publishers/{publisherId}/books:
+    get:
+      tags:
+        - publishers
+      operationId: getPublisherBooks
+      description: return list of books with specific publishers
+      parameters:
+        - name: publisherId
+          in: path
+          description: unique id of department
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+        - name: s
+          in: query
+          description: search of data
+          schema:
+            type: string
+      responses:
+        "200":
+          description: returns list of books
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BookList"
+                  total:
+                    type: number
+        "401":
+          description: anthrorized access to route or expired token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /wallets:
+    get:
+      tags:
+        - wallets
+      operationId: getWallets
+      description: Get wallet's details <br> Parameters are used to filter and sort data
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          description: number of data returned (default 10)
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: page number (default 1)
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: shows the Wallets list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Wallet"
+                  total:
+                    type: number
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /wallets/{walletId}:
+    get:
+      tags:
+        - wallets
+      operationId: getWallet
+      description: Get wallet details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: walletId
+          in: path
+          description: unique id of wallets
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the wallet with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Wallets with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /logs:
+    get:
+      tags:
+        - logs
+      operationId: getLogs
+      description: Get log's details <br> Parameters are used to filter and sort data
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: returns list of logs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: date
+        "401":
+          description: anthrorized access to route or expired token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /logs/{date}:
+    get:
+      tags:
+        - logs
+      operationId: getLog
+      description: Get log details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: date
+          in: path
+          description: unique id of log
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the log with specific date
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Log"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Role with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /files:
+    post:
+      tags:
+        - filemanager
+      operationId: uploadFile
+      description: Upload new file
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multiple/form-data:
+            schema:
+              properties:
+                attachment:
+                  description: file to upload
+                  type: object
+      responses:
+        "200":
+          description: uploaded file details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uuid:
+                    description: uploaded file unique id
+                    type: "string"
+                    format: UUID
+                  updatedAt:
+                    description: uploaded file unique id
+                    type: "string"
+                    format: Timestamp
+                  createdAt:
+                    description: uploaded file unique id
+                    type: "string"
+                    format: Timestamp
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /files/{uuid}:
+    get:
+      tags:
+        - filemanager
+      operationId: getFile
+      description: Get file with specific id
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: uuid
+          in: path
+          description: unique id of specific file
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Details of requested file,
+          content:
+            image/:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: File with specified id does not exit
+          content:
+            application/json":
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Something wend wrong when trying to get file from database
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Option:
+      type: object
+      properties:
+        optionKey":
+          type: "string"
+        optionValue:
+          type: "string"
+    Role:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        permissionsList:
+          type: array
+          items:
+            type: string
+        status:
+          $ref: "#/components/schemas/Status"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        phone:
+          type: string
+          format: /09([0-9]{9})/
+        email:
+          type: string
+          format: /[a-zA-Z0-9]@[a-zA-Z0-9].[a-zA-Z0-9]*/
+        firstName:
+          type: string
+        lastName:
+          type: string
+        fullName:
+          type: string
+        imageId:
+          type: string
+        creditTime:
+          type: number
+          format: miliseconds
+        status:
+          $ref: "#/components/schemas/Status"
+        ip:
+          type: string
+        bannedTime:
+          type: string
+        createAt:
+          type: string
+        updatedAt:
+          type: string
+        role:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        permissions:
+          type: array
+          items:
+            type: string
+    Tag:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        content:
+          type: string
+        status:
+          $ref: "#/components/schemas/Status"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        content:
+          type: string
+        status:
+          $ref: "#/components/schemas/Status"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        childs:
+          type: array
+          items:
+            $ref: "#/components/schemas/Category"
+    Offprice:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: number
+        amount:
+          type: number
+        startDate:
+          type: string
+        endDate:
+          type: string
+        book_id:
+          type: array
+          items:
+            type: string
+            format: uuid
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    BookList:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        publishedYear:
+          type: string
+        content:
+          type: string
+        price:
+          type: string
+        status:
+          $ref: "#/components/schemas/Status"
+        image:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        originalPrice:
+          type: number
+        ofAmount:
+          type: number
+    BookAuthor:
+      type: object
+      properties:
+        label:
+          type: string
+        list:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              firstName:
+                type: string
+              lastName:
+                type: string
+              fullName:
+                type: string
+    Book:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+          name:
+            type: string
+          publishedYear:
+            type: string
+          content:
+            type: string
+          price:
+            type: string
+          status:
+            $ref: "#/components/schemas/Status"
+          image:
+            type: string
+            format: uuid
+          createdAt:
+            type: string
+          updatedAt:
+            type: string
+          originalPrice:
+            type: number
+          files:
+            type: array
+            items:
+              type: object
+              properties:
+                uuid:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+          authors:
+            type: object
+            properties:
+              writer:
+                $ref: "#/components/schemas/BookAuthor"
+              author:
+                $ref: "#/components/schemas/BookAuthor"
+              translator:
+                $ref: "#/components/schemas/BookAuthor"
+              resercher:
+                $ref: "#/components/schemas/BookAuthor"
+              narrator:
+                $ref: "#/components/schemas/BookAuthor"
+          tags:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+          categories:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+          publisher:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                imageId:
+                  type: number
+                name:
+                  type: string
+    Author:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        coutnry:
+          type: string
+        birthDate:
+          type: string
+        deathDate:
+          type: string
+        content:
+          type: string
+        status:
+          $ref: "#/components/schemas/Status"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Publisher:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+        imageId:
+          type: number
+        status:
+          $ref: "#/components/schemas/Status"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        name:
+          type: string
+    Wallet:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        ownerId:
+          type: number
+        amount:
+          type: number
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Log:
+      type: object
+      properties:
+        level:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        status:
+          type: number
+        time:
+          type: string
+        meta:
+          type: object
+          properties:
+            ip:
+              type: string
+        detail:
+          type: string
+    Status:
+      type: object
+      properties:
+        code:
+          type: number
+        label:
+          type: string
+        color:
+          type: string
+        bg:
+          type: string
+    Error:
+      type: object
+      required:
+        - text
+        - message
+      properties:
+        text:
+          description: Persian description of error
+          type: string
+        message:
+          description: English description of error
+          type: string
