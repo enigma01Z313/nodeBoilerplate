@@ -1,4 +1,5 @@
 require("dotenv").config();
+const fError = require("../../utils/fError");
 
 const getUser = require("./getUser");
 
