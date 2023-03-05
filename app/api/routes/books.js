@@ -8,7 +8,7 @@ const {
   Validate: {
     index: { ValidateF, validator },
   },
-  Auth: { authentication, authorization },
+  Auth: { authentication, authorization, conditionAuthentication },
   Book: { query: bookQuery },
   Publisher: { checkPublisher },
   getDataByUUID,
@@ -16,14 +16,15 @@ const {
   getEntityByUuid,
   getEntitiesByUuid,
   filteredData,
+  Buy: { validate: buyValidation, authenticate: buyAuth },
 } = require("../src/middleware");
 
 const {
   Book: {
+    buy: buyBook,
     list,
     get,
     create,
-    similar: similarBooks,
     OffPrice: {
       get: getOffPrice,
       create: createOffPrice,
@@ -126,7 +127,13 @@ const updatedOffPriceSchema = new ValidateF()
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(bookQuery), use(list), serveJson);
+router.get(
+  "/",
+  use(conditionAuthentication),
+  use(bookQuery),
+  use(list),
+  serveJson
+);
 
 router.post(
   "/",
@@ -167,14 +174,27 @@ router.post(
 
 router.get("/:uuid", use(get), serveJson);
 
+router.post(
+  "/:uuid/buy",
+  use(buyValidation),
+  use(buyAuth),
+  use(
+    getEntityByUuid({
+      model: "Book",
+      fields: ["uuid"],
+      includes: ["off_price"],
+    })
+  ),
+  use(buyBook)
+);
+
 router.get(
   "/:uuid/tags",
   (req, res) => res.end("getting book tags"),
   serveJson
 );
 
-router.get("/:uuid/similar", use(get), use(similarBooks), serveJson);
-
+//off price for this book
 router.get(
   "/:uuid/offprice",
   use(getEntityByUuid({ model: "Book", fields: ["uuid"] })),

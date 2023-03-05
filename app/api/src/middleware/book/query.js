@@ -20,6 +20,8 @@ module.exports = async (req, res, next) => {
     publishers,
   } = req.query;
 
+  const { loggedIn } = res;
+
   let queryChunk;
   const include = [{ model: Off_price }];
   let defaultOptions = { include };
@@ -84,6 +86,8 @@ module.exports = async (req, res, next) => {
   const page = pageNum ? +pageNum : 1;
   const offset = (page - 1) * +limit;
   const pagedOptions = Object.assign({ limit, offset }, defaultOptions);
+
+  inspect(defaultOptions);
 
   res.queryOptions = { defaultOptions, pagedOptions };
 

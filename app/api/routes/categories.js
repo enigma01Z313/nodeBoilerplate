@@ -10,6 +10,7 @@ const {
   },
   getDataList,
   isUnique,
+  sortedData,
   getEntityByUuid,
   filteredData,
   filteredSearch,
@@ -58,7 +59,7 @@ const updatedCategorySchema = new ValidateF()
 /**************************/
 /*         routes         */
 /**************************/
-router.get("/", use(list), serveJson);
+router.get("/", use(sortedData), use(list), serveJson);
 
 router.get("/:uuid", use(bookQuery), use(get), serveJson);
 

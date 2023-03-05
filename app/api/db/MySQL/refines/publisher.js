@@ -1,11 +1,17 @@
 const status = require("../../staticDb")("defaultStatus");
 
+const refineWallet = (item) => {
+  if (!item) return undefined;
+  return item.amount;
+};
+
 module.exports = ({ dataValues: data }) => {
   return {
     ...data,
     id: data.uuid,
     name: data.firstName,
     status: status(data.status),
+    wallet: refineWallet(data.wallet),
     uuid: undefined,
     confirmCode: undefined,
     firstName: undefined,

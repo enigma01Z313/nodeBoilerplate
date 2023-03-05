@@ -3,7 +3,5 @@ module.exports = (req, res, next) => {
     chainData: { similarityParams },
   } = res;
 
-  console.log(similarityParams);
-
   return res.end("11111111111");
 };

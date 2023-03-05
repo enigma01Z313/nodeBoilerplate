@@ -1,12 +1,11 @@
 const { Op } = require("sequelize");
-const { inspect } = require("../utils");
 
 const filteredData =
   (exclude = {}, translatedModel) =>
   (req, res, next) => {
     const whereOptions = [];
     whereOptions.push(exclude);
-    const { page, limit, status, role, excludeThis } = req.query;
+    const { page, limit, status, role } = req.query;
     const { setLang } = res;
 
     //filters section
@@ -17,16 +16,10 @@ const filteredData =
         [`$${translatedModel}Translations.lang$`]: setLang,
       });
 
-    if (role) whereOptions.push({ [`$Role.uuid$`]: role });
+    if (role) whereOptions.push({ [`$role.uuid$`]: role });
 
-    if (excludeThis) whereOptions.push({ uuid: { [Op.ne]: excludeThis } });
-
-    const whereAnd = Op.and;
-    const defaultOptions = { where: { [whereAnd]: [...whereOptions] } };
-    const paginationedOptions = Object.assign(
-      { limit: 10, page: 0 },
-      defaultOptions
-    );
+    const defaultOptions = { where: { [Op.and]: [...whereOptions] } };
+    const paginationedOptions = Object.assign({}, defaultOptions);
 
     //pagination section
     if (limit && limit !== "undefined")
@@ -39,7 +32,7 @@ const filteredData =
       paginationedOptions.offset = pageNum * parseInt(limits);
     }
 
-    res.dbOptions = { defaultOptions, paginationedOptions, whereAnd };
+    res.dbOptions = { defaultOptions, paginationedOptions };
     next();
   };
 

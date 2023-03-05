@@ -24,7 +24,6 @@ module.exports = async (req, res, next) => {
     image,
     publisherId: publisher.id,
   });
-  console.log(main);
 
   await book.setTags(tags);
   await book.setCategories(categories);

@@ -15,6 +15,7 @@ const {
   getEntityByUuid,
   filteredData,
   filteredSearch,
+  sortedData,
   Book: { bookList, query: bookQuery },
 } = require("../src/middleware");
 
@@ -38,9 +39,6 @@ const newAuthorSchema = new ValidateF()
   .string()
   .param("content", "محتوا")
   .string()
-  .param("status", "وضیعیت")
-  .requiredNumber()
-  .regex(/^(0|1)$/)
   .done();
 
 const updateAuthorSchema = new ValidateF()
@@ -56,9 +54,6 @@ const updateAuthorSchema = new ValidateF()
   .string()
   .param("content", "محتوا")
   .string()
-  .param("status", "وضیعیت")
-  .number()
-  .regex(/^(0|1)$/)
   .done();
 
 /**************************/
@@ -72,7 +67,12 @@ router.post(
   serveJson
 );
 
-router.get("/", use(list), serveJson);
+router.get(
+  "/",
+  use(sortedData),
+  use(getDataList("Author", "مولف", undefined, undefined, "authorList")),
+  serveJson
+);
 
 router.get("/:uuid", use(bookQuery), use(get), serveJson);
 

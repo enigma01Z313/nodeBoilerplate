@@ -28,8 +28,6 @@ module.exports = (data) => async (req, res, next) => {
     defaultOptions.where[whereAnd].push(whereOption);
     paginationedOptions.where[whereAnd].push(whereOption);
   }
-  console.log(defaultOptions);
-  console.log(search);
 
   // inspect(whereAnd);
   // inspect(defaultOptions.where);

@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { User } = require("../../../db/MySQL/models");
+const { User, Wallet } = require("../../../db/MySQL/models");
 const {
   publisher: refinepublisher,
   bookList: refineBooks,
@@ -18,6 +18,11 @@ module.exports = async (req, res, next) => {
 
   const publisher = await User.findOne({
     where: { [Op.and]: [{ uuid }, { roleId: 4 }] },
+    include: [
+      {
+        model: Wallet,
+      },
+    ],
   });
 
   if (!publisher)

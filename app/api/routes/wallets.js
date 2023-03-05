@@ -10,6 +10,7 @@ const {
   getDataList,
   filteredData,
   filteredSearch,
+  sortedData,
 } = require("../src/middleware");
 
 const {
@@ -23,13 +24,14 @@ router.get(
   "/",
   use(authentication),
   use(filteredData({})),
+  use(sortedData),
   use(
     filteredSearch({
       model: "Wallet",
       fields: ["ownerId", "amount"],
     })
   ),
-  use(getDataList("Wallet", "کیف پول", undefined, undefined, "walletList")),
+  use(getDataList("Wallet", "کیف پول", "User", undefined, "walletList")),
   serveJson
 );
 

@@ -41,11 +41,9 @@ class ValidateF {
     return this;
   }
 
-  string(length) {
+  string() {
     const lastItem = this.items[this.items.length - 1];
     lastItem.validations["dataType"] = setType(lastItem, "string", "رشته");
-
-    if (typeof length !== typeof undefined) this.length(length);
     return this;
   }
 
@@ -157,7 +155,8 @@ class ValidateF {
 
   //typed required
   requiredString(length) {
-    this.required().string(length);
+    this.required().string();
+    if (typeof length !== typeof undefined) this.length(length);
 
     return this;
   }

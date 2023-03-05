@@ -20,7 +20,14 @@ const {
 } = require("../src/middleware");
 
 const {
-  User: { create, update, get, list },
+  User: {
+    create,
+    update,
+    get,
+    list,
+    Wallet: { get: getWallet },
+    Card: { list: listCards, create: createCard },
+  },
 } = require("../src/services");
 
 /**************************/
@@ -64,6 +71,18 @@ const updatedUserSchema = new ValidateF()
   .string()
   .length(36)
   .done();
+
+const newCardSchema = new ValidateF()
+  .param("name", "نام")
+  .requiredString()
+  .param("cardNumber", "شماره کارت")
+  .requiredString()
+  .regex(/^[0-9]{16}$/)
+  .param("shebaNumber", "شماره شبا")
+  .requiredString()
+  .regex(/^IR[0-9]{24}$/)
+  .done();
+
 /**************************/
 /*         routes         */
 /**************************/
@@ -77,7 +96,8 @@ router.get(
       fields: ["firstName", "lastName", "phone", "email"],
     })
   ),
-  use(getDataList("User", "کاربر", undefined, undefined, "userList")),
+  use(sortedData),
+  use(getDataList("User", "کاربر", "Wallet", undefined, "userList")),
   serveJson
 );
 
@@ -86,6 +106,35 @@ router.get(
   use(authentication),
   use(theSameUser),
   use(get),
+  serveJson
+);
+
+router.get(
+  "/:uuid/wallet",
+  use(authentication),
+  use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
+  use(getWallet),
+  serveJson
+);
+
+router.get(
+  "/:uuid/cards",
+  use(authentication),
+  use(filteredData({})),
+  use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
+  use(sortedData),
+  use(listCards),
+  serveJson
+);
+
+router.post(
+  "/:uuid/cards",
+  use(validator(newCardSchema)),
+  use(authentication),
+  use(isUnique("Card", "کارد", "cardNumber", "شماره کارت")),
+  use(isUnique("Card", "کارد", "shebaNumber", "شماره شبا")),
+  use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
+  use(createCard),
   serveJson
 );
 

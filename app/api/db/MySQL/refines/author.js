@@ -1,3 +1,5 @@
+const status = require("../../staticDb")("defaultStatus");
+
 refineBooks = (books) =>
   !books
     ? undefined
@@ -17,6 +19,12 @@ module.exports = (item) => {
     ...data,
     id: item.uuid,
     books: refineBooks(item.books),
+    country: item.coutnry,
+    fullName: `${item.firstName} ${item.lastName}`,
+    birthDate: item.birthDate ? item.birthDate : "",
+    deathDate: item.deathDate ? item.deathDate : "",
+    status: status(data.status),
     uuid: undefined,
+    coutnry: undefined,
   };
 };

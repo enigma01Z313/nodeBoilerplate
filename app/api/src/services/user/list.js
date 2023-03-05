@@ -1,7 +1,14 @@
 const { User } = require("../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
-  const user = await User.findAll();
+
+  const defaultOption = {
+    order: [["createdAt", "DESC"]],
+  };
+
+  const user = await User.findAll(defaultOption);
+
+  
   res.jsonData = user;
   next();
 };
