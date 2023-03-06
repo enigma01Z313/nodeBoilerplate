@@ -6,10 +6,9 @@ module.exports = async (req, res, next) => {
       transaction: { userId: user_id, bookId: book_id, from },
     },
   } = res;
-
+  console.log(res.chainData);
   const userBook = await User_book.create({ user_id, book_id });
 
-  console.log("add userBook", userBook);
-  console.log(from);
-  return res.end("mikhaym bargardim safhe book");
+  // return res.end("3333333333");
+  return res.redirect(paymentUrl);
 };

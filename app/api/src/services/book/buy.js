@@ -35,8 +35,5 @@ module.exports = async (req, res, next) => {
   const { trackId, paymentUrl } = gatewayReuest;
 
   //////////////////////
-  console.log(trackId, paymentUrl);
-  // window.location.href = paymentUrl;
-  // open(paymentUrl, "_self");
   return res.redirect(paymentUrl);
 };

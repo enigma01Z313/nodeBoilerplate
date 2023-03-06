@@ -8,7 +8,5 @@ module.exports = async (req, res, next) => {
   const transaction = await Transaction.findOne({ where: { uuid } });
 
   res.chainData.transaction = transaction;
-
-  return res.end("1111111111111");
   next();
 };

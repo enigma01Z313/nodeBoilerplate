@@ -13,13 +13,14 @@
 .opblock-tag-section h3:hover {
   background: #fff !important;
 }
+
 .col-8.col-8-desktop {
-  width: calc(75% - 7.5px);
+  width: 70%;
 }
 .col-4.col-4-desktop {
-  width: calc(25% - 7.5px);
+  width: 25%;
 }
-.wrapper:has(#swagger-navigation) {
+#swagger-navigation-wrap{
   display: flex;
   align-items: flex-start;
 }
