@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) =>
       defaultValue: DataTypes.UUIDV4,
     },
     content: {
-      type: DataTypes.STRING(20000),
+      type: DataTypes.STRING(16000),
     },
     status: {
       allowNull: false,
