@@ -26,6 +26,7 @@ const {
     get,
     list,
     Card: { list: listCards, create: createCard },
+    Comment: { list: listComments },
   },
 } = require("../src/services");
 
@@ -126,6 +127,16 @@ router.post(
   use(isUnique("Card", "کارد", "shebaNumber", "شماره شبا")),
   use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
   use(createCard),
+  serveJson
+);
+
+router.get(
+  "/:uuid/comments",
+  use(authentication),
+  use(filteredData({})),
+  use(getEntityByUuid({ model: "User", fields: ["uuid"] })),
+  use(sortedData),
+  use(listComments),
   serveJson
 );
 

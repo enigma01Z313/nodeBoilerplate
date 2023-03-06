@@ -16,6 +16,7 @@ const {
   getEntityByUuid,
   getEntitiesByUuid,
   filteredData,
+  sortedData,
   Buy: { validate: buyValidation, authenticate: buyAuth },
 } = require("../src/middleware");
 
@@ -31,6 +32,7 @@ const {
       update: updateOffPrice,
       remove,
     },
+    Comment: { list: listComments, create: createComment },
   },
 } = require("../src/services");
 
@@ -108,6 +110,14 @@ const newBookSchema = new ValidateF()
   .object(bookAuthorsSchema)
   .param("files", "فایل")
   .object(fileTypesSchema)
+  .done();
+
+const newCommentSchema = new ValidateF()
+  .param("content", "محتوا")
+  .requiredString()
+  .param("repliseTo", "پاسخ به")
+  .string()
+  .length(36)
   .done();
 
 // inspect(newBookSchema);
@@ -191,6 +201,27 @@ router.post(
 router.get(
   "/:uuid/tags",
   (req, res) => res.end("getting book tags"),
+  serveJson
+);
+
+//comments for this book
+
+router.get(
+  "/:uuid/comments",
+  use(authentication),
+  use(filteredData({})),
+  use(getEntityByUuid({ model: "Book", fields: ["uuid"] })),
+  use(sortedData),
+  use(listComments),
+  serveJson
+);
+
+router.post(
+  "/:uuid/comments",
+  use(validator(newCommentSchema)),
+  use(authentication),
+  use(getEntityByUuid({ model: "Book", fields: ["uuid"] })),
+  use(createComment),
   serveJson
 );
 
