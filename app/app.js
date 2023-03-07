@@ -1,11 +1,12 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const path = require('path');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const mysql = require('mysql2');
-const cookieParser = require('cookie-parser');
-const { dbUrl, dbHost, dbUser, dbPass } = require('../config/dbMysql');
+const path = require("path");
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const mysql = require("mysql2");
+const cookieParser = require("cookie-parser");
+const { dbUrl, dbHost, dbUser, dbPass } = require("../config/dbMysql");
+const cronJobs = require("./cron");
 // const connectToMongo = require("./api/db/mongoDb/connect");
 
 // connectToMongo();
@@ -14,30 +15,31 @@ const { dbUrl, dbHost, dbUser, dbPass } = require('../config/dbMysql');
 const mysqlDB = mysql.createConnection({
   host: dbHost,
   user: dbUser,
-  password: dbPass
+  password: dbPass,
 });
 mysqlDB.connect(function (err) {
   if (err) throw err;
-  console.log('mysql Connected!');
+  console.log("mysql Connected!");
 });
 
-const apiRouter = require('./api/routes');
-const handleError = require('./handleError');
-const handleCors = require('./handleCors');
+const apiRouter = require("./api/routes");
+const handleError = require("./handleError");
+const handleCors = require("./handleCors");
 
+cronJobs.initScheduledJobs();
 app.use(cookieParser());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(handleCors);
 
-app.use(express.static(path.resolve(__dirname, './public')));
-app.use('/api', apiRouter);
-app.get('/robots.txt', (req, res) => {
-  res.end('robots file');
+app.use(express.static(path.resolve(__dirname, "./public")));
+app.use("/api", apiRouter);
+app.get("/robots.txt", (req, res) => {
+  res.end("robots file");
 });
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public/index.html'), function (err) {
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "public/index.html"), function (err) {
     if (err) {
       res.status(500).send(err);
     }
@@ -45,8 +47,8 @@ app.get('/*', function (req, res) {
 });
 
 //handling 404 ndpoints
-app.use('/', (req, res, next) => {
-  const error = new Error('Resource Not Found');
+app.use("/", (req, res, next) => {
+  const error = new Error("Resource Not Found");
   error.status = 404;
   next(error);
 });
