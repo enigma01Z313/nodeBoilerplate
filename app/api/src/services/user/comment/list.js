@@ -1,28 +1,58 @@
-const { commentList } = require("../../../../db/MySQL/refines");
+const { Op } = require("sequelize");
+const { userCommentList } = require("../../../../db/MySQL/refines");
+const { Book } = require("../../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
+  const { s: search } = req.query;
+
   const {
     chainData: { user },
   } = res;
 
   const {
-    dbOptions: { defaultOptions, paginationedOptions },
+    dbOptions: {
+      defaultOptions,
+      paginationedOptions: { limit, offset },
+    },
+    sortOptions,
   } = res;
 
-  const { sortOptions } = res;
+  let searchOption;
+
+  if (search) {
+    searchOption = {
+      where: {
+        name: { [Op.like]: `%${search}%` },
+      },
+    };
+  }
 
   const comments = await user.getComments({
-    paginationedOptions,
-    order: sortOptions,
+    include: [
+      {
+        model: Book,
+        ...searchOption,
+      },
+    ],
+    limit,
+    offset,
   });
 
-  const totalComments = await user.getComments(defaultOptions);
+  const totalComments = await user.getComments({
+    include: [
+      {
+        model: Book,
+        ...searchOption,
+      },
+    ],
+  });
 
   const responseBody = {
-    data: commentList(comments),
+    data: userCommentList(comments),
     total: totalComments && totalComments.length,
   };
 
   res.jsonData = responseBody;
+
   next();
 };

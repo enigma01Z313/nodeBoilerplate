@@ -17,28 +17,17 @@ const refineUser = (items) => {
   };
 };
 
-const refineBook = (items) => {
-  if (!items) return undefined;
-  const {
-    dataValues: { uuid: id, name },
-  } = items;
-  return {
-    id,
-    name,
-  };
-};
+module.exports = (data) =>
+  data.map((comment) => {
+    const data = comment?.dataValues ?? comment;
 
-module.exports = (item) => {
-  const data = item?.dataValues ?? item;
-
-  return {
-    ...data,
-    id: data.uuid,
-    user: refineUser(data.user),
-    book: refineBook(data.book),
-    status: status(data.status),
-    uuid: undefined,
-    bookId: undefined,
-    userId: undefined,
-  };
-};
+    return {
+      ...data,
+      id: data.uuid,
+      user: refineUser(data.user),
+      status: status(data.status),
+      uuid: undefined,
+      bookId: undefined,
+      userId: undefined,
+    };
+  });

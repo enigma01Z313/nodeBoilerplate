@@ -7,9 +7,8 @@ module.exports = async (req, res, next) => {
 
   const {
     dbOptions: { defaultOptions, paginationedOptions },
+    sortOptions,
   } = res;
-
-  const { sortOptions } = res;
 
   const cards = await user.getCards({
     paginationedOptions,

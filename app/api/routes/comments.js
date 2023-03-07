@@ -35,10 +35,10 @@ const updatedCommentSchema = new ValidateF()
 router.get(
   "/",
   use(authentication),
-  use(filteredData()),
+  use(filteredData({})),
   // use(
   //   filteredSearch({
-  //     model: ["Book"],
+  //     model: "Book",
   //     fields: ["name"],
   //   })
   // ),
@@ -55,6 +55,5 @@ router.put(
   use(update),
   serveJson
 );
-
 
 module.exports = router;
