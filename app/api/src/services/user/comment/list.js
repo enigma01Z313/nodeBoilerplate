@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { userCommentList } = require("../../../../db/MySQL/refines");
+const { commentList } = require("../../../../db/MySQL/refines");
 const { Book } = require("../../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
@@ -7,9 +7,6 @@ module.exports = async (req, res, next) => {
 
   const {
     chainData: { user },
-  } = res;
-
-  const {
     dbOptions: {
       defaultOptions,
       paginationedOptions: { limit, offset },
@@ -28,6 +25,7 @@ module.exports = async (req, res, next) => {
   }
 
   const comments = await user.getComments({
+    order: sortOptions,
     include: [
       {
         model: Book,
@@ -48,7 +46,7 @@ module.exports = async (req, res, next) => {
   });
 
   const responseBody = {
-    data: userCommentList(comments),
+    data: commentList(comments),
     total: totalComments && totalComments.length,
   };
 

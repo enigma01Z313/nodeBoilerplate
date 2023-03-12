@@ -3,9 +3,6 @@ const { cardList } = require("../../../../db/MySQL/refines");
 module.exports = async (req, res, next) => {
   const {
     chainData: { user },
-  } = res;
-
-  const {
     dbOptions: { defaultOptions, paginationedOptions },
     sortOptions,
   } = res;

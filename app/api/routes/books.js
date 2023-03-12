@@ -221,6 +221,7 @@ router.post(
   use(validator(newCommentSchema)),
   use(authentication),
   use(getEntityByUuid({ model: "Book", fields: ["uuid"] })),
+  use(getEntityByUuid({ model: "Comment", fields: ["repliesTo"] })),
   use(createComment),
   serveJson
 );

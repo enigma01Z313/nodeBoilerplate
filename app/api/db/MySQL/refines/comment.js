@@ -37,6 +37,7 @@ module.exports = (item) => {
     user: refineUser(data.user),
     book: refineBook(data.book),
     status: status(data.status),
+    repliesTo: undefined,
     uuid: undefined,
     bookId: undefined,
     userId: undefined,

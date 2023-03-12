@@ -36,12 +36,6 @@ router.get(
   "/",
   use(authentication),
   use(filteredData({})),
-  // use(
-  //   filteredSearch({
-  //     model: "Book",
-  //     fields: ["name"],
-  //   })
-  // ),
   use(sortedData),
   use(list),
   serveJson
