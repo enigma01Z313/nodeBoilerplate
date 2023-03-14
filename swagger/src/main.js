@@ -54,5 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
   navigationElement.prepend(navigationHeader);
   navigationElement.append(navigationItems);
 
+  wrapper.id = "swagger-navigation-wrap";
   wrapper.prepend(navigationElement);
 });
