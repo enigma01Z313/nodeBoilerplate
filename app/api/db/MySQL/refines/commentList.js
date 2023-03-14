@@ -1,26 +1,32 @@
-const refinedData = require("./comment");
+const rfineComment = require("./comment");
 
-module.exports = (items) => {
-  const refinedItems = [];
-  const refined = [];
-  for (let item of items) {
-    const { dataValues: data } = item;
+module.exports = (data) => data.map((comment) => rfineComment(comment));
 
-    if (!data.repliesTo) refinedItems.push(data);
-    else {
-      const replyIndex = refinedItems.findIndex(
-        (item) => item.id === data.repliesTo
-      );
+// const refinedData = require("./comment");
 
-      const replyItem = refinedItems[replyIndex];
-      const commentReplies = replyItem.replies ?? [];
-      commentReplies.push(refinedData(data));
-      replyItem.replies = commentReplies;
-    }
-  }
-  for (let refinedItem of refinedItems) {
-    refined.push(refinedData(refinedItem));
-  }
+// module.exports = (items) => {
+//   const refinedItems = [];
 
-  return refined;
-};
+//   let index = 0;
+//   const refined = [];
+//   for (let item of items) {
+//     const { dataValues: data } = item;
+
+//     if (!data.repliesTo) refinedItems.push(data);
+//     else {
+//       const replyIndex = refinedItems.findIndex(
+//         (item) => item.id === data.repliesTo
+//       );
+//       const replyItem = refinedItems[replyIndex];
+//       const commentReplies = replyItem.replies ?? [];
+//       commentReplies.push(refinedData(data));
+//       replyItem.replies = commentReplies;
+//     }
+//     index++;
+//   }
+//   for (let refinedItem of refinedItems) {
+//     refined.push(refinedData(refinedItem));
+//   }
+
+//   return refined;
+// };

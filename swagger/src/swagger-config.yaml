@@ -909,16 +909,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: limit
-          in: query
-          description: number of data returned (default 10)
-          schema:
-            type: integer
-        - name: page
-          in: query
-          description: page number (default 1)
-          schema:
-            type: integer
         - name: sortStatus
           in: query
           description: sort data by status (1 is ascending / 0 is descending)
@@ -2567,16 +2557,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: limit
-          in: query
-          description: number of data returned (default 10)
-          schema:
-            type: integer
-        - name: page
-          in: query
-          description: page number (default 1)
-          schema:
-            type: integer
         - name: sortStatus
           in: query
           description: sort data by status (1 is ascending / 0 is descending)
@@ -3065,16 +3045,6 @@ paths:
       security:
         - bearerAuth: []
       parameters:
-        - name: limit
-          in: query
-          description: number of data returned (default 10)
-          schema:
-            type: integer
-        - name: page
-          in: query
-          description: page number (default 1)
-          schema:
-            type: integer
         - name: sortStatus
           in: query
           description: sort data by status (1 is ascending / 0 is descending)

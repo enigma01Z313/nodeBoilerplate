@@ -92,7 +92,9 @@ module.exports = (db) => {
 
   Comment.hasMany(Comment, {
     foreignKey: "repliesTo",
+    as: "replies",
   });
+  Comment.belongsTo(Comment, { foreignKey: "repliesTo" });
 
   return db;
 };

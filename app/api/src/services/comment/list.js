@@ -5,13 +5,7 @@ const { commentList } = require("../../../db/MySQL/refines");
 module.exports = async (req, res, next) => {
   const { s: search } = req.query;
 
-  const {
-    dbOptions: {
-      defaultOptions,
-      paginationedOptions: { limit, offest },
-    },
-    sortOptions,
-  } = res;
+  const { sortOptions } = res;
 
   let searchOption;
 
@@ -28,20 +22,23 @@ module.exports = async (req, res, next) => {
   }
 
   const comments = await Comment.findAll({
-    order: sortOptions,
-    include: [{ model: User }, { model: Book }],
+    order: [["repliesTo", "ASC"], ...sortOptions],
+    distinct: true,
+    include: [
+      { model: User },
+      { model: Book },
+      { model: Comment, as: "replies" },
+    ],
     ...searchOption,
-    limit,
-    offest,
   });
 
-  const commentsCount = await Comment.findAll(defaultOptions);
+  // return res.json(comments);
 
   responseBody = {
     data: commentList(comments),
-    total: commentsCount.length,
   };
 
   res.jsonData = responseBody;
+
   next();
 };

@@ -28,8 +28,25 @@ const refineBook = (items) => {
   };
 };
 
+const refineReplies = (items) =>
+  !items
+    ? undefined
+    : items.map(({ dataValues: data }) => ({
+        ...data,
+        id: data.uuid,
+        user: refineUser(data.user),
+        book: refineBook(data.book),
+        status: status(data.status),
+        repliesTo: undefined,
+        uuid: undefined,
+        bookId: undefined,
+        userId: undefined,
+      }));
+
 module.exports = (item) => {
   const data = item?.dataValues ?? item;
+
+  console.log(data.replies.includes(data.uuid));
 
   return {
     ...data,
@@ -37,6 +54,7 @@ module.exports = (item) => {
     user: refineUser(data.user),
     book: refineBook(data.book),
     status: status(data.status),
+    replies: refineReplies(data.replies),
     repliesTo: undefined,
     uuid: undefined,
     bookId: undefined,

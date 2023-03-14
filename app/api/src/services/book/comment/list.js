@@ -7,10 +7,6 @@ module.exports = async (req, res, next) => {
 
   const {
     chainData: { book },
-    dbOptions: {
-      defaultOptions,
-      paginationedOptions: { limit, offset },
-    },
     sortOptions,
   } = res;
 
@@ -28,18 +24,7 @@ module.exports = async (req, res, next) => {
   }
 
   const comments = await book.getComments({
-    order: sortOptions,
-    include: [
-      {
-        model: User,
-        ...searchOption,
-      },
-    ],
-    limit,
-    offset,
-  });
-
-  const totalComments = await book.getComments({
+    order: [["repliesTo", "ASC"], ...sortOptions],
     include: [
       {
         model: User,
@@ -50,7 +35,6 @@ module.exports = async (req, res, next) => {
 
   const responseBody = {
     data: commentList(comments),
-    total: totalComments && totalComments.length,
   };
 
   res.jsonData = responseBody;
