@@ -26,7 +26,6 @@ const {
 
 const services = require("../src/services");
 
-console.log(services);
 /**************************/
 /*         routes         */
 /**************************/
