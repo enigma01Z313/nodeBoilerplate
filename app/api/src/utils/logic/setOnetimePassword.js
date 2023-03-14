@@ -5,8 +5,8 @@ const sendSms = require("../thirdParty/sendSms");
 
 const setOnetimePassword = async (user) => {
   const { email } = user;
-  const code = Math.floor(Math.random() * 900000 + 100000);
-  
+  const code = Math.floor(Math.random() * 9000 + 1000);
+
   // const oneTimeLogin = generateRandom(true, 6);
   // await sendSms(email, oneTimeLogin);
   await user.update({ confirmCode: hash("" + code) });
