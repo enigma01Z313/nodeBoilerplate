@@ -1,14 +1,39 @@
-module.exports = (req, res, next) => {
+const { Transaction } = require("../../../db/MySQL/models");
+const { host } = require("../../../../../config/general");
+const zibalGateway = require("./createGateway")();
+
+module.exports = async (req, res, next) => {
   const {
-    authenticatedUser: user,
+    authenticatedUser: { phone: mobile, id: userId },
     chainData: {
       refinedbook: { price },
-      book,
+      book: { id: bookId, name: bookName },
     },
   } = res;
   const { from } = req.body;
 
-  console.log(from, user.id, book.id, price);
+  //////////////////////
+  //craete transaction
+  const transaction = await Transaction.create({
+    amount: price,
+    userId,
+    bookId,
+    from,
+    action: 1,
+  });
+  const { amount, uuid: transactionId } = transaction;
 
-  return res.end("haaaa");
+  //////////////////////
+  //get payment link
+  const gatewayReuest = await zibalGateway.request({
+    amount,
+    callbackUrl: `${host}/api/payments`,
+    orderId: transactionId,
+    description: `خرید کتاب ${bookName}.`,
+    mobile,
+  });
+  const { trackId, paymentUrl } = gatewayReuest;
+
+  //////////////////////
+  return res.redirect(paymentUrl);
 };

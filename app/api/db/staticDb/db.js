@@ -68,7 +68,31 @@ const statusList = {
     { code: 1, label: "فایل pdf", key: "pdf" },
     { code: 2, label: "فایل epub", key: "epub" },
     { code: 3, label: "فایل صوتی", key: "sound" },
-  ]
+  ],
+  transactionActions: [
+    { code: 1, name: "buyBook", label: "خرید کتاب" },
+    { code: 2, name: "payback", label: "تسویه حساب" },
+  ],
+  transactionStatus: [
+    {
+      code: 1,
+      label: "درحال بررسی",
+      color: "red",
+      bg: "red",
+    },
+    {
+      code: 2,
+      label: "تکمیل شده",
+      color: "red",
+      bg: "red",
+    },
+    {
+      code: 3,
+      label: "رد شده",
+      color: "red",
+      bg: "red",
+    },
+  ],
 };
 
 module.exports = statusList;
