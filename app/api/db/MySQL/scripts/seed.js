@@ -17,6 +17,7 @@ const {
   Wallet,
   File,
   Card,
+  User_book,
 } = require("../models");
 const models = require("../models");
 
@@ -210,6 +211,19 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
       firstName: "مینا",
       lastName: "احمدزاده",
       roleId: 3,
+      imageId: "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5",
+      status: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      uuid: crypto.randomUUID(),
+      phone: "09127676895",
+      email: "minaAhmadzade@gmail.com",
+      password,
+      firstName: "محمد",
+      lastName: "سیفی",
+      roleId: 4,
       imageId: "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5",
       status: 1,
       createdAt: new Date(),
@@ -889,6 +903,22 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
     },
   ]);
   console.log("Book images setup");
+
+  await User_book.bulkCreate([
+    {
+      book_id: 1,
+      user_id: 10,
+    },
+    {
+      book_id: 2,
+      user_id: 10,
+    },
+    {
+      book_id: 3,
+      user_id: 10,
+    },
+  ]);
+  console.log("User books added setup");
 
   process.exit();
 })();

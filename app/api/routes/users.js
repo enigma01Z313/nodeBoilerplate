@@ -26,6 +26,7 @@ const {
     get,
     list,
     Card: { list: listCards, create: createCard },
+    Book: { list: listBooks },
   },
 } = require("../src/services");
 
@@ -107,6 +108,8 @@ router.get(
   use(get),
   serveJson
 );
+
+router.get("/:uuid/books", use(authentication), use(listBooks), serveJson);
 
 router.get(
   "/:uuid/cards",
