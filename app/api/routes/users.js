@@ -8,6 +8,7 @@ const {
   Validate: {
     index: { ValidateF, validator },
   },
+  Book: { query: bookQuery },
   isUnique,
   doesExist,
   filteredData,
@@ -109,7 +110,13 @@ router.get(
   serveJson
 );
 
-router.get("/:uuid/books", use(authentication), use(listBooks), serveJson);
+router.get(
+  "/:uuid/books",
+  use(authentication),
+  use(bookQuery),
+  use(listBooks),
+  serveJson
+);
 
 router.get(
   "/:uuid/cards",

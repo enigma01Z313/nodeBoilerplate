@@ -218,8 +218,21 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
     },
     {
       uuid: crypto.randomUUID(),
-      phone: "09127676895",
-      email: "minaAhmadzade@gmail.com",
+      phone: "09304428006",
+      email: "seifi1@gmail.com",
+      password,
+      firstName: "محمد",
+      lastName: "سیفی",
+      roleId: 4,
+      imageId: "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5",
+      status: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      uuid: crypto.randomUUID(),
+      phone: "09372354193",
+      email: "seifi2@gmail.com",
       password,
       firstName: "محمد",
       lastName: "سیفی",
@@ -916,6 +929,10 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
     {
       book_id: 3,
       user_id: 10,
+    },
+    {
+      book_id: 3,
+      user_id: 11,
     },
   ]);
   console.log("User books added setup");

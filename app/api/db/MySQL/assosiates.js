@@ -64,6 +64,12 @@ module.exports = (db) => {
     as: "user_books",
     foreignKey: "user_id",
   });
+  Book.hasMany(User_book, {
+    foreignKey: "book_id",
+  });
+  User.hasMany(User_book, {
+    foreignKey: "user_id",
+  });
 
   Category.hasMany(Category, {
     foreignKey: "parentId",
