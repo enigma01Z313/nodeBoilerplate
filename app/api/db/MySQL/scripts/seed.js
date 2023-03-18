@@ -17,11 +17,8 @@ const {
   Wallet,
   File,
   Card,
-<<<<<<< HEAD
   Comment,
-=======
   User_book,
->>>>>>> develop
 } = require("../models");
 const models = require("../models");
 
