@@ -1,0 +1,27 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form
+      method="post"
+      action="http://localhost:30005/api/books/f9e7113d-50ed-4a19-a337-08500d0f0f13/buy"
+      enctype="multipart/form-data"
+    >
+      <input
+        type="hidden"
+        name="token"
+        value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRlNzNiMjRjLWI0NjAtNDNhMy04NDZhLWZmNGZlMmE2NDY0OSIsInBob25lIjoiMDkzMzM5NTA4ODkiLCJpYXQiOjE2NzgwOTg4MjgsImV4cCI6MTY4NzA5ODgyOH0.kyTUC_NwjKO_PBIi1Q8ZTn8wsNB7xSeeyW0lgcdqXSE"
+      />
+      <input
+        type="hidden"
+        name="from"
+        value="http://localhost:8080/books/1234"
+      />
+      <input type="submit" />
+    </form>
+  </body>
+</html>

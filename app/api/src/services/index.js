@@ -8,16 +8,18 @@ const capitaliseWord = (txt) => txt[0].toUpperCase() + txt.substring(1);
 
 const getDirectoryServices = (directoryPath) => {
   const directoryServices = {};
-  fs.readdirSync(directoryPath).forEach((file) => {
-    if (file.includes(".js")) {
-      const service = require(path.resolve(directoryPath, file));
-      directoryServices[file.slice(0, -3)] = service;
-    } else {
-      const subDir = path.resolve(directoryPath, file);
-      const curDirectoryName = capitaliseWord(file);
-      directoryServices[curDirectoryName] = getDirectoryServices(subDir);
-    }
-  });
+  fs.readdirSync(directoryPath)
+    .filter((file) => !file.includes("html"))
+    .forEach((file) => {
+      if (file.includes(".js")) {
+        const service = require(path.resolve(directoryPath, file));
+        directoryServices[file.slice(0, -3)] = service;
+      } else {
+        const subDir = path.resolve(directoryPath, file);
+        const curDirectoryName = capitaliseWord(file);
+        directoryServices[curDirectoryName] = getDirectoryServices(subDir);
+      }
+    });
 
   return directoryServices;
 };

@@ -8,6 +8,7 @@ const {
   Validate: {
     index: { ValidateF, validator },
   },
+  Book: { query: bookQuery },
   isUnique,
   doesExist,
   filteredData,
@@ -26,7 +27,11 @@ const {
     get,
     list,
     Card: { list: listCards, create: createCard },
+<<<<<<< HEAD
     Comment: { list: listComments },
+=======
+    Book: { list: listBooks },
+>>>>>>> develop
   },
 } = require("../src/services");
 
@@ -106,6 +111,14 @@ router.get(
   use(authentication),
   use(theSameUser),
   use(get),
+  serveJson
+);
+
+router.get(
+  "/:uuid/books",
+  use(authentication),
+  use(bookQuery),
+  use(listBooks),
   serveJson
 );
 
