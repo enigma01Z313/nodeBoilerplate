@@ -206,7 +206,7 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
   ]);
   console.log("User seed has been finished");
 
-  User.bulkCreate([
+  await User.bulkCreate([
     {
       uuid: crypto.randomUUID(),
       phone: "09127676895",
