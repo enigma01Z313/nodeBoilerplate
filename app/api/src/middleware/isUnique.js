@@ -16,7 +16,7 @@ const isUnique = (model, modelFa, param, paramFa) => async (req, res, next) => {
 
   const item = await Models[model].findOne({ where: { [param]: keyParam } });
 
-  if (item && !theSameUser && !isTheSame(req.params.uuid, item))
+  if (item && !isTheSame(req.params.uuid, item))
     return next(
       fError(
         400,
