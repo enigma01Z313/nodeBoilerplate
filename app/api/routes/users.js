@@ -27,11 +27,8 @@ const {
     get,
     list,
     Card: { list: listCards, create: createCard },
-<<<<<<< HEAD
     Comment: { list: listComments },
-=======
     Book: { list: listBooks },
->>>>>>> develop
   },
 } = require("../src/services");
 

@@ -2,7 +2,6 @@ const { comment: commentRefiner } = require("../../../../db/MySQL/refines");
 
 module.exports = async (req, res, next) => {
   const { authenticatedUser } = res;
-
   const { content } = req.body;
 
   const {
@@ -19,5 +18,6 @@ module.exports = async (req, res, next) => {
   await comment.setUser(authenticatedUser.id);
 
   res.jsonData = commentRefiner(comment);
+
   next();
 };

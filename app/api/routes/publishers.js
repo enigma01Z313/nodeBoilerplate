@@ -24,11 +24,6 @@ const {
   },
 } = require("../src/services");
 
-<<<<<<< HEAD
-=======
-const services = require("../src/services");
-
->>>>>>> develop
 /**************************/
 /*         routes         */
 /**************************/

@@ -46,8 +46,6 @@ const refineReplies = (items) =>
 module.exports = (item) => {
   const data = item?.dataValues ?? item;
 
-  console.log(data.replies.includes(data.uuid));
-
   return {
     ...data,
     id: data.uuid,
