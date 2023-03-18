@@ -6,7 +6,8 @@ POST {{apiUrl}}
 Content-Type: application/json
 
 {
-  "phone": "09333950889"
+  "phone": "09333950889",
+  "skipCaptcha": true
 }
 
 ###

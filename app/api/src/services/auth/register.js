@@ -2,7 +2,7 @@
 
 const { User } = require("../../../db/MySQL/models");
 const fError = require("../../utils/fError");
-const notification = require("../../utils/notifications");
+const { sms: sendSMS } = require("../../utils/notifications");
 const hash = require("../../utils/hash");
 const nodemailer = require("nodemailer");
 const createWallet = require("../wallet/_/createWallet.js");
@@ -31,6 +31,7 @@ module.exports = async (req, res, next) => {
   });
 
   await createWallet(newUser.id);
+  // await sendSMS({ to: phone, text:  `کد تایید حساب کاربری: ${code}`});
 
   res.jsonData = { id: newUser.toJSON().uuid, code };
   next();
