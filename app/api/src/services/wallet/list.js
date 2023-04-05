@@ -1,10 +1,58 @@
-const { Wallet } = require("../../../db/MySQL/models");
+const { Op } = require("sequelize");
+const { Wallet, User } = require("../../../db/MySQL/models");
 const { walletList } = require("../../../db/MySQL/refines");
+const { inspect } = require("../../utils");
 
 module.exports = async (req, res, next) => {
-  const wallet = await Wallet.findAll();
+  const { s: search } = req.query;
 
-  res.jsonData = walletList(wallet);
+  const {
+    dbOptions: { defaultOptions, paginationedOptions },
+  } = res;
+
+  let searchOption;
+
+  if (search) {
+    searchOption = {
+      where: {
+        [Op.or]: [
+          { firstName: { [Op.like]: `%${search}%` } },
+          { lastName: { [Op.like]: `%${search}%` } },
+        ],
+      },
+    };
+  }
+
+  const walletDefaultOption = {
+    ...defaultOptions,
+    include: [
+      {
+        model: User,
+        ...searchOption,
+      },
+    ],
+  };
+
+  const walletPagedOption = {
+    ...paginationedOptions,
+    include: [
+      {
+        model: User,
+        ...searchOption,
+      },
+    ],
+  };
+
+  const wallets = await Wallet.findAll(walletPagedOption);
+
+  const totalWallets = await Wallet.findAll(walletDefaultOption);
+
+  const responseBody = {
+    data: walletList(wallets),
+    total: totalWallets && totalWallets.length,
+  };
+
+  res.jsonData = responseBody;
 
   next();
 };

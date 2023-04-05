@@ -69,6 +69,26 @@ const statusList = {
     { code: 2, label: "فایل epub", key: "epub" },
     { code: 3, label: "فایل صوتی", key: "sound" },
   ],
+  commentStatus: [
+    {
+      code: 0,
+      label: "در حال بررسی",
+      color: "yellow",
+      bg: "yellow",
+    },
+    {
+      code: 1,
+      label: "تائید شده",
+      color: "green",
+      bg: "green",
+    },
+    {
+      code: 2,
+      label: "رد شده",
+      color: "red",
+      bg: "red",
+    },
+  ],
   transactionActions: [
     { code: 1, name: "buyBook", label: "خرید کتاب" },
     { code: 2, name: "payback", label: "تسویه حساب" },

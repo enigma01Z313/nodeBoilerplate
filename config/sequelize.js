@@ -17,7 +17,7 @@ module.exports = {
     host: dbHost,
     dialect: "mysql",
     operatorsAliases: "0",
-    logging: false,
+    logging: true,
   },
   production: {
     username: "root",
@@ -26,5 +26,6 @@ module.exports = {
     host: "127.0.0.1",
     dialect: "mysql",
     operatorsAliases: "0",
+    logging: true,
   },
 };

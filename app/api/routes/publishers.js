@@ -24,8 +24,6 @@ const {
   },
 } = require("../src/services");
 
-const services = require("../src/services");
-
 /**************************/
 /*         routes         */
 /**************************/

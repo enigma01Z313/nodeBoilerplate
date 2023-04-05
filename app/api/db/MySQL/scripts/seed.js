@@ -17,6 +17,7 @@ const {
   Wallet,
   File,
   Card,
+  Comment,
   User_book,
 } = require("../models");
 const models = require("../models");
@@ -781,6 +782,29 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
     },
   ]);
   console.log("Card seed has been finished");
+
+  //Comment
+  await Comment.bulkCreate([
+    {
+      content: "این کتاب بسیار عالی است",
+      bookId: 2,
+      userId: 2,
+      status: 0,
+    },
+    {
+      content: "خوب است",
+      bookId: 3,
+      userId: 4,
+      status: 0,
+    },
+    {
+      content: "تست تست",
+      bookId: 5,
+      userId: 2,
+      status: 0,
+    },
+  ]);
+  console.log("Comment seed has been finished");
 
   const sizeArr = ["Kb", "Mb"];
   //Book image

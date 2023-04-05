@@ -1,4 +1,5 @@
 const express = require("express");
+const { Op } = require("sequelize");
 const router = express.Router();
 const use = require("../src/utils/use");
 const {
@@ -7,19 +8,30 @@ const {
   Validate: {
     index: { ValidateF, validator },
   },
-  getDataList,
   filteredData,
   filteredSearch,
   sortedData,
+  getDataList,
+  getEntityByUuid,
 } = require("../src/middleware");
 
 const {
-  Wallet: { list, get },
+  Comment: { list, update },
 } = require("../src/services");
+
+/**************************/
+/*   validation schemas   */
+/**************************/
+const updatedCommentSchema = new ValidateF()
+  .param("status", "وضعیت")
+  .number()
+  .regex(/^(0|1|2)$/)
+  .done();
 
 /**************************/
 /*         routes         */
 /**************************/
+
 router.get(
   "/",
   use(authentication),
@@ -29,6 +41,13 @@ router.get(
   serveJson
 );
 
-router.get("/:uuid", use(authentication), use(get), serveJson);
+router.put(
+  "/:uuid",
+  use(validator(updatedCommentSchema)),
+  use(authentication),
+  use(getEntityByUuid({ model: "Comment", fields: ["uuid"] })),
+  use(update),
+  serveJson
+);
 
 module.exports = router;

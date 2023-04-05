@@ -18,19 +18,21 @@ module.exports = async (req, res, next) => {
     { model: Off_price },
     { model: Author, as: "authors", required: true },
   ];
+
   let where = {};
 
   if (criteria === "all") {
     include.push({ model: User, as: "publisher", required: true });
     where[Op.or] = [
       { name: { [Op.like]: `%${search}%` } },
-      { "$authors.first_name$": { [Op.like]: `%${search}%` } },
+      // { "$authors.first_name$": { [Op.like]: `%${search}%` } },
       { "$publisher.first_name$": { [Op.like]: `%${search}%` } },
     ];
   } else if (criteria === "author") {
-    const whereOptions = [
-      { "$authors.first_name$": { [Op.like]: `%${search}%` } },
-    ];
+    //   const whereOptions = [
+    //     { "$authors.first_name$": { [Op.like]: `%${search}%` } },
+    //   ];
+
     if (bookType !== "all") whereOptions.push({ [bookType]: true });
 
     where[Op.and] = whereOptions;

@@ -44,6 +44,8 @@ tags:
     description: wallet's management
   - name: cards
     description: card's management
+  - name: comments
+    description: comment's management
 paths:
   /auth/register:
     post:
@@ -882,6 +884,61 @@ paths:
                 $ref: "#/components/schemas/Card"
         "403":
           description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/{userId}/comments:
+    get:
+      tags:
+        - users
+      operationId: getComment
+      description: Get comment details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: unique id of users
+          required: true
+          schema:
+            type: string
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: s
+          in: query
+          description: search of data
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the comment with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCommentList"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Comment with specific id does not exist
           content:
             application/json:
               schema:
@@ -2485,6 +2542,108 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /books/{bookId}/comments:
+    get:
+      tags:
+        - books
+      operationId: getComment
+      description: Get comment details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookId
+          in: path
+          description: unique id of books
+          required: true
+          schema:
+            type: string
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: s
+          in: query
+          description: search of data
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the comment with specific uuid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookCommentList"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Comment with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - books
+      operationId: addComment
+      description: Add new Comment to system
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookId
+          in: path
+          description: book's id of the new Comment
+          format: uuid
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  description: content of the new Comment
+                  type: string
+                repliesTo:
+                  description: reply to the other comment
+                  type: string
+              required:
+                - content
+      responses:
+        "200":
+          description: returns the new added comment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookCommentList"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /publishers:
     get:
       tags:
@@ -2867,6 +3026,105 @@ paths:
                 $ref: "#/components/schemas/Error"
         "404":
           description: Card with specific id does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /comments:
+    get:
+      tags:
+        - comments
+      operationId: getComment
+      description: Get comment's details <br> Parameters are used to filter and sort data
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: sortStatus
+          in: query
+          description: sort data by status (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: sortCreatedAt
+          in: query
+          description: sort data by registration date (1 is ascending / 0 is descending)
+          schema:
+            type: boolean
+        - name: s
+          in: query
+          description: search of data
+          schema:
+            type: string
+      responses:
+        "200":
+          description: shows the Comments list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Comment"
+                  total:
+                    type: number
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Some server error happened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /comments/{commentId}:
+    put:
+      tags:
+        - comments
+      operationId: upadteComment
+      description: Update comment details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: commentId
+          in: path
+          description: unique id of comments
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  description: status of the comment
+                  type: string
+      responses:
+        "200":
+          description: return the updated comment's detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+        "403":
+          description: Token is not valid/being expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Comment with specific id does not exist
           content:
             application/json:
               schema:
@@ -3402,6 +3660,92 @@ components:
           type: string
         updatedAt:
           type: string
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        content:
+          type: string
+        status:
+          $ref: "#/components/schemas/Status"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            fullName:
+              type: string
+        book:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        replies:
+          type: array
+          items:
+            $ref: "#/components/schemas/Comment"
+    BookCommentList:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        content:
+          type: string
+        status:
+          $ref: "#/components/schemas/Status"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            fullName:
+              type: string
+        replies:
+          type: array
+          items:
+            $ref: "#/components/schemas/BookCommentList"
+    UserCommentList:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        content:
+          type: string
+        status:
+          $ref: "#/components/schemas/Status"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        book:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        replies:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserCommentList"
     Log:
       type: object
       properties:
