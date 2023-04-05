@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
 const { commentList } = require("../../../../db/MySQL/refines");
-const { User } = require("../../../../db/MySQL/models");
+const { Comment, User } = require("../../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
   const { s: search } = req.query;
@@ -25,11 +25,13 @@ module.exports = async (req, res, next) => {
 
   const comments = await book.getComments({
     order: [["repliesTo", "ASC"], ...sortOptions],
+    distinct: true,
     include: [
       {
         model: User,
         ...searchOption,
       },
+      { model: Comment, as: "replies", include: [{ model: User }] },
     ],
   });
 

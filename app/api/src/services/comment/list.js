@@ -1,13 +1,18 @@
 const { Op } = require("sequelize");
 const { Comment, User, Book } = require("../../../db/MySQL/models");
-const { commentList } = require("../../../db/MySQL/refines");
+const {
+  commentList,
+  comment,
+  commentfullList,
+} = require("../../../db/MySQL/refines");
 
 module.exports = async (req, res, next) => {
-  const { s: search } = req.query;
+  const { s: search, flat } = req.query;
 
   const { sortOptions } = res;
 
   let searchOption;
+  let flatComments;
 
   if (search) {
     searchOption = {
@@ -27,16 +32,31 @@ module.exports = async (req, res, next) => {
     include: [
       { model: User },
       { model: Book },
-      { model: Comment, as: "replies" },
+      {
+        model: Comment,
+        as: "replies",
+        include: [{ model: User }, { model: Book }],
+      },
     ],
     ...searchOption,
   });
 
-  // return res.json(comments);
+  if (flat === "true") {
+    flatComments = await Comment.findAll({
+      order: [["repliesTo", "ASC"], ...sortOptions],
+      distinct: true,
+      include: [{ model: User }, { model: Book }],
+      ...searchOption,
+    });
 
-  responseBody = {
-    data: commentList(comments),
-  };
+    responseBody = {
+      data: commentfullList(flatComments),
+    };
+  } else {
+    responseBody = {
+      data: commentList(comments),
+    };
+  }
 
   res.jsonData = responseBody;
 

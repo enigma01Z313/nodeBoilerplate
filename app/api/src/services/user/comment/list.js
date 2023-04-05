@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
 const { commentList } = require("../../../../db/MySQL/refines");
-const { Book } = require("../../../../db/MySQL/models");
+const { Comment, Book } = require("../../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
   const { s: search } = req.query;
@@ -27,6 +27,7 @@ module.exports = async (req, res, next) => {
         model: Book,
         ...searchOption,
       },
+      { model: Comment, as: "replies", include: [{ model: Book }] },
     ],
   });
 
