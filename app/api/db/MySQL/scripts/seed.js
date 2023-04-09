@@ -19,6 +19,7 @@ const {
   Card,
   Comment,
   User_book,
+  SettleUp,
 } = require("../models");
 const models = require("../models");
 
@@ -805,6 +806,20 @@ const imageUUID13 = "0f861f7f-7e95-98s3-bc02-2f4a58caa0e5";
     },
   ]);
   console.log("Comment seed has been finished");
+
+  //SettleUp
+  await SettleUp.bulkCreate([
+    {
+      cardNumber: "6037998125000000",
+      amount: 12000,
+      userId: 2,
+    },
+    {
+      cardNumber: "5894357894123122",
+      amount: 13000,
+      userId: 2,
+    },
+  ]);
 
   const sizeArr = ["Kb", "Mb"];
   //Book image
