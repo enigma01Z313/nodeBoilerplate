@@ -16,6 +16,7 @@ module.exports = (db) => {
     Wallet,
     Card,
     Comment,
+    SettleUp,
   } = db;
 
   User.belongsTo(Role, { foreignKey: "role_id" });
@@ -28,6 +29,9 @@ module.exports = (db) => {
 
   User.hasMany(UserMeta, { foreignKey: "userId" });
   UserMeta.belongsTo(User, { foreignKey: "userId" });
+
+  User.hasMany(SettleUp, { foreignKey: "userId" });
+  SettleUp.belongsTo(User, { foreignKey: "userId" });
 
   Book.belongsToMany(Tag, {
     through: Book_tag,
