@@ -178,7 +178,6 @@ router.put(
   use(getEntityByUuid({ model: "Role", fields: ["roleId"] })),
   use(isUnique("User", "کاربر", "phone", "شماره موبایل")),
   use(isUnique("User", "کاربر", "email", "ایمیل")),
-  (req, res) => res.end("22222222222222"),
   use(getDataByUUID("User", "کاربر")),
   use(update),
   use(get),
