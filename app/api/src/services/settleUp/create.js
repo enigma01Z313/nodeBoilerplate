@@ -1,10 +1,21 @@
 const { SettleUp } = require("../../../db/MySQL/models");
 
 module.exports = async (req, res, next) => {
-  const { cardNumber, amount } = req.body;
+  const { cardNumber: cNumber, amount } = req.body;
 
+  const {
+    chainData: { card },
+  } = res;
+
+  const {
+    dataValues: { cardNumber },
+  } = card;
+
+  console.log(cardNumber);
+
+  return res.end("=============");
   const settleUpData = {
-    cardNumber,
+    cNumber,
     amount,
   };
 

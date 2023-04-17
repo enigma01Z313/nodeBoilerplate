@@ -25,12 +25,17 @@ module.exports = async (req, res, next) => {
     publisherId: publisher.id,
   });
 
+  res.chainData.createdUuid = book.uuid;
+
   await book.setTags(tags);
+
   await book.setCategories(categories);
+
   await setOffPrice(book.id, offPrice);
+
   await setAuthors(book.id, authors, req.body.authors, main);
+
   await setFiles(book.id, files, req.body.files);
 
-  res.chainData.createdUuid = book.uuid;
   next();
 };

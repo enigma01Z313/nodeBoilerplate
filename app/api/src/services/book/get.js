@@ -29,6 +29,7 @@ module.exports = async (req, res, next) => {
       { model: Off_price },
     ],
   };
+
   const book = await Book.findOne(bookOption);
 
   if (!book) return next(fError(404, "Not found", "کتاب مورد نظر یافت نشد"));

@@ -6,7 +6,10 @@ const fileTypes = require("../../../../db/staticDb")("fileTypes")();
 
 module.exports = (bookId, files, bodyFiles) =>
   new Promise(async (res, rej) => {
-    for (const fileType of fileTypes) {
+
+if (!bodyFiles) return res();
+
+	  for (const fileType of fileTypes) {
       const thiTypeFile = bodyFiles[fileType.key];
 
       if (thiTypeFile) {

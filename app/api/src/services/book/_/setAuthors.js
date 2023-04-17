@@ -31,7 +31,6 @@ module.exports = (bookId, authors, bodyAuthors, main) =>
         counter++;
       }
     }
-
     await BookAuthor.bulkCreate(bookAuthorsPackage);
     res();
   });

@@ -26,6 +26,7 @@ const {
     list,
     get,
     create,
+    update,
     OffPrice: {
       get: getOffPrice,
       create: createOffPrice,
@@ -112,6 +113,29 @@ const newBookSchema = new ValidateF()
   .object(fileTypesSchema)
   .done();
 
+const updateBookSchema = new ValidateF()
+  .param("name", "نام کتاب")
+  .string()
+  .param("image", "تصویر کتاب")
+  .string(36)
+  .param("content", "محتوا")
+  .string()
+  .param("publishedYear", "تاریخ انتشار")
+  .number()
+  .param("price", "قیمت")
+  .number()
+  .param("publisher", "ناشر")
+  .string(36)
+  .param("categories", "دسته بندی")
+  .array("string")
+  .param("tags", "دسته بندی")
+  .array("string")
+  .param("authors", "مولف")
+  .object(bookAuthorsSchema)
+  .param("files", "فایل")
+  .object(fileTypesSchema)
+  .done();
+
 const newCommentSchema = new ValidateF()
   .param("content", "محتوا")
   .requiredString()
@@ -167,6 +191,7 @@ router.post(
       model: "Author",
       field: "authors",
       chainKey: "authors",
+      flat: true,
     })
   ),
   use(
@@ -174,6 +199,7 @@ router.post(
       model: "File",
       field: "files",
       chainKey: "files",
+      flat: true,
     })
   ),
   use(checkPublisher()),

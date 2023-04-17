@@ -2,7 +2,8 @@ const { Off_price } = require("../../../../db/MySQL/models");
 
 module.exports = (bookId, offPrice) =>
   new Promise(async (res, rej) => {
-    if (offPrice && bookId) {
+    if (bookId) {
+      if (!offPrice) return res();
       const amount =
         offPrice.type === 1 && offPrice.amount >= 100 ? 100 : offPrice.amount;
 
