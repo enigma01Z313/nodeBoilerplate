@@ -3,15 +3,15 @@ const Models = require("../../db/MySQL/models");
 const flatObj = (obj, field) => {
   const arr = [];
 
-  //  if (field === "files") {
-  //   for (const i in obj) {
-  //     arr.push(obj[i].main.file, obj[i].sample.file);
-  //   }
-  //  } else {
-  for (const i in obj) {
-    arr.push(...obj[i]);
+  if (field === "files") {
+    for (const i in obj) {
+      arr.push(obj[i].main.file, obj[i].sample.file);
+    }
+  } else {
+    for (const i in obj) {
+      arr.push(...obj[i]);
+    }
   }
-  //  }
   return arr;
 };
 

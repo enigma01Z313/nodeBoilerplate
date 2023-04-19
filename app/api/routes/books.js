@@ -208,6 +208,47 @@ router.post(
   serveJson
 );
 
+///update-book
+router.put(
+  "/:uuid",
+  use(validator(updateBookSchema)),
+  use(
+    getEntitiesByUuid({
+      model: "Category",
+      field: "categories",
+      chainKey: "categories",
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "Tag",
+      field: "tags",
+      chainKey: "tags",
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "Author",
+      field: "authors",
+      chainKey: "authors",
+      flat: true,
+    })
+  ),
+  use(
+    getEntitiesByUuid({
+      model: "File",
+      field: "files",
+      chainKey: "files",
+      flat: true,
+    })
+  ),
+  // use(checkPublisher()),
+  use(getDataByUUID("Book", "کتاب")),
+  use(update),
+  use(get),
+  serveJson
+);
+
 router.get("/:uuid", use(get), serveJson);
 
 router.post(
