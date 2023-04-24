@@ -9,19 +9,19 @@ module.exports = async (req, res, next) => {
     name,
     content,
     publishedYear,
-    publisherId,
     price,
     offPrice,
     image,
     main,
+    status,
+    sound,
+    tags: tagsBody,
+    text,
   } = req.body;
+
   const {
     chainData: { book, tags, categories, authors, publisher, files },
   } = res;
-
-//   if (publisherId) {
-//     publisherId = publisher?.id;
-//   }
 
   if (name && name !== book.name) book.name = uppedData = name;
 
@@ -34,24 +34,22 @@ module.exports = async (req, res, next) => {
 
   if (image && image !== book.image) book.image = uppedData = image;
 
-  if (offPrice && offPrice !== book.offPrice)
-    book.offPrice = uppedData = offPrice;
-
-//   if (publisherId && publisherId !== book.publisherId)
-    // book.publisherId = uppedData = publisherId;
-
   if (main && main !== book.main) book.main = uppedData = main;
+
+  if (sound && sound !== book.sound) book.sound = uppedData = sound;
+
+  if (text && text !== book.text) book.text = uppedData = text;
+
+  if (status && status !== book.status) book.status = uppedData = status;
 
   if (uppedData === false) {
     res.statusCode = 204;
     return next();
   }
 
-  await book.save();
+  const updatedBook = await book.save();
 
-  res.chainData.createdUuid = book.uuid;
-
-  await book.setTags(tags);
+  res.chainData.createdUuid = updatedBook.uuid;
 
   await book.setCategories(categories);
 

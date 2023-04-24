@@ -23,11 +23,11 @@ const statusList = {
     {
       code: 1,
       label: "منتشر شده",
-      color: "red",
-      bg: "red",
+      color: "green",
+      bg: "green",
     },
     {
-      code: 1,
+      code: 2,
       label: "غیر فعال شده",
       color: "red",
       bg: "red",

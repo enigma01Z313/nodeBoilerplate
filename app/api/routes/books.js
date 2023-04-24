@@ -238,12 +238,13 @@ router.put(
     getEntitiesByUuid({
       model: "File",
       field: "files",
-      chainKey: "files",
+      chainKey: "file",
       flat: true,
     })
   ),
   // use(checkPublisher()),
-  use(getDataByUUID("Book", "کتاب")),
+  // use(getDataByUUID("Book", "کتاب")),
+  use(getEntityByUuid({ model: "Book", fields: ["uuid"] })),
   use(update),
   use(get),
   serveJson

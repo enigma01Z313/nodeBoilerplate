@@ -1,15 +1,12 @@
-const {
-  File,
-} = require("../../../../db/MySQL/models");
+const { File } = require("../../../../db/MySQL/models");
 
 const fileTypes = require("../../../../db/staticDb")("fileTypes")();
 
 module.exports = (bookId, files, bodyFiles) =>
   new Promise(async (res, rej) => {
+    if (!bodyFiles) return res();
 
-if (!bodyFiles) return res();
-
-	  for (const fileType of fileTypes) {
+    for (const fileType of fileTypes) {
       const thiTypeFile = bodyFiles[fileType.key];
 
       if (thiTypeFile) {

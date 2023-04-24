@@ -21,6 +21,15 @@ module.exports = async (req, res, next) => {
   }
   const updatedTag = await tag.save();
 
+  console.log(
+    "================================================================="
+  );
+  console.log(updatedTag.uuid);
+
+  console.log(
+    "================================================================="
+  );
+
   res.jsonData = refinedTag(updatedTag);
   next();
 };
